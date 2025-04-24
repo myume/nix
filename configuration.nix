@@ -12,7 +12,6 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "navi"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -41,6 +40,15 @@
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
+
+  # Track the latest Linux kernel release for improved hardware support
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  # Enable fingerprint reader support
+  services.fprintd.enable = true;
+
+  # Enable firmware updates
+  services.fwupd.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
