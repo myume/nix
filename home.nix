@@ -1,5 +1,4 @@
-{ config, pkgs, inputs, ... }:
-{
+{ config, pkgs, inputs, ... }: {
   home.username = "myu";
   home.homeDirectory = "/home/myu";
 
@@ -7,6 +6,7 @@
   home.packages = with pkgs; [
     fastfetch
     yazi # terminal file explorer
+    rofi
 
     kitty # terminal
 
@@ -32,18 +32,25 @@
     zstd
     gnupg
 
-    btop  # replacement of htop/nmon
+    btop # replacement of htop/nmon
     iotop # io monitoring
     iftop # network monitoring
   ];
 
-   wayland.windowManager.hyprland = {
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+  };
+
+  wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
     xwayland.enable = true;
     extraConfig = ''
       ${builtins.readFile ./example.conf}
-    ''; 
+    '';
   };
 
   # basic configuration of git, please change to your own
@@ -51,8 +58,17 @@
     enable = true;
     userName = "myu";
     userEmail = "contact@memyu.com";
-    extraConfig = {
-      init.defaultBranch = "main";
+    extraConfig = { init.defaultBranch = "main"; };
+  };
+
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      "github.com" = {
+        hostname = "github.com";
+        user = "git";
+        identityFile = "~/.ssh/id_ed25519";
+      };
     };
   };
 

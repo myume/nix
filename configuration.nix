@@ -5,10 +5,9 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -54,9 +53,6 @@
     isNormalUser = true;
     description = "myu";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-        neovim
-    ];
     shell = pkgs.zsh;
   };
 
@@ -66,13 +62,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-     git
-     vim
-     wget
-     curl
-     kitty
-  ];
+  environment.systemPackages = with pkgs; [ git vim wget curl kitty ];
   environment.variables.EDITOR = "vim";
   environment.variables.VISUAL = "vim";
 
