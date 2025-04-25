@@ -121,18 +121,18 @@
   # starship - an customizable prompt for any shell
   programs.starship = {
     enable = true;
-    enableZshIntegration = true; # Enable integration with Zsh
+    enableZshIntegration = true;
     settings = {
-      add_newline = true; # Add a blank line between prompts
-      scan_timeout = 30; # Timeout for scanning files (in milliseconds)
-      command_timeout = 500; # Timeout for commands (in milliseconds)
+      add_newline = true;
+      scan_timeout = 30;
+      command_timeout = 500;
       character = {
-        success_symbol =
-          "[➜](bold green)"; # Symbol shown on successful command execution
-        error_symbol = "[➜](bold red)"; # Symbol shown on command error
+        success_symbol = "[➜](bold green)";
+        error_symbol = "[➜](bold red)";
       };
     };
   };
+
   # this value determines the home manager release that your
   # configuration is compatible with. this helps avoid breakage
   # when a new home manager release introduces backwards
