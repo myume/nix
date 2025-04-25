@@ -1,5 +1,11 @@
-{ config, pkgs, inputs, lib, ... }: {
-  imports = [ inputs.nvf.homeManagerModules.default ];
+{
+  config,
+  pkgs,
+  inputs,
+  lib,
+  ...
+}: {
+  imports = [inputs.nvf.homeManagerModules.default];
   home.username = "myu";
   home.homeDirectory = "/home/myu";
 
@@ -68,26 +74,37 @@
       vim = {
         viAlias = true;
         vimAlias = true;
-        lsp = { enable = true; };
+        lsp = {enable = true;};
 
         theme = {
           enable = true;
-          name = "tokyonight";
-          style = "moon";
+          name = "catppuccin";
+          style = "mocha";
         };
 
-        statusline.lualine = { enable = true; };
+        statusline.lualine = {enable = true;};
         autocomplete.nvim-cmp.enable = true;
+        filetree.nvimTree.enable = true;
+        formatter.conform-nvim = {enable = true;};
 
-        keymaps = [{
-          key = "kj";
-          mode = [ "i" ];
-          action = "<ESC>";
-          desc = "Enter normal mode";
-        }];
+        languages = {
+          nix = {
+            enable = true;
+            format = {enable = true;};
+            lsp = {enable = true;};
+          };
+        };
+
+        keymaps = [
+          {
+            key = "kj";
+            mode = ["i"];
+            action = "<ESC>";
+            desc = "Enter normal mode";
+          }
+        ];
       };
     };
-
   };
 
   wayland.windowManager.hyprland = {
@@ -104,7 +121,7 @@
     enable = true;
     userName = "myu";
     userEmail = "contact@memyu.com";
-    extraConfig = { init.defaultBranch = "main"; };
+    extraConfig = {init.defaultBranch = "main";};
   };
 
   programs.ssh = {
