@@ -1,4 +1,5 @@
-{ config, pkgs, inputs, ... }: {
+{ config, pkgs, inputs, lib, ... }: {
+  imports = [ inputs.nvf.homeManagerModules.default ];
   home.username = "myu";
   home.homeDirectory = "/home/myu";
 
@@ -23,7 +24,7 @@
     ripgrep # recursively searches directories for a regex pattern
     jq # A lightweight and flexible command-line JSON processor
     yq-go # yaml processor https://github.com/mikefarah/yq
-    eza # A modern replacement for ‘ls’
+    # eza # A modern replacement for ‘ls’
     fzf # A command-line fuzzy finder
 
     # misc
@@ -40,8 +41,14 @@
   programs.neovim = {
     enable = true;
     defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
+
+    enableManpages = true;
+
+    settings = {
+      vim.viAlias = true;
+      vim.vimAlias = true;
+      vim.lsp = { enable = true; };
+    };
   };
 
   wayland.windowManager.hyprland = {
