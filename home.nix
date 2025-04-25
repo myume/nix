@@ -38,7 +38,27 @@
     iftop # network monitoring
   ];
 
-  programs.neovim = {
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+    autocd = true;
+
+    defaultKeymap = "viins";
+
+    shellAliases = {
+      ll = "ls -l";
+      la = "ls -a";
+      rebuild = "sudo nixos-rebuild switch";
+    };
+
+    initContent = ''
+      bindkey '^ ' autosuggest-accept
+    '';
+  };
+
+  programs.nvf = {
     enable = true;
     defaultEditor = true;
 
@@ -82,15 +102,18 @@
   # starship - an customizable prompt for any shell
   programs.starship = {
     enable = true;
-    # custom settings
+    enableZshIntegration = true; # Enable integration with Zsh
     settings = {
-      add_newline = false;
-      aws.disabled = true;
-      gcloud.disabled = true;
-      line_break.disabled = true;
+      add_newline = true; # Add a blank line between prompts
+      scan_timeout = 30; # Timeout for scanning files (in milliseconds)
+      command_timeout = 500; # Timeout for commands (in milliseconds)
+      character = {
+        success_symbol =
+          "[➜](bold green)"; # Symbol shown on successful command execution
+        error_symbol = "[➜](bold red)"; # Symbol shown on command error
+      };
     };
   };
-
   # this value determines the home manager release that your
   # configuration is compatible with. this helps avoid breakage
   # when a new home manager release introduces backwards
