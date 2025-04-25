@@ -65,10 +65,29 @@
     enableManpages = true;
 
     settings = {
-      vim.viAlias = true;
-      vim.vimAlias = true;
-      vim.lsp = { enable = true; };
+      vim = {
+        viAlias = true;
+        vimAlias = true;
+        lsp = { enable = true; };
+
+        theme = {
+          enable = true;
+          name = "tokyonight";
+          style = "moon";
+        };
+
+        statusline.lualine = { enable = true; };
+        autocomplete.nvim-cmp.enable = true;
+
+        keymaps = [{
+          key = "kj";
+          mode = [ "i" ];
+          action = "<ESC>";
+          desc = "Enter normal mode";
+        }];
+      };
     };
+
   };
 
   wayland.windowManager.hyprland = {
