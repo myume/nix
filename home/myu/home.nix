@@ -82,10 +82,13 @@
           style = "mocha";
         };
 
-        statusline.lualine = {enable = true;};
+        statusline.lualine.enable = true;
         autocomplete.nvim-cmp.enable = true;
-        filetree.nvimTree.enable = true;
-        formatter.conform-nvim = {enable = true;};
+        tabline.nvimBufferline.enable = true;
+        # filetree.nvimTree.enable = true;
+        utility.yazi-nvim.enable = true;
+        formatter.conform-nvim.enable = true;
+        autopairs.nvim-autopairs.enable = true;
 
         languages = {
           nix = {
@@ -116,7 +119,6 @@
     '';
   };
 
-  # basic configuration of git, please change to your own
   programs.git = {
     enable = true;
     userName = "myu";
@@ -150,16 +152,6 @@
     };
   };
 
-  # this value determines the home manager release that your
-  # configuration is compatible with. this helps avoid breakage
-  # when a new home manager release introduces backwards
-  # incompatible changes.
-  #
-  # you can update home manager without changing this value. see
-  # the home manager release notes for a list of state version
-  # changes in each release.
   home.stateVersion = "24.11";
-
-  # let home manager install and manage itself.
   programs.home-manager.enable = true;
 }

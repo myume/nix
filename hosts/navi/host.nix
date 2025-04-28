@@ -72,9 +72,19 @@
   nix.settings.experimental-features = ["nix-command" "flakes"];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [git vim wget curl kitty];
+  environment.systemPackages = with pkgs; [
+    git
+    vim
+    wget
+    curl
+    kitty
+  ];
   environment.variables.EDITOR = "vim";
   environment.variables.VISUAL = "vim";
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.fira-code
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
