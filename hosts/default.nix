@@ -7,7 +7,7 @@
     system = "x86_64-linux";
 
     modules = [
-      ./navi/host.nix
+      ./navi
 
       home-manager.nixosModules.home-manager
       {
