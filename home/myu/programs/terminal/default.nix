@@ -3,5 +3,6 @@
     ./nvim
     ./zsh
     ./tools
+    ./kitty
   ];
 }

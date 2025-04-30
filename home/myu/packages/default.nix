@@ -8,8 +8,6 @@
     yazi # terminal file explorer
     rofi
 
-    kitty # terminal
-
     # browser
     inputs.zen-browser.packages."${pkgs.system}".twilight
 
