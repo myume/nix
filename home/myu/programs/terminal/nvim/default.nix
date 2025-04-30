@@ -8,6 +8,7 @@
       inputs.nvf.homeManagerModules.default
 
       ./keymaps.nix
+      ./autocmds.nix
     ]
     # import all plugins
     ++ (lib.filesystem.listFilesRecursive ./plugins);
