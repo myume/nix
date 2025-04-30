@@ -3,7 +3,6 @@
     ui = {
       illuminate.enable = true;
       colorizer.enable = true;
-      modes-nvim.enable = false;
     };
   };
 }
