@@ -1,6 +1,8 @@
 {inputs, ...}: {
   imports = [
     inputs.nvf.homeManagerModules.default
+
+    ./keymaps.nix
   ];
 
   programs.nvf = {
@@ -35,15 +37,6 @@
             lsp = {enable = true;};
           };
         };
-
-        keymaps = [
-          {
-            key = "kj";
-            mode = ["i"];
-            action = "<ESC>";
-            desc = "Enter normal mode";
-          }
-        ];
       };
     };
   };
