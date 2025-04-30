@@ -1,7 +1,9 @@
 {
   programs.nvf.settings.vim = {
-    statusline.lualine = {
+    treesitter = {
       enable = true;
+      context.enable = true;
+      fold = true;
     };
   };
 }
