@@ -2,7 +2,7 @@
   programs.nvf.settings.vim.keymaps = [
     {
       key = "kj";
-      mode = "i";
+      mode = ["i"];
       action = "<ESC>";
       desc = "Exit insert mode";
     }
@@ -10,37 +10,37 @@
     # navigation
     {
       key = "<C-d>";
-      mode = "n";
+      mode = ["n" "v"];
       action = "<C-d>zz";
       desc = "Scroll down half a screen and center cursor";
     }
     {
       key = "<C-u>";
-      mode = "n";
+      mode = ["n" "v"];
       action = "<C-u>zz";
       desc = "Scroll up half a screen and center cursor";
     }
     {
       key = "<A-n>";
-      mode = "n";
+      mode = ["n" "v"];
       action = "G";
       desc = "Go to end of file";
     }
     {
       key = "<A-p>";
-      mode = "n";
+      mode = ["n" "v"];
       action = "gg";
       desc = "Go to start of file";
     }
     {
       key = "H";
-      mode = "n";
+      mode = ["n" "v"];
       action = "^";
       desc = "Go to start of line";
     }
     {
       key = "L";
-      mode = "n";
+      mode = ["n" "v"];
       action = "$";
       desc = "Go to end of line";
     }
@@ -48,67 +48,67 @@
     # split nav
     {
       key = "<C-j>";
-      mode = "n";
+      mode = ["n"];
       action = "<C-W><C-j>";
       desc = "Move to split below";
     }
     {
       key = "<C-k>";
-      mode = "n";
+      mode = ["n"];
       action = "<C-W><C-k>";
       desc = "Move to split above";
     }
     {
       key = "<C-l>";
-      mode = "n";
+      mode = ["n"];
       action = "<C-W><C-l>";
       desc = "Move to split on the right";
     }
     {
       key = "<C-h>";
-      mode = "n";
+      mode = ["n"];
       action = "<C-W><C-h>";
       desc = "Move to split on the left";
     }
     {
       key = "<C-w><C-L>";
-      mode = "n";
+      mode = ["n"];
       action = ":vertical res -5<CR>";
       desc = "Decrease vertical split width by 5";
     }
     {
       key = "<C-w><C-H>";
-      mode = "n";
+      mode = ["n"];
       action = ":vertical res +5<CR>";
       desc = "Increase vertical split width by 5";
     }
     {
       key = "<C-w><C-K>";
-      mode = "n";
+      mode = ["n"];
       action = ":res -5<CR>";
       desc = "Decrease horizontal split height by 5";
     }
     {
       key = "<C-w><C-J>";
-      mode = "n";
+      mode = ["n"];
       action = ":res +5<CR>";
       desc = "Increase horizontal split height by 5";
     }
     {
       key = "<A-w>l";
-      mode = "n";
+      mode = ["n"];
       action = "<A-w>r";
       desc = "Rotate split right";
     }
     {
       key = "<A-w>h";
-      mode = "n";
+      mode = ["n"];
       action = "<A-w>R";
       desc = "Rotate split left";
     }
     {
       key = "<A-w>e";
-      mode = "n";
+      mode = ["n"];
       action = "<A-w>x";
       desc = "Exchange splits";
     }
@@ -136,39 +136,27 @@
     # yanking
     {
       key = "<space>/";
-      mode = "n";
+      mode = ["n"];
       action = ":noh<CR>";
       desc = "Clear search highlight";
     }
     {
       key = "<leader>d";
-      mode = "n";
+      mode = ["n" "v"];
       action = "\"_d";
-      desc = "Delete without yanking in normal mode";
-    }
-    {
-      key = "<leader>d";
-      mode = "v";
-      action = "\"_d";
-      desc = "Delete without yanking in visual mode";
+      desc = "Delete without yanking";
     }
     {
       key = "<leader>p";
-      mode = "v";
+      mode = ["v"];
       action = "\"_dP";
-      desc = "Paste without yanking in visual mode";
+      desc = "Paste without yanking";
     }
     {
       key = "<leader>y";
-      mode = "n";
+      mode = ["n" "v"];
       action = "\"+y";
       desc = "Yank to clipboard in normal mode";
-    }
-    {
-      key = "<leader>y";
-      mode = "v";
-      action = "\"+y";
-      desc = "Yank to clipboard in visual mode";
     }
   ];
 }
