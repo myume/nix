@@ -220,11 +220,5 @@
       action = ":Lspsaga finder<CR>";
       desc = "Open Lspsaga finder for references or definitions";
     }
-    {
-      key = "<leader>t";
-      mode = ["n"];
-      action = ":Lspsaga term_toggle<CR>";
-      desc = "Toggle terminal window";
-    }
   ];
 }
