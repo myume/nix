@@ -22,6 +22,16 @@
         '';
         desc = "Close NvimTree when last window";
       }
+      {
+        enable = true;
+        event = ["TextYankPost"];
+        callback = lib.generators.mkLuaInline ''
+          function()
+            vim.highlight.on_yank({ higroup = "IncSearch", timeout = 100 })
+          end
+        '';
+        desc = "Highlight on yank";
+      }
     ];
   };
 }
