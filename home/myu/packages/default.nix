@@ -31,5 +31,7 @@
     btop # replacement of htop/nmon
     iotop # io monitoring
     iftop # network monitoring
+
+    silicon # pretty screenshots of code
   ];
 }
