@@ -1,10 +1,10 @@
 {
   programs.nvf.settings.vim = {
     treesitter = {
-      enable = true;
       context.enable = true;
       fold = true;
       autotagHtml = true;
+      indent.enable = false; # wonky for some reason
     };
   };
 }

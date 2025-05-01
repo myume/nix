@@ -12,15 +12,16 @@
       go.enable = true;
       haskell.enable = true;
       html.enable = true;
-      lua.enable = true;
       markdown.enable = true;
       nix.enable = true;
       python.enable = true;
       rust.enable = true;
-      sql.enable = true;
-      tailwind.enable = true;
       ts.enable = true;
-      zig.enable = true;
+
+      # lua.enable = true;
+      # sql.enable = true;
+      # tailwind.enable = true;
+      # zig.enable = true;
     };
   };
 }
