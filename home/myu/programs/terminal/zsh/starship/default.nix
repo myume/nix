@@ -1,4 +1,6 @@
 {
+  imports = [./symbols.nix];
+
   programs.starship = {
     enable = true;
 
@@ -8,6 +10,7 @@
         catppuccin = {
           sky = "#89dceb";
           sapphire = "#74c7ec";
+          lavendar = "#b4befe";
         };
       };
 
@@ -18,18 +21,16 @@
       };
 
       directory = {
-        style = "bold bright-blue";
-        read_only = "";
+        style = "bold blue";
         truncation_length = 8;
       };
 
       git_branch = {
         format = "[$symbol$branch(:$remote_branch)]($style) ";
-        symbol = " ";
-        style = "bright-cyan";
+        style = "bold sapphire";
       };
       git_status = {
-        style = "sky";
+        style = "bold sky";
         ahead = "⇡";
         behind = "⇣";
         conflicted = " ";
@@ -41,18 +42,6 @@
         staged = "+";
         untracked = "?";
       };
-
-      lua.symbol = "[ ](blue)";
-      python.symbol = "[ ](blue)";
-      rust.symbol = "[ ](red)";
-      nix_shell.symbol = "[󱄅 ](blue)";
-      golang.symbol = "[󰟓 ](blue)";
-      c.symbol = "[ ](black)";
-      cpp = {
-        disabled = false;
-        symbol = "[ ](black)";
-      };
-      nodejs.symbol = "[󰎙 ](yellow)";
     };
   };
 }
