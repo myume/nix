@@ -23,7 +23,7 @@
       vim = {
         viAlias = true;
         vimAlias = true;
-        spellcheck.enable = true;
+        # spellcheck.enable = true;
       };
     };
   };
