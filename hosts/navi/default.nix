@@ -1,15 +1,7 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
   ];
-
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "navi"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -39,19 +31,31 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Track the latest Linux kernel release for improved hardware support
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot = {
+    # Track the latest Linux kernel release for improved hardware support
+    kernelPackages = pkgs.linuxPackages_latest;
+    loader = {
+      # Bootloader.
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true; # Did you read the comment?
 
-  # Enable fingerprint reader support
-  services.fprintd.enable = true;
+      # Limit the number of generations to keep
+      systemd-boot.configurationLimit = 10;
+    };
+  };
 
-  # Enable firmware updates
-  services.fwupd.enable = true;
+  services = {
+    # Enable fingerprint reader support
+    fprintd.enable = true;
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
+    # Enable firmware updates
+    fwupd.enable = true;
+
+    # Configure keymap in X11
+    xserver.xkb = {
+      layout = "us";
+      variant = "";
+    };
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -65,15 +69,37 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-  environment.systemPackages = with pkgs; [
-    git
-    vim
-    wget
-    curl
-  ];
-  environment.variables.EDITOR = "vim";
-  environment.variables.VISUAL = "vim";
+  nix = {
+    settings.experimental-features = ["nix-command" "flakes"];
+    # boot.loader.grub.configurationLimit = 10;
+
+    # Perform garbage collection weekly to maintain low disk usage
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 1w";
+    };
+
+    # Optimize storage
+    # You can also manually optimize the store via:
+    #    nix-store --optimise
+    # Refer to the following link for more details:
+    # https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf-auto-optimise-store
+    settings.auto-optimise-store = true;
+  };
+  environment = {
+    systemPackages = with pkgs; [
+      git
+      vim
+      wget
+      curl
+    ];
+
+    variables = {
+      EDITOR = "vim";
+      VISUAL = "vim";
+    };
+  };
 
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
@@ -106,23 +132,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11"; # Did you read the comment?
-
-  # Limit the number of generations to keep
-  boot.loader.systemd-boot.configurationLimit = 10;
-  # boot.loader.grub.configurationLimit = 10;
-
-  # Perform garbage collection weekly to maintain low disk usage
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 1w";
-  };
-
-  # Optimize storage
-  # You can also manually optimize the store via:
-  #    nix-store --optimise
-  # Refer to the following link for more details:
-  # https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf-auto-optimise-store
-  nix.settings.auto-optimise-store = true;
+  system.stateVersion = "24.11";
 }
