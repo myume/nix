@@ -1,7 +1,21 @@
-{pkgs, ...}: {
-  imports = [
-    ./hardware-configuration.nix
-  ];
+{pkgs, ...}: let
+  modPath = ../../modules;
+
+  securityImports =
+    builtins.map
+    (module: modPath + /security + ("/" + module + ".nix"))
+    [
+      "fprint"
+      "pam"
+      "polkit"
+      "sudo"
+    ];
+in {
+  imports =
+    [
+      ./hardware-configuration.nix
+    ]
+    ++ securityImports;
 
   networking.hostName = "navi"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -45,9 +59,6 @@
   };
 
   services = {
-    # Enable fingerprint reader support
-    fprintd.enable = true;
-
     # Enable firmware updates
     fwupd.enable = true;
 

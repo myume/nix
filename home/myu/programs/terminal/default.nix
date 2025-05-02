@@ -4,5 +4,6 @@
     ./zsh
     ./tools
     ./kitty
+    ./hyprlock
   ];
 }
