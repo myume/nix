@@ -6,6 +6,8 @@
       mappings = {
         next = "<C-n>";
         previous = "<C-p>";
+        scrollDocsDown = "<C-j>";
+        scrollDocsUp = "<C-k>";
       };
     };
   };
