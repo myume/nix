@@ -3,6 +3,7 @@
     ./packages
     ./programs
     ./services
+    ./misc
   ];
 
   home = {

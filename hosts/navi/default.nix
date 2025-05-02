@@ -1,5 +1,6 @@
 {pkgs, ...}: let
   modPath = ../../modules;
+  progPath = modPath + /programs;
 
   securityImports =
     builtins.map
@@ -14,6 +15,7 @@ in {
   imports =
     [
       ./hardware-configuration.nix
+      progPath
     ]
     ++ securityImports;
 
@@ -123,8 +125,6 @@ in {
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-  programs.hyprland.enable = true; # enable Hyprland
-  programs.zsh.enable = true;
 
   # List services that you want to enable:
 
