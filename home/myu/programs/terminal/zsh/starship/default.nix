@@ -3,6 +3,7 @@
 
   programs.starship = {
     enable = true;
+    enableZshIntegration = true;
 
     settings = {
       # this inserts a newline before every prompt, even in an empty terminal.

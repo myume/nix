@@ -4,5 +4,6 @@
     ./git.nix
     ./ssh.nix
     ./bat.nix
+    ./yazi.nix
   ];
 }

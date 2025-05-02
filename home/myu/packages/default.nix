@@ -5,7 +5,6 @@
 }: {
   home.packages = with pkgs; [
     fastfetch
-    yazi # terminal file explorer
     rofi
 
     # browser
