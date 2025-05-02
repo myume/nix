@@ -1,1 +1,5 @@
-{inputs, ...}: {}
+{
+  imports = [
+    ./hypridle.nix
+  ];
+}

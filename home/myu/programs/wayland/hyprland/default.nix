@@ -6,7 +6,6 @@
   imports = lib.filesystem.listFilesRecursive ./settings;
 
   home.packages = with pkgs; [
-    hypridle
     hyprshot
     hyprlock
 
