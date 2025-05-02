@@ -113,26 +113,6 @@
       desc = "Exchange splits";
     }
 
-    # buffer nav
-    {
-      key = "<C-A-h>";
-      mode = "n";
-      action = ":bp<CR>";
-      desc = "Go to previous buffer";
-    }
-    {
-      key = "<C-A-l>";
-      mode = "n";
-      action = ":bn<CR>";
-      desc = "Go to next buffer";
-    }
-    {
-      key = "<C-A-d>";
-      mode = "n";
-      action = ":bd<CR>";
-      desc = "Delete current buffer";
-    }
-
     # yanking
     {
       key = "<space>/";
