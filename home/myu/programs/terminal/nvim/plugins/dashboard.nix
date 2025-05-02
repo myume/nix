@@ -7,8 +7,12 @@
         config = {
           week_header.enable = true;
           packages.enable = false;
-          shortcut = {};
-          footer = {};
+          shortcut = [];
+          footer = [
+            ""
+            ""
+            "I don't know everything, I just know what I know."
+          ];
         };
       };
     };
