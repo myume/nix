@@ -35,7 +35,7 @@
       };
       git_status = {
         style = "bold sky";
-        format = "([$all_status]($style)( $ahead_behind)($style) )";
+        format = "([$all_status]($style)[( $ahead_behind)]($style) )";
         ahead = "↑";
         behind = "↓";
         conflicted = " ";
