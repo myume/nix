@@ -30,18 +30,19 @@
       };
 
       git_branch = {
-        format = "[$symbol$branch(:$remote_branch)]($style) ";
+        format = "[$symbol$branch(:$remote_branch)]($style)";
         style = "bold sapphire";
       };
       git_status = {
         style = "bold sky";
-        ahead = "⇡";
-        behind = "⇣";
+        format = "([$all_status]($style)( $ahead_behind)($style) )";
+        ahead = "↑";
+        behind = "↓";
         conflicted = " ";
         renamed = "»";
         deleted = "✘";
-        diverged = "⇆";
-        modified = "!";
+        diverged = "⇅";
+        modified = "*";
         stashed = "≡";
         staged = "+";
         untracked = "?";
