@@ -1,6 +1,6 @@
 let
-  wallpaperPath = toString ./wallpapers;
-  wallPaperFile = "/sky/sky-girl.png";
+  wallpaperPath = ../../../../modules/wallpapers;
+  wallPaperFile = "sky.jpg";
 in {
   services.hyprpaper = {
     enable = true;

@@ -12,7 +12,10 @@
       go.enable = true;
       haskell.enable = true;
       html.enable = true;
-      markdown.enable = true;
+      markdown = {
+        enable = true;
+        extensions.render-markdown-nvim.enable = true;
+      };
       nix.enable = true;
       python.enable = true;
       rust.enable = true;
