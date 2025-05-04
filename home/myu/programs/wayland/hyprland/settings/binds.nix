@@ -54,10 +54,16 @@ in {
         "CONTROL_SUPER, L, exec, hyprlock"
 
         # Screenshots
-        "SUPER_SHIFT, P, exec, hyprshot -m output -o ~/Pictures/screenshots"
-        "ALT_SHIFT, P, exec, hyprshot -m region -o ~/Pictures/screenshots"
+        "SUPER_SHIFT, P, exec, hyprshot -m output -o ~/Pictures/Screenshots"
+        "ALT_SHIFT, P, exec, hyprshot -m region -o ~/Pictures/Screenshots"
       ]
       ++ workspaces;
+
+    bindm = [
+      # Move/resize windows with mainMod + LMB/RMB and dragging
+      "$mod, mouse:272, movewindow"
+      "$mod, mouse:273, resizewindow"
+    ];
 
     binde = [
       # Window Size
