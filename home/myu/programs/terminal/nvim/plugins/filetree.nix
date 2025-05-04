@@ -15,6 +15,11 @@
 
           hijack_cursor = true;
           hijack_unnamed_buffer_when_opening = true;
+          hijack_netrw = true;
+          hijack_directories = {
+            enable = true;
+            auto_open = true;
+          };
 
           diagnostics.enable = true;
 
