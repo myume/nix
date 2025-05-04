@@ -32,5 +32,6 @@
     iftop # network monitoring
 
     silicon # pretty screenshots of code
+    obs-studio
   ];
 }

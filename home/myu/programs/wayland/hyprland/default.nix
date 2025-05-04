@@ -16,9 +16,6 @@
     enable = true;
     systemd.enable = true;
     xwayland.enable = true;
-    # extraConfig = ''
-    #   ${builtins.readFile ./config.conf}
-    # '';
   };
   home.sessionVariables.NIXOS_OZONE_WL = "1";
 }

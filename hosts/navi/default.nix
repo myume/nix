@@ -116,6 +116,9 @@ in {
 
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
+
+    noto-fonts
+    noto-fonts-cjk-sans
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
