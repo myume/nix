@@ -1,14 +1,7 @@
-{
-  inputs,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     fastfetch
     rofi
-
-    # browser
-    inputs.zen-browser.packages."${pkgs.system}".twilight
 
     # archives
     zip

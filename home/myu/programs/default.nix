@@ -2,5 +2,6 @@
   imports = [
     ./terminal
     ./wayland
+    ./browser
   ];
 }

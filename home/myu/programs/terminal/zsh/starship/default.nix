@@ -41,7 +41,7 @@
         conflicted = " ";
         renamed = "»";
         deleted = "✘";
-        diverged = "⇅";
+        diverged = "⇄";
         modified = "*";
         stashed = "≡";
         staged = "+";
