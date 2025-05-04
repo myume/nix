@@ -3,8 +3,8 @@
   home-manager,
   ...
 } @ inputs: {
-  navi = let
-    hostname = "navi";
+  makima = let
+    hostname = "makima";
   in
     nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
