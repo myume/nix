@@ -12,6 +12,11 @@
           lightbulb.enable = false;
         };
       };
+
+      mappings = {
+        goToDefinition = "gd";
+        goToType = "gt";
+      };
     };
   };
 }
