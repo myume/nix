@@ -1,7 +1,8 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     fastfetch
-    rofi
+    rofi-wayland-unwrapped
+    gimp3
 
     # archives
     zip
