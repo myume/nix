@@ -54,8 +54,8 @@ in {
         "CONTROL_SUPER, L, exec, hyprlock"
 
         # Screenshots
-        "SUPER_SHIFT, P, exec, hyprshot -m output -o ~/Pictures/Screenshots"
-        "ALT_SHIFT, P, exec, hyprshot -m region -o ~/Pictures/Screenshots"
+        "SUPER_SHIFT, P, exec, hyprshot -m region -o ~/Pictures/Screenshots"
+        "CONTROL_SUPER_SHIFT, P, exec, hyprshot -m output -o ~/Pictures/Screenshots"
       ]
       ++ workspaces;
 
