@@ -1,6 +1,7 @@
 {
   nixpkgs,
   home-manager,
+  nixos-hardware,
   ...
 } @ inputs: {
   makima = let
@@ -14,6 +15,8 @@
 
       modules = [
         (./. + "/${hostname}")
+
+        nixos-hardware.nixosModules.framework-amd-ai-300-series
 
         home-manager.nixosModules.home-manager
         {
