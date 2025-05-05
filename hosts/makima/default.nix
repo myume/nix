@@ -22,11 +22,6 @@ in {
     ]
     ++ securityImports;
 
-  sddm = {
-    enable = true;
-    enableWayland = true;
-  };
-
   boot = {
     # Track the latest Linux kernel release for improved hardware support
     kernelPackages = pkgs.linuxPackages_latest;
