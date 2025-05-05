@@ -1,6 +1,6 @@
 let
   wallpaperPath = ../../../../modules/wallpapers;
-  wallPaperFile = "sky.jpg";
+  wallPaperFile = "purple.jpg";
 in {
   services.hyprpaper = {
     enable = true;
