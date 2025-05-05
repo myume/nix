@@ -102,5 +102,7 @@ in {
     noto-fonts-cjk-sans
   ];
 
+  hardware.framework.laptop13.audioEnhancement.enable = true;
+
   system.stateVersion = "24.11";
 }
