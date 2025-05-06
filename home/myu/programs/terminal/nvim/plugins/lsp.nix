@@ -4,6 +4,7 @@
       enable = true;
       formatOnSave = true;
 
+      lspconfig.enable = true;
       lspSignature.enable = true;
       lspkind.enable = true;
       lspsaga = {
