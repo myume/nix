@@ -23,7 +23,10 @@
       vim = {
         viAlias = true;
         vimAlias = true;
-        # spellcheck.enable = true;
+        options = {
+          cursorline = true;
+          cursorlineopt = "number";
+        };
       };
     };
   };

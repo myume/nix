@@ -1,10 +1,12 @@
-{lib, ...}: {
+{lib, ...}: let
+  inherit (lib.generators) mkLuaInline;
+in {
   programs.nvf.settings.vim = {
     autocmds = [
       {
         enable = true;
         event = ["QuitPre"];
-        callback = lib.generators.mkLuaInline ''
+        callback = mkLuaInline ''
           function()
             local invalid_win = {}
             local wins = vim.api.nvim_list_wins()
@@ -25,12 +27,28 @@
       {
         enable = true;
         event = ["TextYankPost"];
-        callback = lib.generators.mkLuaInline ''
+        callback = mkLuaInline ''
           function()
             vim.highlight.on_yank({ higroup = "IncSearch", timeout = 100 })
           end
         '';
         desc = "Highlight on yank";
+      }
+      {
+        enable = true;
+        event = ["InsertEnter"];
+        callback = mkLuaInline ''
+          function() vim.opt.relativenumber = false end
+        '';
+        desc = "Toggle absolute numbers on insert";
+      }
+      {
+        enable = true;
+        event = ["InsertLeave"];
+        callback = mkLuaInline ''
+          function() vim.opt.relativenumber = true end
+        '';
+        desc = "Toggle relative numberes in normal mode";
       }
     ];
   };
