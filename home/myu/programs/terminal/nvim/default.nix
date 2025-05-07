@@ -24,6 +24,7 @@
         viAlias = true;
         vimAlias = true;
         searchCase = "smart";
+
         options = {
           cursorline = true;
           cursorlineopt = "number";

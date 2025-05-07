@@ -5,18 +5,27 @@
       formatOnSave = true;
 
       lspconfig.enable = true;
-      lspSignature.enable = true;
       lspkind.enable = true;
-      lspsaga = {
+      trouble = {
         enable = true;
         setupOpts = {
-          lightbulb.enable = false;
+          auto_close = true;
+        };
+        mappings = {
+          documentDiagnostics = "<leader>xx";
+          workspaceDiagnostics = "<leader>xX";
         };
       };
 
       mappings = {
         goToDefinition = "gd";
         goToType = "gt";
+        codeAction = "<C-.>";
+        hover = "K";
+        nextDiagnostic = "]d";
+        previousDiagnostic = "[d";
+        renameSymbol = "<A-r>";
+        openDiagnosticFloat = "<leader>k";
       };
     };
   };
