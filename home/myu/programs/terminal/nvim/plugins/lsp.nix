@@ -4,7 +4,6 @@
       enable = true;
       formatOnSave = true;
 
-      lspconfig.enable = true;
       lspkind.enable = true;
       trouble = {
         enable = true;
@@ -25,7 +24,6 @@
         nextDiagnostic = "]d";
         previousDiagnostic = "[d";
         renameSymbol = "<A-r>";
-        openDiagnosticFloat = "<leader>k";
       };
     };
   };

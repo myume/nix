@@ -22,6 +22,12 @@
           };
         };
       };
+
+      borders.plugins = {
+        nvim-cmp = {
+          enable = true;
+        };
+      };
     };
   };
 }
