@@ -12,6 +12,8 @@
     playerctl
   ];
 
+  hyprland.smartgaps.enable = false;
+
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
