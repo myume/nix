@@ -100,6 +100,7 @@ in {
 
     noto-fonts
     noto-fonts-cjk-sans
+    inter
   ];
 
   hardware.framework.laptop13.audioEnhancement.enable = true;
