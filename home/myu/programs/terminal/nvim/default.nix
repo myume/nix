@@ -11,6 +11,7 @@
       ./keymaps.nix
       ./autocmds.nix
       ./extra.nix
+      ./highlight.nix
     ]
     # import all plugins
     ++ (lib.filesystem.listFilesRecursive ./plugins);
