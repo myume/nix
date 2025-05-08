@@ -1,6 +1,7 @@
 {
   inputs,
   lib,
+  pkgs,
   ...
 }: {
   imports =
@@ -9,9 +10,15 @@
 
       ./keymaps.nix
       ./autocmds.nix
+      ./extra.nix
     ]
     # import all plugins
     ++ (lib.filesystem.listFilesRecursive ./plugins);
+
+  # add lazygit for nvim
+  home.packages = [
+    pkgs.lazygit
+  ];
 
   programs.nvf = {
     enable = true;

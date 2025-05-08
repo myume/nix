@@ -21,18 +21,6 @@
       desc = "Scroll up half a screen and center cursor";
     }
     {
-      key = "<A-n>";
-      mode = ["n" "v"];
-      action = "G";
-      desc = "Go to end of file";
-    }
-    {
-      key = "<A-p>";
-      mode = ["n" "v"];
-      action = "gg";
-      desc = "Go to start of file";
-    }
-    {
       key = "H";
       mode = ["n" "v"];
       action = "^";
@@ -137,6 +125,38 @@
       mode = ["n" "v"];
       action = "\"+y";
       desc = "Yank to clipboard in normal mode";
+    }
+
+    # Snacks binds
+    {
+      key = "<A-a>";
+      mode = ["n"];
+      action = ":lua Snacks.picker.explorer()<CR>";
+      desc = "Toggle File Explorer";
+    }
+    {
+      key = "<C-p>";
+      mode = ["n"];
+      action = ":lua Snacks.picker.files()<CR>";
+      desc = "Toggle File Picker";
+    }
+    {
+      key = "<leader>fg";
+      mode = ["n"];
+      action = ":lua Snacks.picker.grep()<CR>";
+      desc = "Toggle grep";
+    }
+    {
+      key = "<A-p>";
+      mode = ["n"];
+      action = ":lua Snacks.picker()<CR>";
+      desc = "Open Snacks picker";
+    }
+    {
+      key = "<A-g>";
+      mode = ["n"];
+      action = ":lua Snacks.lazygit()<CR>";
+      desc = "Open lazygit";
     }
   ];
 }

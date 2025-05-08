@@ -1,7 +1,7 @@
 {
   programs.nvf.settings.vim = {
     telescope = {
-      enable = true;
+      enable = false; # using snacks instead
       mappings = {
         findFiles = "<C-p>";
       };
