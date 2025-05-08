@@ -37,6 +37,7 @@ in {
       {
         enable = true;
         event = ["InsertEnter"];
+        # group = "toggleAbsoluteNumbers";
         callback = mkLuaInline ''
           function() vim.opt.relativenumber = false end
         '';
@@ -45,10 +46,27 @@ in {
       {
         enable = true;
         event = ["InsertLeave"];
+        # group = "toggleAbsoluteNumbers";
         callback = mkLuaInline ''
           function() vim.opt.relativenumber = true end
         '';
         desc = "Toggle relative numberes in normal mode";
+      }
+      {
+        enable = true;
+        event = ["FileType"];
+        pattern = ["TelescopePrompt"];
+        callback = mkLuaInline ''
+          function()
+              local api_ok, nvim_tree_api = pcall(require, "nvim-tree.api")
+              if api_ok then
+                nvim_tree_api.tree.close()
+              else
+                vim.cmd("NvimTreeClose")
+              end
+          end
+        '';
+        desc = "Close NvimTree when opening telescope";
       }
     ];
   };
