@@ -5,7 +5,7 @@
 
       blur = {
         enabled = true;
-        size = 5;
+        size = 8;
         passes = 2;
         new_optimizations = true;
         xray = true;

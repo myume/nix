@@ -28,6 +28,7 @@
         options = {
           cursorline = true;
           cursorlineopt = "number";
+          fillchars = "eob: "; # remove ~ characters on empty lines in the line numbers
         };
       };
     };
