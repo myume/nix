@@ -158,5 +158,17 @@
       action = ":lua Snacks.lazygit()<CR>";
       desc = "Open lazygit";
     }
+    {
+      key = "]]";
+      mode = ["n"];
+      action = ":lua Snacks.words.jump(1)<CR>";
+      desc = "Jump to next reference";
+    }
+    {
+      key = "[[";
+      mode = ["n"];
+      action = ":lua Snacks.words.jump(-1)<CR>";
+      desc = "Jump to previous reference";
+    }
   ];
 }

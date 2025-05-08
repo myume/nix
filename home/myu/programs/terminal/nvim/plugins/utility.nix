@@ -34,6 +34,8 @@
           image.enabled = true;
           zen.enabled = true;
           rename.enabled = true;
+          notifier.enabled = true;
+          words.enabled = true;
         };
       };
     };
