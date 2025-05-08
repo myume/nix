@@ -137,7 +137,8 @@
     {
       key = "<C-p>";
       mode = ["n"];
-      action = ":lua Snacks.picker.files()<CR>";
+      action = ":lua Snacks.picker.smart()<CR>";
+      # action = ":lua Snacks.picker.files()<CR>";
       desc = "Toggle File Picker";
     }
     {

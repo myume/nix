@@ -26,7 +26,21 @@
             };
           };
 
-          picker.enabled = true;
+          picker = {
+            enabled = true;
+            sources = {
+              smart = {
+                title = "Files";
+                filter = {
+                  cwd = true;
+                  paths = {
+                    "^.git" = true;
+                  };
+                };
+              };
+            };
+          };
+
           bigfile.enabled = true;
           lazygit.enabled = true;
           quickfile.enabled = true;
