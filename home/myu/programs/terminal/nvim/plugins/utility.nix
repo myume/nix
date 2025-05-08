@@ -49,6 +49,7 @@
           zen.enabled = true;
           rename.enabled = true;
           notifier.enabled = true;
+          notify.enabled = true;
           words.enabled = true;
         };
       };
