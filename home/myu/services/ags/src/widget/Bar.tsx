@@ -1,7 +1,18 @@
-import { App, Astal, Gtk, Gdk } from "astal/gtk4";
+import { App, Astal, Gdk } from "astal/gtk4";
 import { Variable } from "astal";
+import Clock from "./modules/Clock";
 
 const time = Variable("").poll(1000, "date");
+
+const Start = () => <box></box>;
+
+const Center = () => <box></box>;
+
+const End = () => (
+  <box>
+    <Clock />
+  </box>
+);
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
   const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
@@ -12,20 +23,13 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
       cssClasses={["Bar"]}
       gdkmonitor={gdkmonitor}
       exclusivity={Astal.Exclusivity.EXCLUSIVE}
-      anchor={TOP | LEFT | RIGHT}
+      anchor={TOP | RIGHT | LEFT}
       application={App}
     >
-      <centerbox cssName="centerbox">
-        <button onClicked="echo hello" hexpand halign={Gtk.Align.CENTER}>
-          Welcome to AGS!
-        </button>
-        <box />
-        <menubutton hexpand halign={Gtk.Align.CENTER}>
-          <label label={time()} />
-          <popover>
-            <Gtk.Calendar />
-          </popover>
-        </menubutton>
+      <centerbox>
+        <Start />
+        <Center />
+        <End />
       </centerbox>
     </window>
   );
