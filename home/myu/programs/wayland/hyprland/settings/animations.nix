@@ -17,7 +17,7 @@
 
         "fade, 1, 10, smoothIn"
         "fadeDim, 1, 10, smoothIn"
-        "workspaces, 1, 6, smoothIn, slidevert"
+        "workspaces, 1, 6, smoothIn" # ", slidevert"
       ];
     };
   };

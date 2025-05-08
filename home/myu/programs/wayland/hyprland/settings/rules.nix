@@ -1,7 +1,13 @@
 {
   wayland.windowManager.hyprland.settings = {
+    layerrule = [
+      "blur ,gtk4-layer-shell"
+    ];
+
+    workspace = [
+    ];
+
     windowrulev2 = [
-      # "opacity 0.92,  class:^(kitty)"
     ];
   };
 }
