@@ -17,6 +17,7 @@ in {
       "${modPath}/networking"
       "${modPath}/locale"
       "${modPath}/displayManager"
+      "${modPath}/services"
 
       ./hardware-configuration.nix
     ]
