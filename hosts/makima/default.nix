@@ -104,7 +104,14 @@ in {
     inter
   ];
 
-  hardware.framework.laptop13.audioEnhancement.enable = true;
+  hardware = {
+    framework.laptop13.audioEnhancement.enable = true;
+
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
+  };
 
   system.stateVersion = "24.11";
 }

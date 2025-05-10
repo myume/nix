@@ -5,6 +5,7 @@ import Network from "./modules/Network";
 import Audio from "./modules/Audio";
 import Brightness from "./modules/Brightness";
 import Tray from "./modules/Tray";
+import Bluetooth from "./modules/Bluetooth";
 
 const Start = () => <box></box>;
 
@@ -13,6 +14,7 @@ const Center = () => <box children={[<Time />]}></box>;
 const End = () => (
   <box>
     <Tray />
+    <Bluetooth />
     <Brightness />
     <Audio />
     <Network />

@@ -35,5 +35,6 @@
     obs-studio
 
     brightnessctl
+    bluez
   ];
 }

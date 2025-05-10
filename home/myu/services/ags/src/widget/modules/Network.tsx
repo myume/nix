@@ -1,21 +1,19 @@
 import AstalNetwork from "gi://AstalNetwork";
-import { bind } from "astal";
+import { bind, Binding } from "astal";
 
-function Wired() {
-  const network = AstalNetwork.get_default();
-  const wired = bind(network, "wired");
+type NetworkProps<T> = {
+  connection: Binding<T>;
+  visible: boolean | Binding<boolean>;
+};
 
+function Wired({ connection, visible }: NetworkProps<AstalNetwork.Wired>) {
   return (
     <box
-      child={wired.as(
+      visible={visible}
+      child={connection.as(
         (wired) =>
           wired && (
             <image
-              visible={bind(wired, "internet").as(
-                (internet) =>
-                  internet === AstalNetwork.Internet.CONNECTED ||
-                  internet === AstalNetwork.Internet.CONNECTING,
-              )}
               tooltipText={bind(wired, "internet").as((internet) =>
                 internet === AstalNetwork.Internet.CONNECTED
                   ? "Connected"
@@ -32,13 +30,11 @@ function Wired() {
   );
 }
 
-function Wifi() {
-  const network = AstalNetwork.get_default();
-  const wifi = bind(network, "wifi");
-
+function Wifi({ connection, visible }: NetworkProps<AstalNetwork.Wifi>) {
   return (
     <box
-      child={wifi.as(
+      visible={visible}
+      child={connection.as(
         (wifi) =>
           wifi && (
             <image
@@ -53,10 +49,22 @@ function Wifi() {
 }
 
 export default function Network() {
+  const network = AstalNetwork.get_default();
+  const wired = bind(network, "wired");
+  const wifi = bind(network, "wifi");
+  const hasWiredConnection = bind(network, "wired").as(
+    ({ internet }) =>
+      internet === AstalNetwork.Internet.CONNECTED ||
+      internet === AstalNetwork.Internet.CONNECTING,
+  );
+
   return (
     <box cssClasses={["Network"]}>
-      <Wired />
-      <Wifi />
+      <Wired connection={wired} visible={hasWiredConnection} />
+      <Wifi
+        connection={wifi}
+        visible={hasWiredConnection.as((visible) => !visible)}
+      />
     </box>
   );
 }
