@@ -1,9 +1,44 @@
-$fg-color: #cdd6f4;
-/* $bg-color: #1e1e2e; */
+$bg-color: #1e1e2e;
+$fg-color: #{"@window_fg_color"};
+$accent: #{"@accent_color"};
+
+$surface0: #313244;
+$surface1: #45475a;
 
 window.Bar {
-  background-color: rgb(17, 17, 27, 0.3);
+  background-color: rgba($bg-color, 0.3);
   color: $fg-color;
-  font-weight: bold;
   padding: 5px 15px;
+
+  font-family: "Inter";
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  button {
+    background: transparent;
+    min-height: 0;
+    outline: none;
+    padding: 0px;
+    margin: 0px;
+
+    :hover {
+      color: $accent;
+    }
+
+  }
+
+  menubutton {
+    :checked {
+      color: $accent;
+    }
+  }
 }
+
+/* .volumeSlider { */
+/*   margin-top: 0.8em; */
+/**/
+/*   contents { */
+/*     background: $surface0; */
+/*     border: solid $accent 1px; */
+/*   } */
+/* } */
