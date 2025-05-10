@@ -6,10 +6,11 @@ import Audio from "./modules/Audio";
 import Brightness from "./modules/Brightness";
 import Tray from "./modules/Tray";
 import Bluetooth from "./modules/Bluetooth";
+import Workspaces from "./modules/Workspaces";
 
-const Start = () => <box></box>;
+const Start = () => <box child={<Workspaces />}></box>;
 
-const Center = () => <box children={[<Time />]}></box>;
+const Center = () => <box child={<Time />}></box>;
 
 const End = () => (
   <box>
