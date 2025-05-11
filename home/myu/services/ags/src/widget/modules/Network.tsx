@@ -53,9 +53,10 @@ export default function Network() {
   const wired = bind(network, "wired");
   const wifi = bind(network, "wifi");
   const hasWiredConnection = bind(network, "wired").as(
-    ({ internet }) =>
-      internet === AstalNetwork.Internet.CONNECTED ||
-      internet === AstalNetwork.Internet.CONNECTING,
+    (wired) =>
+      wired &&
+      (wired.internet === AstalNetwork.Internet.CONNECTED ||
+        wired.internet === AstalNetwork.Internet.CONNECTING),
   );
 
   return (
