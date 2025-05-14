@@ -4,22 +4,24 @@ $accent: #{"@accent_color"};
 
 $surface0: #313244;
 $surface1: #45475a;
+$overlay0: #6c7086;
+$subtext1: #b8c0e0;
+$lavender: #b4befe;
+$blue: #89b4fa;
 
 window.Bar {
   background-color: rgba($bg-color, 0.3);
   color: $fg-color;
-  padding: 5px 15px;
+  padding: 4px 8px;
 
   font-family: "Inter";
   font-size: 0.9rem;
   font-weight: 600;
 
   button {
-    background: transparent;
     min-height: 0;
     outline: none;
     padding: 0px;
-    margin: 0px;
 
     :hover {
       color: $accent;
@@ -42,3 +44,30 @@ window.Bar {
 /*     border: solid $accent 1px; */
 /*   } */
 /* } */
+
+
+.section>* {
+  margin: 0px 2px;
+}
+
+
+
+.workspaces {
+  button {
+    margin: 0px 2px;
+
+    background: $surface1;
+    border-radius: 99px;
+
+    &:hover {
+      background: $lavender;
+    }
+
+    &.focused {
+      border-radius: 18px;
+      background: $blue;
+      padding: 0 8px;
+    }
+  }
+
+}

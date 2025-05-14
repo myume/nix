@@ -21,7 +21,7 @@ function Wired({ connection, visible }: NetworkProps<AstalNetwork.Wired>) {
                     ? "Connecting"
                     : "Disconnected",
               )}
-              cssClasses={["Wired"]}
+              cssClasses={["wired"]}
               iconName={bind(wired, "iconName")}
             />
           ),
@@ -60,7 +60,7 @@ export default function Network() {
   );
 
   return (
-    <box cssClasses={["Network"]}>
+    <box cssClasses={["network"]}>
       <Wired connection={wired} visible={hasWiredConnection} />
       <Wifi
         connection={wifi}

@@ -9,17 +9,19 @@ import Bluetooth from "./modules/Bluetooth";
 import Workspaces from "./modules/Workspaces";
 import Player from "./modules/Player";
 
-const Start = () => <box child={<Workspaces />}></box>;
+const Start = () => (
+  <box cssClasses={["start", "section"]} child={<Workspaces />}></box>
+);
 
 const Center = () => (
-  <box>
+  <box cssClasses={["center", "section"]}>
     <Time />
     <Player />
   </box>
 );
 
 const End = () => (
-  <box>
+  <box cssClasses={["end", "section"]}>
     <Tray />
     <Bluetooth />
     <Brightness />
