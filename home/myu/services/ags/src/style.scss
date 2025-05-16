@@ -9,31 +9,35 @@ $subtext1: #b8c0e0;
 $lavender: #b4befe;
 $blue: #89b4fa;
 
-window.Bar {
+.bar {
   background-color: rgba($bg-color, 0.3);
   color: $fg-color;
-  padding: 4px 8px;
+  padding: 4px;
 
   font-family: "Inter";
   font-size: 0.9rem;
   font-weight: 600;
 
   button {
-    min-height: 0;
     outline: none;
     padding: 0px;
+    min-height: 0;
+  }
+}
+
+.end,
+.center {
+  button {
+    background: transparent;
 
     :hover {
-      color: $accent;
-    }
-
-  }
-
-  menubutton {
-    :checked {
-      color: $accent;
+      color: $lavender;
     }
   }
+}
+
+.section>* {
+  margin: 0px 2px;
 }
 
 /* .volumeSlider { */
@@ -46,28 +50,30 @@ window.Bar {
 /* } */
 
 
-.section>* {
-  margin: 0px 2px;
-}
-
-
 
 .workspaces {
+  min-height: 2px;
+
   button {
     margin: 0px 2px;
+    min-width: 1rem;
 
-    background: $surface1;
-    border-radius: 99px;
+    background-color: $surface1;
+    border-radius: 2rem;
+    transition: 100ms linear;
 
     &:hover {
       background: $lavender;
     }
 
     &.focused {
-      border-radius: 18px;
       background: $blue;
-      padding: 0 8px;
+      min-width: 2rem;
     }
   }
+}
 
+.battery-percentage {
+  font-size: 0.7rem;
+  font-weight: lighter;
 }

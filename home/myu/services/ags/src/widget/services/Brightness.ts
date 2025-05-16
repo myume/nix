@@ -19,6 +19,19 @@ export default class Brightness extends GObject.Object {
 
   #screenMax = get("max");
   #screen = get("get") / (get("max") || 1);
+  #icon_name = "brightness-symbolic";
+
+  @property(String)
+  get icon_name() {
+    return this.#icon_name;
+  }
+
+  set icon_name(value) {
+    if (this.#icon_name !== value) {
+      this.#icon_name = value;
+      this.notify("icon_name");
+    }
+  }
 
   @property(Number)
   get screen() {
@@ -43,7 +56,15 @@ export default class Brightness extends GObject.Object {
     monitorFile(`/sys/class/backlight/${screen}/brightness`, async (f) => {
       const v = await readFileAsync(f);
       this.#screen = Number(v) / this.#screenMax;
+      if (this.#screen >= 0.8) {
+        this.icon_name = "brightness-high-symbolic";
+      } else if (this.#screen >= 0.5) {
+        this.icon_name = "brightness-medium-symbolic";
+      } else {
+        this.icon_name = "brightness-low-symbolic";
+      }
       this.notify("screen");
+      this.notify("icon_name");
     });
   }
 }
