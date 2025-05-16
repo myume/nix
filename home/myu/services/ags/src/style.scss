@@ -68,12 +68,7 @@ $blue: #89b4fa;
 
     &.focused {
       background: $blue;
-      min-width: 2rem;
+      min-width: 2.2rem;
     }
   }
-}
-
-.battery-percentage {
-  font-size: 0.7rem;
-  font-weight: lighter;
 }

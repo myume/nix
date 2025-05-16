@@ -1,16 +1,35 @@
 import AstalBattery from "gi://AstalBattery";
 import { bind, derive } from "astal";
 
+const secondsToTimeStamp = (seconds: number) => {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+
+  return `${h}h ${m}m`;
+};
+
 export default function Battery() {
   const battery = AstalBattery.get_default();
-  const percentage = bind(battery, "percentage");
-  const charging = bind(battery, "state").as(
-    (state) => state === AstalBattery.State.CHARGING,
+  const percentage = bind(battery, "percentage").as((percentage) =>
+    Math.round(percentage * 100),
   );
+
+  const timeToEmpty = bind(battery, "timeToEmpty").as(secondsToTimeStamp);
+  const timeToFull = bind(battery, "timeToFull").as(secondsToTimeStamp);
+
+  const charging = bind(battery, "charging");
 
   return (
     <button
-      tooltipText={percentage.as((p) => `Battery on ${Math.round(p * 100)}%`)}
+      tooltipText={derive([percentage, timeToEmpty, timeToFull, charging])().as(
+        ([percentage, timeToEmpty, timeToFull, charging]) =>
+          `Battery on ${percentage}%\n` +
+          (!charging
+            ? `${timeToEmpty} remaining`
+            : percentage == 100
+              ? "Fully Charged"
+              : `${timeToFull} until charged`),
+      )}
     >
       <box>
         <image
@@ -30,7 +49,7 @@ export default function Battery() {
         <label
           cssClasses={["battery-percentage"]}
           visible={true}
-          label={percentage.as((p) => `${Math.round(p * 100)}%`)}
+          label={percentage.as((percentage) => `${percentage}%`)}
         />
       </box>
     </button>
