@@ -4,6 +4,7 @@ import Bar from "./widget/Bar";
 
 App.start({
   css: style,
+  iconTheme: "Papirus-Dark",
   main() {
     App.get_monitors().map(Bar);
   },
