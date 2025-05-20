@@ -5,7 +5,11 @@ export default function AudioOutput() {
   const { defaultSpeaker: speaker } = AstalWp.get_default()!;
 
   return (
-    <menubutton>
+    <menubutton
+      tooltipText={bind(speaker, "volume").as(
+        (volume) => `Volume at ${Math.round(volume * 100)}%`,
+      )}
+    >
       <image iconName={bind(speaker, "volumeIcon")} />
       <popover
         cssClasses={["volumeSlider"]}

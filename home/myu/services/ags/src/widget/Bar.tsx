@@ -24,9 +24,9 @@ const End = () => (
   <box cssClasses={["end", "section"]}>
     <Tray />
     <Bluetooth />
+    <Network />
     <Brightness />
     <Audio />
-    <Network />
     <Battery />
   </box>
 );

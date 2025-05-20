@@ -11,7 +11,7 @@ const secondsToTimeStamp = (seconds: number) => {
 export default function Battery() {
   const battery = AstalBattery.get_default();
   const percentage = bind(battery, "percentage").as((percentage) =>
-    Math.round(percentage * 100),
+    Math.floor(percentage * 100),
   );
 
   const timeToEmpty = bind(battery, "timeToEmpty").as(secondsToTimeStamp);
