@@ -86,5 +86,10 @@ in {
 
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
     ];
+
+    bindle = [
+      ", XF86MonBrightnessDown, exec, brightnessctl -q set 2%-"
+      ", XF86MonBrightnessUp, exec, brightnessctl -q set +2%"
+    ];
   };
 }

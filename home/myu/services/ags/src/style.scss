@@ -1,9 +1,74 @@
-$fg-color: #cdd6f4;
-/* $bg-color: #1e1e2e; */
+$bg-color: #1e1e2e;
+$fg-color: #{"@window_fg_color"};
+$accent: #{"@accent_color"};
 
-window.Bar {
-  background-color: rgb(17, 17, 27, 0.3);
+$surface0: #313244;
+$surface1: #45475a;
+$overlay0: #6c7086;
+$subtext1: #b8c0e0;
+$lavender: #b4befe;
+$blue: #89b4fa;
+
+.bar {
+  background-color: rgba($bg-color, 0.3);
   color: $fg-color;
-  font-weight: bold;
-  padding: 5px 15px;
+  padding: 4px;
+
+  font-family: "Inter";
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  button {
+    outline: none;
+    padding: 0px;
+    min-height: 0;
+  }
+}
+
+.end,
+.center {
+  button {
+    background: transparent;
+
+    :hover {
+      color: $lavender;
+    }
+  }
+}
+
+.section>* {
+  margin: 0px 2px;
+}
+
+/* .volumeSlider { */
+/*   margin-top: 0.8em; */
+/**/
+/*   contents { */
+/*     background: $surface0; */
+/*     border: solid $accent 1px; */
+/*   } */
+/* } */
+
+
+
+.workspaces {
+  min-height: 2px;
+
+  button {
+    margin: 0px 2px;
+    min-width: 1rem;
+
+    background-color: $surface1;
+    border-radius: 2rem;
+    transition: 100ms linear;
+
+    &:hover {
+      background: $lavender;
+    }
+
+    &.focused {
+      background: $blue;
+      min-width: 2.2rem;
+    }
+  }
 }

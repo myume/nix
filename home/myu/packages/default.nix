@@ -2,7 +2,10 @@
   home.packages = with pkgs; [
     fastfetch
     rofi-wayland-unwrapped
+
+    # desktop applications
     gimp3
+    discord
 
     # archives
     zip
@@ -17,6 +20,7 @@
     fzf # A command-line fuzzy finder
     fd
     ghostscript # render pdf
+    tldr
 
     # misc
     file
@@ -29,5 +33,8 @@
 
     silicon # pretty screenshots of code
     obs-studio
+
+    brightnessctl
+    bluez
   ];
 }
