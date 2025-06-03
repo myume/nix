@@ -23,15 +23,17 @@ const Center = () => (
 const End = () => (
   <box cssClasses={["end", "section"]}>
     <Tray />
-    <Bluetooth />
-    <Network />
-    <Brightness />
-    <Audio />
-    <Battery />
+    <box>
+      <Bluetooth />
+      <Network />
+      <Brightness />
+      <Audio />
+      <Battery />
+    </box>
   </box>
 );
 
-export default function Bar(gdkmonitor: Gdk.Monitor) {
+export function Bar(gdkmonitor: Gdk.Monitor) {
   const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
 
   return (
