@@ -38,14 +38,19 @@
       background-color: colors.$surface1;
       border-radius: 2rem;
 
-      &:hover {
+      &.populated {
         background: colors.$lavender;
+      }
+
+      &:hover {
+        background: colors.$sky;
       }
 
       &.focused {
         background: colors.$blue;
         min-width: 2.2rem;
       }
+
     }
   }
 
