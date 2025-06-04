@@ -1,0 +1,59 @@
+@use "./mixins";
+@use "./colors";
+
+.bar {
+  color: colors.$fg-color;
+  padding: 4px 8px 0px;
+
+  font-family: "Inter";
+  font-size: 12px;
+  font-weight: 600;
+
+  button {
+    outline: none;
+    padding: 0px;
+  }
+
+  .section {
+    background: colors.$transparent-bg;
+    border-radius: 2rem;
+    padding: 6px;
+
+    button {
+      background: transparent;
+
+      :hover {
+        color: colors.$lavender;
+      }
+    }
+  }
+
+  .workspaces {
+    padding: 4px;
+
+    button {
+      margin: 0px 4px;
+      min-width: 0.5rem;
+
+      background-color: colors.$surface1;
+      border-radius: 2rem;
+
+      &:hover {
+        background: colors.$lavender;
+      }
+
+      &.focused {
+        background: colors.$blue;
+        min-width: 2.2rem;
+      }
+    }
+  }
+
+  .center {
+    padding: 2px 10px;
+  }
+
+  .status {
+    margin: 0px 1px;
+  }
+}
