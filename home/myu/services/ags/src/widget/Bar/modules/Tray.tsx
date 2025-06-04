@@ -5,7 +5,7 @@ export default function Tray() {
   const tray = AstalTray.get_default();
 
   return (
-    <box cssClasses={["Tray"]}>
+    <box cssClasses={["Tray"]} spacing={4}>
       {bind(tray, "items").as((items) =>
         items.map((item) => (
           <menubutton
