@@ -1,13 +1,9 @@
 import { App, Astal, Gdk } from "astal/gtk4";
 import Time from "./modules/Time";
-import Battery from "./modules/Battery";
-import Network from "./modules/Network";
-import Audio from "./modules/Audio";
-import Brightness from "./modules/Brightness";
 import Tray from "./modules/Tray";
-import Bluetooth from "./modules/Bluetooth";
 import Workspaces from "./modules/Workspaces";
 import Player from "./modules/Player";
+import Status from "./Status";
 
 const Start = () => (
   <box cssClasses={["start", "section"]} child={<Workspaces />}></box>
@@ -23,13 +19,7 @@ const Center = () => (
 const End = () => (
   <box cssClasses={["end", "section"]}>
     <Tray />
-    <box>
-      <Bluetooth />
-      <Network />
-      <Brightness />
-      <Audio />
-      <Battery />
-    </box>
+    <Status />
   </box>
 );
 
@@ -39,9 +29,12 @@ export function Bar(gdkmonitor: Gdk.Monitor) {
   return (
     <window
       visible
+      namespace={"top-bar"}
       cssClasses={["bar"]}
-      gdkmonitor={gdkmonitor}
+      layer={Astal.Layer.TOP}
       exclusivity={Astal.Exclusivity.EXCLUSIVE}
+      heightRequest={12}
+      gdkmonitor={gdkmonitor}
       anchor={TOP | RIGHT | LEFT}
       application={App}
       child={

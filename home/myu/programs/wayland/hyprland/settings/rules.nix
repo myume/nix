@@ -1,7 +1,8 @@
 {
   wayland.windowManager.hyprland.settings = {
     layerrule = [
-      "blur ,gtk4-layer-shell"
+      "blur ,top-bar"
+      "ignorealpha .3, top-bar"
     ];
 
     workspace = [
