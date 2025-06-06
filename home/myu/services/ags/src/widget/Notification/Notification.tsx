@@ -4,6 +4,7 @@ import AstalNotifd from "gi://AstalNotifd";
 import AstalApps from "gi://AstalApps";
 import Pango from "gi://Pango?version=1.0";
 import { toTitleCase } from "../../utils/util";
+import win32 from "gi://win32?version=1.0";
 
 const apps = new AstalApps.Apps();
 
@@ -18,11 +19,26 @@ const urgencyToString = (urgency: AstalNotifd.Urgency) => {
   }
 };
 
-export default function Notification(notification: AstalNotifd.Notification) {
+type Props = {
+  notification: AstalNotifd.Notification;
+};
+
+export default function Notification({ notification }: Props) {
   let appIcon = notification.appIcon;
   if (appIcon === "") {
     appIcon = apps.exact_query(notification.appName)[0]?.iconName ?? appIcon;
   }
+
+  const widthChars = 20;
+  const actions = bind(notification, "actions").as((actions) =>
+    actions.map((action) => (
+      <button
+        cssClasses={["action", action.label]}
+        label={action.label}
+        onClicked={() => notification.invoke(action.id)}
+      />
+    )),
+  );
 
   return (
     <box
@@ -34,7 +50,7 @@ export default function Notification(notification: AstalNotifd.Notification) {
     >
       <box cssClasses={["notification-header"]} hexpand>
         <box halign={Gtk.Align.START} hexpand spacing={4}>
-          <image iconName={appIcon} />
+          <image visible={appIcon !== ""} iconName={appIcon} />
           <label
             label={bind(notification, "appName").as(toTitleCase)}
             xalign={0}
@@ -65,31 +81,39 @@ export default function Notification(notification: AstalNotifd.Notification) {
         </box>
       </box>
       <box cssClasses={["separator"]} />
-      <box
-        orientation={Gtk.Orientation.VERTICAL}
-        cssClasses={["notificiation-content"]}
-        hexpand
-      >
-        <label
-          cssClasses={["summary"]}
-          label={bind(notification, "summary")}
-          xalign={0}
-          useMarkup
-          widthChars={40}
-          maxWidthChars={40}
-          ellipsize={Pango.EllipsizeMode.END}
+      <box cssClasses={["notificiation-content"]} spacing={8} hexpand>
+        <image
+          visible={bind(notification, "image").as(
+            (image) => image !== null && image !== "",
+          )}
+          overflow={Gtk.Overflow.HIDDEN}
+          cssClasses={["notification-image"]}
+          file={bind(notification, "image")}
+          pixelSize={64}
         />
-        <label
-          cssClasses={["body"]}
-          label={bind(notification, "body")}
-          xalign={0}
-          useMarkup
-          wrap
-          wrapMode={Pango.WrapMode.WORD_CHAR}
-          widthChars={40}
-          maxWidthChars={40}
-        />
+        <box orientation={Gtk.Orientation.VERTICAL}>
+          <label
+            cssClasses={["summary"]}
+            label={bind(notification, "summary")}
+            xalign={0}
+            useMarkup
+            ellipsize={Pango.EllipsizeMode.END}
+            widthChars={widthChars}
+            maxWidthChars={widthChars}
+          />
+          <label
+            cssClasses={["body"]}
+            label={bind(notification, "body")}
+            xalign={0}
+            useMarkup
+            wrap
+            wrapMode={Pango.WrapMode.WORD_CHAR}
+            widthChars={widthChars}
+            maxWidthChars={widthChars}
+          />
+        </box>
       </box>
+      <box visible={actions.as((actions) => actions.length > 0)}>{actions}</box>
     </box>
   );
 }

@@ -21,12 +21,12 @@
   }
 
   .summary {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
   }
 
   .body {
-    font-size: 12px;
+    font-size: 14px;
     margin-top: 4px;
     font-weight: 400;
   }
@@ -39,5 +39,9 @@
     :hover {
       color: colors.$red;
     }
+  }
+
+  .notification-image {
+    border-radius: 6px;
   }
 }
