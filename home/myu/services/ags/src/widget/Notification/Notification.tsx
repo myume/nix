@@ -63,7 +63,9 @@ export default function Notification(notification: AstalNotifd.Notification) {
           label={bind(notification, "summary")}
           xalign={0}
           useMarkup
-          wrap
+          widthChars={40}
+          maxWidthChars={40}
+          ellipsize={Pango.EllipsizeMode.END}
         />
         <label
           cssClasses={["body"]}
