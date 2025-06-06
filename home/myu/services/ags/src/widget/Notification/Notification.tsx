@@ -1,9 +1,9 @@
-import { bind } from "astal";
+import { bind, GLib } from "astal";
 import { Gtk } from "astal/gtk4";
 import AstalNotifd from "gi://AstalNotifd";
 import AstalApps from "gi://AstalApps";
 import Pango from "gi://Pango?version=1.0";
-import { capitalize } from "../../utils/util";
+import { toTitleCase } from "../../utils/util";
 
 export default function Notification(notification: AstalNotifd.Notification) {
   const apps = new AstalApps.Apps();
@@ -25,23 +25,30 @@ export default function Notification(notification: AstalNotifd.Notification) {
         <box halign={Gtk.Align.START} hexpand spacing={4}>
           <image iconName={appIcon} />
           <label
-            label={bind(notification, "appName").as(capitalize)}
+            label={bind(notification, "appName").as(toTitleCase)}
             xalign={0}
           />
         </box>
-        <box halign={Gtk.Align.END}>
+        <box halign={Gtk.Align.END} spacing={2}>
           <label
-            label={bind(notification, "time").as((time) =>
-              new Date(time).toLocaleString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: false,
-              }),
-            )}
+            label={bind(notification, "time").as((time) => {
+              const datetime = GLib.DateTime.new_from_unix_local(time);
+              let format = "%H:%M";
+              if (datetime.compare(GLib.DateTime.new_now_local()) === 1) {
+                format = "%d/%m " + format;
+              }
+
+              return datetime.format(format) ?? "";
+            })}
           />
           <button
             onClicked={() => notification.dismiss()}
-            child={<image iconName={"window-close-symbolic"} />}
+            child={
+              <image
+                cssClasses={["close-icon"]}
+                iconName={"window-close-symbolic"}
+              />
+            }
           />
         </box>
       </box>

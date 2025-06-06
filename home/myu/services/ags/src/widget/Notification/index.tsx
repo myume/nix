@@ -1,6 +1,7 @@
 import { bind } from "astal";
 import { App, Astal, Gdk, Gtk } from "astal/gtk4";
 import AstalNotifd from "gi://AstalNotifd";
+import AstalApps from "gi://AstalApps";
 import Notification from "./Notification";
 
 export function Notifications(gdkmonitor: Gdk.Monitor) {
@@ -8,6 +9,7 @@ export function Notifications(gdkmonitor: Gdk.Monitor) {
 
   const notifd = AstalNotifd.get_default();
   const notifications = bind(notifd, "notifications");
+  const apps = new AstalApps.Apps();
 
   return (
     <window

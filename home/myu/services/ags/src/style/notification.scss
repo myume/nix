@@ -21,13 +21,17 @@
   }
 
   .summary {
-    font-size: 1rem;
+    font-size: 14px;
     font-weight: 700;
   }
 
   .body {
-    font-size: 1rem;
+    font-size: 12px;
     margin-top: 4px;
     font-weight: 400;
+  }
+
+  .close-icon {
+    margin: 0px 0px 2px;
   }
 }
