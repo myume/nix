@@ -34,4 +34,10 @@
   .close-icon {
     margin: 0px 0px 2px;
   }
+
+  .close-button {
+    :hover {
+      color: colors.$red;
+    }
+  }
 }

@@ -7,6 +7,17 @@ import { toTitleCase } from "../../utils/util";
 
 const apps = new AstalApps.Apps();
 
+const urgencyToString = (urgency: AstalNotifd.Urgency) => {
+  switch (urgency) {
+    case AstalNotifd.Urgency.LOW:
+      return "low";
+    case AstalNotifd.Urgency.NORMAL:
+      return "normal";
+    case AstalNotifd.Urgency.CRITICAL:
+      return "critical";
+  }
+};
+
 export default function Notification(notification: AstalNotifd.Notification) {
   let appIcon = notification.appIcon;
   if (appIcon === "") {
@@ -15,7 +26,7 @@ export default function Notification(notification: AstalNotifd.Notification) {
 
   return (
     <box
-      cssClasses={["notification"]}
+      cssClasses={["notification", urgencyToString(notification.urgency)]}
       orientation={Gtk.Orientation.VERTICAL}
       widthRequest={256}
       spacing={8}
@@ -42,6 +53,7 @@ export default function Notification(notification: AstalNotifd.Notification) {
             })}
           />
           <button
+            cssClasses={["close-button"]}
             onClicked={() => notification.dismiss()}
             child={
               <image
