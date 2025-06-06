@@ -5,9 +5,9 @@ import AstalApps from "gi://AstalApps";
 import Pango from "gi://Pango?version=1.0";
 import { toTitleCase } from "../../utils/util";
 
-export default function Notification(notification: AstalNotifd.Notification) {
-  const apps = new AstalApps.Apps();
+const apps = new AstalApps.Apps();
 
+export default function Notification(notification: AstalNotifd.Notification) {
   let appIcon = notification.appIcon;
   if (appIcon === "") {
     appIcon = apps.exact_query(notification.appName)[0]?.iconName ?? appIcon;
