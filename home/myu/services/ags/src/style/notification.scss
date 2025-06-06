@@ -44,4 +44,22 @@
   .notification-image {
     border-radius: 6px;
   }
+
+  .action {
+    color: colors.$text;
+
+    border-radius: 4px;
+
+    background: colors.$surface0;
+    padding: 6px;
+    font-size: 12px;
+
+    & label {
+      font-weight: 600;
+    }
+
+    &:hover {
+      background: colors.$surface1;
+    }
+  }
 }

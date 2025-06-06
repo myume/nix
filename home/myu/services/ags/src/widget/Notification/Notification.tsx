@@ -4,7 +4,6 @@ import AstalNotifd from "gi://AstalNotifd";
 import AstalApps from "gi://AstalApps";
 import Pango from "gi://Pango?version=1.0";
 import { toTitleCase } from "../../utils/util";
-import win32 from "gi://win32?version=1.0";
 
 const apps = new AstalApps.Apps();
 
@@ -35,7 +34,10 @@ export default function Notification({ notification }: Props) {
       <button
         cssClasses={["action", action.label]}
         label={action.label}
-        onClicked={() => notification.invoke(action.id)}
+        onClicked={() => {
+          notification.invoke(action.id);
+          notification.dismiss();
+        }}
       />
     )),
   );
@@ -113,7 +115,13 @@ export default function Notification({ notification }: Props) {
           />
         </box>
       </box>
-      <box visible={actions.as((actions) => actions.length > 0)}>{actions}</box>
+      <box
+        cssClasses={["actions"]}
+        visible={actions.as((actions) => actions.length > 0)}
+        spacing={4}
+      >
+        {actions}
+      </box>
     </box>
   );
 }
