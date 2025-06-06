@@ -1,5 +1,6 @@
 @use "./style/mixins";
 @use "./style/bar";
+@use "./style/notification";
 
 * {
   @include mixins.reset-props;

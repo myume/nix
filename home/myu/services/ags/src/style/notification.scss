@@ -1,0 +1,33 @@
+@use "./colors";
+
+.notification {
+  color: colors.$fg-color;
+  background: colors.$bg-color;
+  padding: 12px;
+
+  border-radius: 12px;
+
+  min-width: 200px;
+
+  .notification-header {
+    font-weight: 300;
+    font-size: 10px
+  }
+
+  .separator {
+    min-width: 10px;
+    min-height: 1px;
+    background: rgba(colors.$text, 0.3);
+  }
+
+  .summary {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .body {
+    font-size: 1rem;
+    margin-top: 4px;
+    font-weight: 400;
+  }
+}

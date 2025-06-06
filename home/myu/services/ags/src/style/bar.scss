@@ -15,7 +15,7 @@
   }
 
   .section {
-    background: colors.$transparent-bg;
+    background: colors.$bg-transparent;
     border-radius: 2rem;
     padding: 6px;
 
@@ -29,7 +29,7 @@
   }
 
   .workspaces {
-    padding: 4px;
+    padding: 4.8px;
 
     button {
       margin: 0px 4px;
@@ -48,14 +48,18 @@
 
       &.focused {
         background: colors.$blue;
-        min-width: 2.2rem;
+        min-width: 2rem;
       }
 
     }
   }
 
   .center {
-    padding: 2px 10px;
+    padding: 6px 16px;
+  }
+
+  .end {
+    padding: 6px 10px;
   }
 
   .status {

@@ -1,10 +1,11 @@
 $bg-color: #1e1e2e;
-$transparent-bg: rgba($bg-color, 0.55);
+$bg-transparent: rgba($bg-color, 0.55);
 $fg-color: #{"@window_fg_color"};
 $accent: #{"@accent_color"};
 
 $surface0: #313244;
 $surface1: #45475a;
+$surface2: #585b70;
 $overlay0: #6c7086;
 $subtext1: #b8c0e0;
 $subtext2: #a6adc8;
@@ -12,3 +13,5 @@ $lavender: #b4befe;
 $blue: #89b4fa;
 $teal: #94e2d5;
 $sky: #89dceb;
+
+$text: #cdd6f4;
