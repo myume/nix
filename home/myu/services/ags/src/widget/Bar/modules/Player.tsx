@@ -1,6 +1,7 @@
 import { bind, Gio, Variable } from "astal";
 import AstalMpris from "gi://AstalMpris";
 import AstalApps from "gi://AstalApps";
+import { Gtk } from "astal/gtk4";
 
 const apps = new AstalApps.Apps();
 
@@ -19,7 +20,10 @@ function PlayerWidget(player: AstalMpris.Player) {
       />
       <label label={bind(player, "title").as((title) => title ?? "unknown")} />
       <box visible={hasArtist} cssClasses={["separator"]} />
-      <label visible={hasArtist} label={artist} />
+      <label
+        visible={hasArtist}
+        label={artist.as((artist) => artist ?? "unknown")}
+      />
     </box>
   );
 }
@@ -59,9 +63,11 @@ export default function Player() {
   const bus = Gio.DBus.session;
 
   return (
-    <box
+    <revealer
       cssClasses={["player-container"]}
-      visible={players.as((ps) => ps.length > 0)}
+      transitionDuration={1000}
+      revealChild={players.as((ps) => ps.length > 0)}
+      transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}
       child={players.as((ps) => {
         if (ps.length > 0) {
           const player = Variable(ps[0]);
@@ -72,6 +78,9 @@ export default function Player() {
               setup={() => {
                 // wanted to get the widget to grab the most recently used/active player
                 // instead of just the first one in the list.
+
+                if (signalId) return;
+
                 signalId = bus.signal_subscribe(
                   null, // sender (null = any)
                   "org.freedesktop.DBus.Properties", // interface

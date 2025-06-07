@@ -61,7 +61,10 @@
 .player-container {
   background: colors.$bg-secondary;
   border-radius: 2rem;
-  padding: 2px 10px;
+
+  .player {
+    padding: 2px 10px;
+  }
 
   &:hover,
   &:checked {
