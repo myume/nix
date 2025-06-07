@@ -1,12 +1,16 @@
 import { bind, Gio, Variable } from "astal";
-import Mpris from "gi://AstalMpris";
+import AstalMpris from "gi://AstalMpris";
 import AstalApps from "gi://AstalApps";
 
 const apps = new AstalApps.Apps();
 
-function PlayerWidget(player: Mpris.Player) {
+function PlayerWidget(player: AstalMpris.Player) {
+  const artist = bind(player, "artist");
+  const hasArtist = artist.as(
+    (artist) => artist !== null && artist !== undefined && artist !== "",
+  );
   return (
-    <box spacing={6}>
+    <box cssClasses={["player"]} spacing={6}>
       <image
         cssClasses={["icon"]}
         iconName={bind(player, "entry").as(
@@ -14,32 +18,60 @@ function PlayerWidget(player: Mpris.Player) {
         )}
       />
       <label label={bind(player, "title").as((title) => title ?? "unknown")} />
-      <box cssClasses={["separator"]} />
-      <label
-        label={bind(player, "artist").as((artist) => artist ?? "unknown")}
+      <box visible={hasArtist} cssClasses={["separator"]} />
+      <label visible={hasArtist} label={artist} />
+    </box>
+  );
+}
+
+function PlayerControls(player: AstalMpris.Player) {
+  return (
+    <box cssClasses={["player-controls"]} spacing={4}>
+      <button
+        tooltipText={"Previous"}
+        iconName={"media-skip-backward-symbolic"}
+        onClicked={() => player.canGoPrevious && player.previous()}
+      />
+      <button
+        tooltipText={bind(player, "playback_status").as((status) =>
+          status === AstalMpris.PlaybackStatus.PLAYING ? "Pause" : "Play",
+        )}
+        iconName={bind(player, "playback_status").as((status) =>
+          status === AstalMpris.PlaybackStatus.PLAYING
+            ? "media-playback-pause-symbolic"
+            : "media-playback-start-symbolic",
+        )}
+        onClicked={() => player.play_pause()}
+      />
+      <button
+        tooltipText={"Next"}
+        iconName={"media-skip-forward-symbolic"}
+        onClicked={() => player.canGoNext && player.next()}
       />
     </box>
   );
 }
 
 export default function Player() {
-  const mpris = Mpris.get_default();
+  const mpris = AstalMpris.get_default();
   const players = bind(mpris, "players");
 
   const bus = Gio.DBus.session;
 
   return (
     <box
-      cssClasses={["player"]}
+      cssClasses={["player-container"]}
       visible={players.as((ps) => ps.length > 0)}
       child={players.as((ps) => {
         if (ps.length > 0) {
-          let player = Variable(ps[0]);
+          const player = Variable(ps[0]);
           let signalId: number | null = null;
 
           return (
             <box
               setup={() => {
+                // wanted to get the widget to grab the most recently used/active player
+                // instead of just the first one in the list.
                 signalId = bus.signal_subscribe(
                   null, // sender (null = any)
                   "org.freedesktop.DBus.Properties", // interface
@@ -62,7 +94,7 @@ export default function Player() {
                         const activePlayers = ps.filter(
                           (player) =>
                             player.playbackStatus ===
-                            Mpris.PlaybackStatus.PLAYING,
+                            AstalMpris.PlaybackStatus.PLAYING,
                         );
                         player.set(activePlayers[0] ?? ps[0]);
                       }
@@ -74,7 +106,7 @@ export default function Player() {
                 signalId !== null && bus.signal_unsubscribe(signalId)
               }
               child={player(PlayerWidget)}
-            ></box>
+            />
           );
         }
 
@@ -83,18 +115,3 @@ export default function Player() {
     />
   );
 }
-
-// <box
-//   cssClasses={["cover"]}
-//   valign={Gtk.Align.CENTER}
-//   setup={(self) => {
-//     self.set_baseline_position;
-//   }}
-//   child={
-//     <image
-//       visible={false}
-//       pixelSize={64}
-//       file={bind(player, "coverArt")}
-//     />
-//   }
-// />

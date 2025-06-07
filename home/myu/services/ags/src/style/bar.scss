@@ -9,24 +9,12 @@
   font-size: 12px;
   font-weight: 600;
 
-  button {
-    outline: none;
-    padding: 0px;
-  }
-
   .section {
     background: colors.$bg-transparent;
     border-radius: 2rem;
     padding: 6px;
-
-    button {
-      background: transparent;
-
-      :hover {
-        color: colors.$lavender;
-      }
-    }
   }
+
 
   .workspaces {
     padding: 4px;
@@ -70,19 +58,19 @@
   }
 }
 
-.player {
-  padding: 2px 8px;
-  color: colors.$bg-color;
-  background: colors.$blue;
+.player-container {
+  background: colors.$bg-secondary;
   border-radius: 2rem;
+  padding: 2px 10px;
+
+  &:hover,
+  &:checked {
+    background: colors.$bg-color;
+  }
 
   .separator {
     min-width: 1px;
     min-height: 10px;
-    background: rgba(colors.$bg-color, 0.6);
-  }
-
-  .icon {
-    color: colors.$bg-color;
+    background: rgba(colors.$text, 0.4);
   }
 }
