@@ -9,7 +9,7 @@ export default function Time({ format = "%a %b %d  %H:%M" }) {
   );
 
   return (
-    <menubutton>
+    <menubutton cssClasses={["time"]}>
       <label onDestroy={() => time.drop()} label={time()} />
       <popover>
         <Gtk.Calendar />

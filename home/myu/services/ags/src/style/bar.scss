@@ -29,10 +29,10 @@
   }
 
   .workspaces {
-    padding: 0px 6px;
+    padding: 4px;
 
     button {
-      margin: 4px 3px;
+      margin: 4px;
       min-width: 8px;
       min-height: 8px;
 
@@ -56,7 +56,9 @@
   }
 
   .center {
-    padding: 6px 16px;
+    .time {
+      padding: 0px 8px;
+    }
   }
 
   .end {
@@ -65,5 +67,22 @@
 
   .status {
     margin: 0px 1px;
+  }
+}
+
+.player {
+  padding: 2px 8px;
+  color: colors.$bg-color;
+  background: colors.$blue;
+  border-radius: 2rem;
+
+  .separator {
+    min-width: 1px;
+    min-height: 10px;
+    background: rgba(colors.$bg-color, 0.6);
+  }
+
+  .icon {
+    color: colors.$bg-color;
   }
 }
