@@ -1,8 +1,41 @@
-import { Variable } from "astal";
+import { Binding, Variable } from "astal";
 import { App, Astal, Gdk, Gtk } from "astal/gtk4";
 import AstalApps from "gi://AstalApps";
+import { ScrolledWindow } from "../Gtk";
 
 const hideLauncher = () => App.get_window("launcher")?.hide();
+
+const SearchResults = ({
+  searchResults,
+  selected,
+}: {
+  searchResults: Binding<AstalApps.Application[]>;
+  selected: Variable<number>;
+}) => {
+  return (
+    <ScrolledWindow
+      cssClasses={["app-results"]}
+      heightRequest={400}
+      maxContentHeight={400}
+      hscrollbarPolicy={Gtk.PolicyType.NEVER}
+      vscrollbarPolicy={Gtk.PolicyType.AUTOMATIC}
+      kineticScrolling
+      overlayScrolling
+      propagateNaturalHeight
+      child={searchResults.as((results) =>
+        results.length > 0 ? (
+          <box orientation={Gtk.Orientation.VERTICAL}>
+            {results.map((app, i) => (
+              <AppItem selected={selected} app={app} index={i} />
+            ))}
+          </box>
+        ) : (
+          <label>No Applications Found</label>
+        ),
+      )}
+    />
+  );
+};
 
 const AppItem = ({
   selected,
@@ -12,47 +45,48 @@ const AppItem = ({
   selected: Variable<number>;
   app: AstalApps.Application;
   index: number;
-}) => (
-  <button
-    onClicked={() => {
-      app.launch();
-      hideLauncher();
-    }}
-    child={
-      <box
-        spacing={8}
-        cssClasses={selected((selected) => {
-          const classes = ["app-item"];
-          if (selected === index) {
-            classes.push("selected");
-          }
-          return classes;
-        })}
-      >
-        <image pixelSize={36} iconName={app.iconName} />
-        <box orientation={Gtk.Orientation.VERTICAL}>
-          <label
-            cssClasses={["app-title"]}
-            label={app.name}
-            xalign={0}
-            vexpand
-          />
-          <label
-            cssClasses={["app-desc"]}
-            visible={
-              app.description !== null &&
-              app.description !== undefined &&
-              app.description !== ""
-            }
-            label={app.description}
-            xalign={0}
-          />
-        </box>
-      </box>
-    }
-  />
-);
+}) => {
+  const hasDescription =
+    app.description !== null &&
+    app.description !== undefined &&
+    app.description !== "";
 
+  return (
+    <button
+      onClicked={() => {
+        app.launch();
+        hideLauncher();
+      }}
+      onHoverEnter={() => selected.set(index)}
+      cssClasses={selected((selected) => {
+        const classes = ["app-item"];
+        if (selected === index) {
+          classes.push("selected");
+        }
+        return classes;
+      })}
+      child={
+        <box spacing={8}>
+          <image pixelSize={36} iconName={app.iconName} />
+          <box orientation={Gtk.Orientation.VERTICAL} heightRequest={40}>
+            <label
+              cssClasses={["app-title"]}
+              label={app.name}
+              xalign={0}
+              heightRequest={!hasDescription ? 40 : -1}
+            />
+            <label
+              cssClasses={["app-desc"]}
+              visible={hasDescription}
+              label={app.description}
+              xalign={0}
+            />
+          </box>
+        </box>
+      }
+    />
+  );
+};
 export function Launcher(gdkmonitor: Gdk.Monitor) {
   const apps = new AstalApps.Apps();
 
@@ -77,8 +111,8 @@ export function Launcher(gdkmonitor: Gdk.Monitor) {
       application={App}
       keymode={Astal.Keymode.ON_DEMAND}
       onShow={() => {
-        searchString.set("");
         selected.set(0);
+        searchString.set("");
         entryRef?.set({ text: "" });
         entryRef?.grab_focus();
       }}
@@ -115,7 +149,7 @@ export function Launcher(gdkmonitor: Gdk.Monitor) {
           cssClasses={["launcher"]}
           valign={Gtk.Align.CENTER}
           orientation={Gtk.Orientation.VERTICAL}
-          widthRequest={600}
+          widthRequest={700}
           spacing={12}
         >
           <entry
@@ -135,21 +169,8 @@ export function Launcher(gdkmonitor: Gdk.Monitor) {
               hideLauncher();
             }}
           />
-          <box
-            cssClasses={["separator"]}
-            visible={searchResults.as((results) => results.length > 0)}
-          />
-          <box
-            orientation={Gtk.Orientation.VERTICAL}
-            cssClasses={["app-results"]}
-            visible={searchResults.as((results) => results.length > 0)}
-          >
-            {searchResults.as((results) =>
-              results.map((app, i) => (
-                <AppItem selected={selected} app={app} index={i} />
-              )),
-            )}
-          </box>
+          <box cssClasses={["separator"]} />
+          <SearchResults searchResults={searchResults} selected={selected} />
         </box>
       }
     />
