@@ -3,9 +3,8 @@ import AstalMpris from "gi://AstalMpris";
 import AstalApps from "gi://AstalApps";
 import { Gtk } from "astal/gtk4";
 
-const apps = new AstalApps.Apps();
-
 function PlayerWidget(player: AstalMpris.Player) {
+  const apps = new AstalApps.Apps();
   const artist = bind(player, "artist");
   const hasArtist = artist.as(
     (artist) => artist !== null && artist !== undefined && artist !== "",

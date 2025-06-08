@@ -5,8 +5,6 @@ import AstalApps from "gi://AstalApps";
 import Pango from "gi://Pango?version=1.0";
 import { toTitleCase } from "../../utils/util";
 
-const apps = new AstalApps.Apps();
-
 const urgencyToString = (urgency: AstalNotifd.Urgency) => {
   switch (urgency) {
     case AstalNotifd.Urgency.LOW:
@@ -23,6 +21,7 @@ type Props = {
 };
 
 export default function Notification({ notification }: Props) {
+  const apps = new AstalApps.Apps();
   let appIcon = notification.appIcon;
   if (appIcon === "") {
     appIcon = apps.exact_query(notification.appName)[0]?.iconName ?? appIcon;

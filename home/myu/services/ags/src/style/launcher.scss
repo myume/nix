@@ -1,0 +1,48 @@
+@use "./colors";
+
+.launcher-container {
+
+  .launcher {
+
+    background: rgba(colors.$bg-secondary, 0.75);
+    padding: 20px;
+
+    border-radius: 1.5rem;
+
+    .search {
+      image {
+        margin-right: 8px;
+      }
+
+      font-size: 1.2rem;
+    }
+
+    .separator {
+      min-width: 10px;
+      min-height: 1px;
+      background: rgba(colors.$text, 0.4);
+    }
+
+    .app-results {
+      font-size: 1.1rem;
+
+      .app-item {
+        padding: 8px;
+        border-radius: 12px;
+
+        .app-title {
+          font-weight: 500;
+
+        }
+
+        .app-desc {
+          font-size: 0.85rem;
+        }
+      }
+
+      .selected {
+        background: colors.$bg-accent;
+      }
+    }
+  }
+}

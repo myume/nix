@@ -1,4 +1,5 @@
 @mixin reset-props {
   all: unset;
-  transition: 100ms linear;
+  font-family: "Inter";
+  transition: 120ms linear;
 }

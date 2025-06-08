@@ -29,6 +29,7 @@ export function Bar(gdkmonitor: Gdk.Monitor) {
   return (
     <window
       visible
+      name={"top-bar"}
       namespace={"top-bar"}
       cssClasses={["bar"]}
       layer={Astal.Layer.TOP}

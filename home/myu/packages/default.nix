@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     fastfetch
-    rofi-wayland-unwrapped
 
     # desktop applications
     gimp3

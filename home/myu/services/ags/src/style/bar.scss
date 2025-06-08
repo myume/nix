@@ -5,7 +5,6 @@
   color: colors.$fg-color;
   padding: 4px 8px 0px;
 
-  font-family: "Inter";
   font-size: 12px;
   font-weight: 600;
 
@@ -37,7 +36,7 @@
 
       &.focused {
         background: colors.$blue;
-        min-width: 28px;
+        min-width: 36px;
       }
 
     }
@@ -59,7 +58,7 @@
 }
 
 .player-container {
-  background: colors.$bg-secondary;
+  background: colors.$bg-accent;
   border-radius: 2rem;
 
   .player {

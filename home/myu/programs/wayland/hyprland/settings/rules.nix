@@ -6,6 +6,9 @@
 
       "blur ,floating-notifications"
       "ignorealpha .3, floating-notifications"
+
+      "blur ,launcher"
+      "ignorealpha .3, launcher"
     ];
 
     workspace = [
