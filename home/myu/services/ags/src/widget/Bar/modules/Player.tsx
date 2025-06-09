@@ -3,63 +3,56 @@ import AstalMpris from "gi://AstalMpris";
 import AstalApps from "gi://AstalApps";
 import { Gtk } from "astal/gtk4";
 
-function PlayerWidget(player: AstalMpris.Player) {
-  const apps = new AstalApps.Apps();
-  const artist = bind(player, "artist");
-  const hasArtist = artist.as(
-    (artist) => artist !== null && artist !== undefined && artist !== "",
-  );
-  return (
-    <box cssClasses={["player"]} spacing={6}>
-      <image
-        cssClasses={["icon"]}
-        iconName={bind(player, "entry").as(
-          (entry) => apps.exact_query(entry)[0].iconName,
-        )}
+const PlayerWidget =
+  (showMediaControls: Variable<boolean>) => (player: AstalMpris.Player) => {
+    const apps = new AstalApps.Apps();
+    const artist = bind(player, "artist");
+    const hasArtist = artist.as(
+      (artist) => artist !== null && artist !== undefined && artist !== "",
+    );
+    return (
+      <button
+        onClicked={() => showMediaControls.set(!showMediaControls.get())}
+        child={
+          <box
+            cssClasses={showMediaControls((show) => [
+              "player",
+              show ? "toggled" : "",
+            ])}
+            spacing={6}
+          >
+            <image
+              cssClasses={["icon"]}
+              iconName={bind(player, "entry").as(
+                (entry) => apps.exact_query(entry)[0].iconName,
+              )}
+            />
+            <label
+              label={bind(player, "title").as((title) => title ?? "unknown")}
+            />
+            <box visible={hasArtist} cssClasses={["separator"]} />
+            <label
+              visible={hasArtist}
+              label={artist.as((artist) => artist ?? "unknown")}
+            />
+          </box>
+        }
       />
-      <label label={bind(player, "title").as((title) => title ?? "unknown")} />
-      <box visible={hasArtist} cssClasses={["separator"]} />
-      <label
-        visible={hasArtist}
-        label={artist.as((artist) => artist ?? "unknown")}
-      />
-    </box>
-  );
-}
+    );
+  };
 
-function PlayerControls(player: AstalMpris.Player) {
-  return (
-    <box cssClasses={["player-controls"]} spacing={4}>
-      <button
-        tooltipText={"Previous"}
-        iconName={"media-skip-backward-symbolic"}
-        onClicked={() => player.canGoPrevious && player.previous()}
-      />
-      <button
-        tooltipText={bind(player, "playback_status").as((status) =>
-          status === AstalMpris.PlaybackStatus.PLAYING ? "Pause" : "Play",
-        )}
-        iconName={bind(player, "playback_status").as((status) =>
-          status === AstalMpris.PlaybackStatus.PLAYING
-            ? "media-playback-pause-symbolic"
-            : "media-playback-start-symbolic",
-        )}
-        onClicked={() => player.play_pause()}
-      />
-      <button
-        tooltipText={"Next"}
-        iconName={"media-skip-forward-symbolic"}
-        onClicked={() => player.canGoNext && player.next()}
-      />
-    </box>
-  );
-}
-
-export default function Player() {
+export default function Player({
+  showMediaControls,
+}: {
+  showMediaControls: Variable<boolean>;
+}) {
   const mpris = AstalMpris.get_default();
   const players = bind(mpris, "players");
 
   const bus = Gio.DBus.session;
+  players.subscribe((players) => {
+    if (players.length === 0) showMediaControls.set(false);
+  });
 
   return (
     <revealer
@@ -113,7 +106,7 @@ export default function Player() {
               onDestroy={() =>
                 signalId !== null && bus.signal_unsubscribe(signalId)
               }
-              child={player(PlayerWidget)}
+              child={player(PlayerWidget(showMediaControls))}
             />
           );
         }

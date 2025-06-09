@@ -4,15 +4,20 @@ import Tray from "./modules/Tray";
 import Workspaces from "./modules/Workspaces";
 import Player from "./modules/Player";
 import Status from "./Status";
+import { SharedState } from "../../app";
 
 const Start = () => (
   <box cssClasses={["start", "section"]} child={<Workspaces />}></box>
 );
 
-const Center = () => (
+const Center = ({
+  state: { showCalender, showMediaControls },
+}: {
+  state: SharedState;
+}) => (
   <box cssClasses={["center", "section"]}>
-    <Time />
-    <Player />
+    <Time showCalender={showCalender} />
+    <Player showMediaControls={showMediaControls} />
   </box>
 );
 
@@ -23,7 +28,7 @@ const End = () => (
   </box>
 );
 
-export function Bar(gdkmonitor: Gdk.Monitor) {
+export const Bar = (state: SharedState) => (gdkmonitor: Gdk.Monitor) => {
   const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
 
   return (
@@ -41,10 +46,10 @@ export function Bar(gdkmonitor: Gdk.Monitor) {
       child={
         <centerbox>
           <Start />
-          <Center />
+          <Center state={state} />
           <End />
         </centerbox>
       }
     />
   );
-}
+};

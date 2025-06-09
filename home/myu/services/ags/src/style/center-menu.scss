@@ -1,0 +1,8 @@
+@use "./colors.scss";
+
+.center-menu {
+  background: rgba(colors.$bg-secondary, 0.75);
+  border-radius: 1rem;
+  margin: 8px;
+  padding: 1rem;
+}

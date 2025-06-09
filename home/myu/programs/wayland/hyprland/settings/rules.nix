@@ -9,12 +9,15 @@
 
       "blur ,launcher"
       "ignorealpha .3, launcher"
+
+      "blur ,center-menu"
+      "ignorealpha .3, center-menu"
     ];
 
     workspace = [
     ];
 
-    windowrulev2 = [
+    windowrulev3 = [
     ];
   };
 }

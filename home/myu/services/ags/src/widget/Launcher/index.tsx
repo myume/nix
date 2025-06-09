@@ -4,6 +4,25 @@ import AstalApps from "gi://AstalApps";
 import { ScrolledWindow } from "../Gtk";
 import Hyprland from "gi://AstalHyprland";
 
+const hideOnClickAway = (self: Gtk.Window, event: Gdk.ButtonEvent) => {
+  if (
+    event.get_button() === Gdk.BUTTON_PRIMARY ||
+    event.get_button() === Gdk.BUTTON_SECONDARY
+  ) {
+    const [, x, y] = event.get_position();
+    const allocation = (self.get_child()! as Gtk.Box).get_allocation();
+
+    if (
+      x < allocation.x ||
+      x > allocation.x + allocation.width ||
+      y < allocation.y ||
+      y > allocation.y + allocation.height
+    ) {
+      self.hide();
+    }
+  }
+};
+
 const hideLauncher = () => App.get_window("launcher")?.hide();
 
 const wrapIndex = (index: number, length: number) =>
@@ -158,7 +177,13 @@ export function Launcher() {
       cssClasses={["launcher-container"]}
       application={App}
       layer={Astal.Layer.OVERLAY}
-      anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM}
+      anchor={
+        Astal.WindowAnchor.TOP |
+        Astal.WindowAnchor.BOTTOM |
+        Astal.WindowAnchor.LEFT |
+        Astal.WindowAnchor.RIGHT
+      }
+      onButtonPressed={hideOnClickAway}
       exclusivity={Astal.Exclusivity.IGNORE}
       keymode={Astal.Keymode.ON_DEMAND}
       onShow={() => {
@@ -203,6 +228,7 @@ export function Launcher() {
         <box
           cssClasses={["launcher"]}
           valign={Gtk.Align.CENTER}
+          halign={Gtk.Align.CENTER}
           orientation={Gtk.Orientation.VERTICAL}
           widthRequest={700}
           spacing={12}
