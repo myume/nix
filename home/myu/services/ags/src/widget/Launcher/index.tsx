@@ -134,7 +134,7 @@ const AppItem = ({
     />
   );
 };
-export function Launcher(gdkmonitor: Gdk.Monitor) {
+export function Launcher() {
   const apps = new AstalApps.Apps();
 
   const searchString = Variable("");
@@ -152,11 +152,10 @@ export function Launcher(gdkmonitor: Gdk.Monitor) {
       name={"launcher"}
       namespace={"launcher"}
       cssClasses={["launcher-container"]}
+      application={App}
       layer={Astal.Layer.OVERLAY}
       anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM}
       exclusivity={Astal.Exclusivity.IGNORE}
-      gdkmonitor={gdkmonitor}
-      application={App}
       keymode={Astal.Keymode.ON_DEMAND}
       onShow={() => {
         selected.set(0);

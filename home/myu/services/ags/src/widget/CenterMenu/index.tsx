@@ -1,16 +1,21 @@
-import { App, Astal, Gdk } from "astal/gtk4";
+import { App, Astal } from "astal/gtk4";
 
-export function CenterMenu(gdkmonitor: Gdk.Monitor) {
+export function CenterMenu() {
   return (
     <window
-      namespace={"floating-notifications"}
-      cssClasses={["bar"]}
-      layer={Astal.Layer.OVERLAY}
+      name={"center-menu"}
+      namespace={"centery-menu"}
+      cssClasses={["centery-menu"]}
+      layer={Astal.Layer.TOP}
       exclusivity={Astal.Exclusivity.NORMAL}
-      gdkmonitor={gdkmonitor}
       anchor={Astal.WindowAnchor.TOP}
       application={App}
-      child={<label>test</label>}
+      heightRequest={200}
+      child={
+        <box>
+          <label>test</label>
+        </box>
+      }
     />
   );
 }
