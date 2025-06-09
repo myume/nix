@@ -2,8 +2,24 @@ import { Binding, Variable } from "astal";
 import { App, Astal, Gdk, Gtk } from "astal/gtk4";
 import AstalApps from "gi://AstalApps";
 import { ScrolledWindow } from "../Gtk";
+import Hyprland from "gi://AstalHyprland";
 
 const hideLauncher = () => App.get_window("launcher")?.hide();
+
+// didn't want to use the app.launch() method
+// since it executes everything from the .config/ags dir
+const launchApp = (app: AstalApps.Application) => {
+  const executable = app.executable.replace(/(%f|%F|%u|%U|%i|%c|%k)/g, "");
+
+  // why are you launching cli programs from outside of a cli
+  if (app.categories.includes("ConsoleOnly")) {
+    Hyprland.get_default().dispatch("exec", `$TERMINAL -e ${executable}`);
+  } else {
+    Hyprland.get_default().dispatch("exec", executable);
+  }
+
+  hideLauncher();
+};
 
 const scrollToSelectedItem = (
   scrolledWindow: Gtk.ScrolledWindow,
@@ -86,8 +102,7 @@ const AppItem = ({
     <button
       heightRequest={appItemHeight}
       onClicked={() => {
-        app.launch();
-        hideLauncher();
+        launchApp(app);
       }}
       onHoverEnter={() => selected.set(index)}
       cssClasses={selected((selected) => {
@@ -127,7 +142,9 @@ export function Launcher(gdkmonitor: Gdk.Monitor) {
 
   let entryRef: Gtk.Entry | null = null;
 
-  const searchResults = searchString((str) => apps.fuzzy_query(str));
+  const searchResults = searchString((str) =>
+    apps.fuzzy_query(str).sort((a, b) => b.frequency - a.frequency),
+  );
   searchResults.subscribe(() => selected.set(0));
 
   return (
@@ -196,8 +213,7 @@ export function Launcher(gdkmonitor: Gdk.Monitor) {
               }
             }}
             onActivate={() => {
-              searchResults.get()[selected.get()].launch();
-              hideLauncher();
+              launchApp(searchResults.get()[selected.get()]);
             }}
           />
           <box cssClasses={["separator"]} />
