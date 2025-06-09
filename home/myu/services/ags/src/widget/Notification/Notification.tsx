@@ -92,7 +92,7 @@ export default function Notification({ notification }: Props) {
           file={bind(notification, "image")}
           pixelSize={64}
         />
-        <box orientation={Gtk.Orientation.VERTICAL}>
+        <box orientation={Gtk.Orientation.VERTICAL} valign={Gtk.Align.CENTER}>
           <label
             cssClasses={["summary"]}
             label={bind(notification, "summary")}
