@@ -5,6 +5,29 @@ import { ScrolledWindow } from "../Gtk";
 
 const hideLauncher = () => App.get_window("launcher")?.hide();
 
+const scrollToSelectedItem = (
+  scrolledWindow: Gtk.ScrolledWindow,
+  itemIndex: number,
+  itemHeight: number,
+) => {
+  const vadjustment = scrolledWindow.get_vadjustment();
+  const targetPosition = itemIndex * itemHeight;
+
+  // Get viewport information
+  const pageSize = vadjustment.get_page_size();
+  const currentValue = vadjustment.get_value();
+  const maxValue = vadjustment.get_upper() - pageSize;
+
+  if (targetPosition < currentValue) {
+    vadjustment.set_value(targetPosition);
+  } else if (targetPosition + itemHeight > currentValue + pageSize) {
+    const newValue = Math.min(targetPosition - pageSize + itemHeight, maxValue);
+    vadjustment.set_value(newValue);
+  }
+};
+
+const appItemHeight = 56;
+
 const SearchResults = ({
   searchResults,
   selected,
@@ -12,8 +35,16 @@ const SearchResults = ({
   searchResults: Binding<AstalApps.Application[]>;
   selected: Variable<number>;
 }) => {
+  let scrollRef: Gtk.ScrolledWindow;
+  selected.subscribe((index) => {
+    scrollToSelectedItem(scrollRef, index, appItemHeight);
+  });
+
   return (
     <ScrolledWindow
+      setup={(self) => {
+        scrollRef = self;
+      }}
       cssClasses={["app-results"]}
       heightRequest={400}
       maxContentHeight={400}
@@ -24,7 +55,7 @@ const SearchResults = ({
       propagateNaturalHeight
       child={searchResults.as((results) =>
         results.length > 0 ? (
-          <box orientation={Gtk.Orientation.VERTICAL}>
+          <box orientation={Gtk.Orientation.VERTICAL} marginEnd={12}>
             {results.map((app, i) => (
               <AppItem selected={selected} app={app} index={i} />
             ))}
@@ -53,6 +84,7 @@ const AppItem = ({
 
   return (
     <button
+      heightRequest={appItemHeight}
       onClicked={() => {
         app.launch();
         hideLauncher();
@@ -100,7 +132,6 @@ export function Launcher(gdkmonitor: Gdk.Monitor) {
 
   return (
     <window
-      visible={false}
       name={"launcher"}
       namespace={"launcher"}
       cssClasses={["launcher-container"]}
