@@ -1,4 +1,4 @@
-import { Binding, Variable } from "astal";
+import { Binding, Gio, Variable } from "astal";
 import { App, Astal, Gdk, Gtk } from "astal/gtk4";
 import AstalApps from "gi://AstalApps";
 import { ScrolledWindow } from "../Gtk";
@@ -6,17 +6,23 @@ import Hyprland from "gi://AstalHyprland";
 
 const hideLauncher = () => App.get_window("launcher")?.hide();
 
+const wrapIndex = (index: number, length: number) =>
+  ((index % length) + length) % length;
+
 // didn't want to use the app.launch() method
 // since it executes everything from the .config/ags dir
 const launchApp = (app: AstalApps.Application) => {
   const executable = app.executable.replace(/(%f|%F|%u|%U|%i|%c|%k)/g, "");
 
   // why are you launching cli programs from outside of a cli
-  if (app.categories.includes("ConsoleOnly")) {
+  if ((app.app as Gio.DesktopAppInfo).get_boolean("Terminal")) {
     Hyprland.get_default().dispatch("exec", `$TERMINAL -e ${executable}`);
   } else {
     Hyprland.get_default().dispatch("exec", executable);
   }
+
+  // since we're launching manually, we also need to manually increase this value
+  app.set_frequency(app.frequency + 1);
 
   hideLauncher();
 };
@@ -142,9 +148,7 @@ export function Launcher() {
 
   let entryRef: Gtk.Entry | null = null;
 
-  const searchResults = searchString((str) =>
-    apps.fuzzy_query(str).sort((a, b) => b.frequency - a.frequency),
-  );
+  const searchResults = searchString((str) => apps.fuzzy_query(str));
   searchResults.subscribe(() => selected.set(0));
 
   return (
@@ -167,21 +171,25 @@ export function Launcher() {
       onKeyPressed={(self, keyval, _, state) => {
         if (state === Gdk.ModifierType.CONTROL_MASK) {
           if (keyval === Gdk.KEY_p) {
-            selected.set(Math.max(0, selected.get() - 1));
+            selected.set(
+              wrapIndex(selected.get() - 1, searchResults.get().length),
+            );
           }
           if (keyval === Gdk.KEY_n) {
             selected.set(
-              Math.min(selected.get() + 1, searchResults.get().length - 1),
+              wrapIndex(selected.get() + 1, searchResults.get().length),
             );
           }
         }
         if (keyval === Gdk.KEY_Up) {
-          selected.set(Math.max(0, selected.get() - 1));
+          selected.set(
+            wrapIndex(selected.get() - 1, searchResults.get().length),
+          );
         }
 
         if (keyval === Gdk.KEY_Down)
           selected.set(
-            Math.min(selected.get() + 1, searchResults.get().length - 1),
+            wrapIndex(selected.get() + 1, searchResults.get().length),
           );
 
         if (keyval === Gdk.KEY_Escape) {
