@@ -65,10 +65,18 @@
     padding: 2px 10px;
   }
 
-  &:hover,
-  .toggled {
+  &:hover {
     background: colors.$bg-color;
   }
+
+  .toggled {
+    background: colors.$bg-color;
+
+    &:hover {
+      background: colors.$bg-accent;
+    }
+  }
+
 
   .separator {
     min-width: 1px;

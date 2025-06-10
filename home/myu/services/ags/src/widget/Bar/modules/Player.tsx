@@ -43,8 +43,10 @@ const PlayerWidget =
 
 export default function Player({
   showMediaControls,
+  currentPlayer,
 }: {
   showMediaControls: Variable<boolean>;
+  currentPlayer: Variable<AstalMpris.Player | null>;
 }) {
   const mpris = AstalMpris.get_default();
   const players = bind(mpris, "players");
@@ -62,7 +64,7 @@ export default function Player({
       transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}
       child={players.as((ps) => {
         if (ps.length > 0) {
-          const player = Variable(ps[0]);
+          currentPlayer.set(ps[0]);
           let signalId: number | null = null;
 
           return (
@@ -97,7 +99,9 @@ export default function Player({
                             player.playbackStatus ===
                             AstalMpris.PlaybackStatus.PLAYING,
                         );
-                        player.set(activePlayers[0] ?? ps[0]);
+                        currentPlayer.set(
+                          activePlayers[0] ?? currentPlayer.get() ?? ps[0],
+                        );
                       }
                     }
                   },
@@ -106,7 +110,13 @@ export default function Player({
               onDestroy={() =>
                 signalId !== null && bus.signal_unsubscribe(signalId)
               }
-              child={player(PlayerWidget(showMediaControls))}
+              child={currentPlayer((player) =>
+                player ? (
+                  PlayerWidget(showMediaControls)(player)
+                ) : (
+                  <box visible={false} />
+                ),
+              )}
             />
           );
         }

@@ -1,8 +1,42 @@
+@use "sass:color";
 @use "./colors.scss";
 
 .center-menu {
-  background: rgba(colors.$bg-secondary, 0.75);
+  background: rgba(colors.$bg-secondary, 0.5);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
   border-radius: 1rem;
   margin: 8px;
   padding: 1rem;
+
+  .separator {
+    min-width: 1px;
+    background: rgba(colors.$text, 0.4);
+    margin: 0px 1.1rem;
+  }
+
+  .media-control-menu {
+    padding: 0.5rem;
+
+    .art {
+      border-radius: 1rem;
+    }
+
+    scale {
+      min-height: 8px;
+      min-width: 100px;
+      border-radius: 2rem;
+
+      trough {
+        background-color: colors.$bg-accent // Visible background
+      }
+
+      /* slider */
+
+      highlight {
+        min-height: 8px;
+        background-color: rgba(colors.$text, 0.3);
+        border-radius: 2rem;
+      }
+    }
+  }
 }

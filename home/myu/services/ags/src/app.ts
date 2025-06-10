@@ -5,11 +5,13 @@ import { Notifications } from "./widget/Notification";
 import { Launcher } from "./widget/Launcher";
 import { CenterMenu } from "./widget/CenterMenu";
 import { Variable } from "astal";
+import AstalMpris from "gi://AstalMpris";
 
 // state shared between windows
 export type SharedState = {
   showMediaControls: Variable<boolean>;
   showCalender: Variable<boolean>;
+  currentPlayer: Variable<AstalMpris.Player | null>;
 };
 
 App.start({
@@ -17,9 +19,10 @@ App.start({
   iconTheme: "Papirus-Dark",
   main() {
     // initialize shared state
-    const sharedState = {
+    const sharedState: SharedState = {
       showMediaControls: Variable(false),
       showCalender: Variable(false),
+      currentPlayer: Variable(null),
     };
 
     const allMonitorWindows = [Bar(sharedState), Notifications];

@@ -11,13 +11,16 @@ const Start = () => (
 );
 
 const Center = ({
-  state: { showCalender, showMediaControls },
+  state: { showCalender, showMediaControls, currentPlayer },
 }: {
   state: SharedState;
 }) => (
   <box cssClasses={["center", "section"]}>
     <Time showCalender={showCalender} />
-    <Player showMediaControls={showMediaControls} />
+    <Player
+      showMediaControls={showMediaControls}
+      currentPlayer={currentPlayer}
+    />
   </box>
 );
 
