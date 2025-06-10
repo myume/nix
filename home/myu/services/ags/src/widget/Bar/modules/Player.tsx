@@ -2,6 +2,7 @@ import { bind, Gio, Variable } from "astal";
 import AstalMpris from "gi://AstalMpris";
 import AstalApps from "gi://AstalApps";
 import { Gtk } from "astal/gtk4";
+import Pango from "gi://Pango?version=1.0";
 
 const PlayerWidget =
   (showMediaControls: Variable<boolean>) => (player: AstalMpris.Player) => {
@@ -29,11 +30,16 @@ const PlayerWidget =
             />
             <label
               label={bind(player, "title").as((title) => title ?? "unknown")}
+              useMarkup
+              ellipsize={Pango.EllipsizeMode.END}
+              maxWidthChars={40}
             />
             <box visible={hasArtist} cssClasses={["separator"]} />
             <label
               visible={hasArtist}
               label={artist.as((artist) => artist ?? "unknown")}
+              ellipsize={Pango.EllipsizeMode.END}
+              maxWidthChars={40}
             />
           </box>
         }

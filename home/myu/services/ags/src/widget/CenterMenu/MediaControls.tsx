@@ -2,6 +2,7 @@ import { bind, Variable } from "astal";
 import { Gtk } from "astal/gtk4";
 import AstalMpris from "gi://AstalMpris";
 import AstalApps from "gi://AstalApps";
+import Pango from "gi://Pango?version=1.0";
 
 function formatDuration(length: number) {
   const totalSeconds = Math.floor(length);
@@ -84,6 +85,9 @@ export const MediaControlMenu = ({
         <label
           cssClasses={["title"]}
           label={bind(currentPlayer, "title").as((title) => title ?? "unknown")}
+          wrap
+          wrapMode={Pango.WrapMode.WORD_CHAR}
+          maxWidthChars={30}
         />
         <label
           cssClasses={["artist"]}
@@ -94,6 +98,9 @@ export const MediaControlMenu = ({
           label={bind(currentPlayer, "artist").as(
             (artist) => artist ?? "unknown",
           )}
+          wrap
+          wrapMode={Pango.WrapMode.WORD_CHAR}
+          maxWidthChars={25}
         />
       </box>
       <box orientation={Gtk.Orientation.VERTICAL}>
