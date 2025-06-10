@@ -4,24 +4,25 @@ import AstalApps from "gi://AstalApps";
 import { ScrolledWindow } from "../Gtk";
 import Hyprland from "gi://AstalHyprland";
 
-const hideOnClickAway = (self: Gtk.Window, event: Gdk.ButtonEvent) => {
-  if (
-    event.get_button() === Gdk.BUTTON_PRIMARY ||
-    event.get_button() === Gdk.BUTTON_SECONDARY
-  ) {
-    const [, x, y] = event.get_position();
-    const allocation = (self.get_child()! as Gtk.Box).get_allocation();
-
+export const hideOnClickAway =
+  (callBack: () => void) => (self: Gtk.Window, event: Gdk.ButtonEvent) => {
     if (
-      x < allocation.x ||
-      x > allocation.x + allocation.width ||
-      y < allocation.y ||
-      y > allocation.y + allocation.height
+      event.get_button() === Gdk.BUTTON_PRIMARY ||
+      event.get_button() === Gdk.BUTTON_SECONDARY
     ) {
-      self.hide();
+      const [, x, y] = event.get_position();
+      const allocation = (self.get_child()! as Gtk.Box).get_allocation();
+
+      if (
+        x < allocation.x ||
+        x > allocation.x + allocation.width ||
+        y < allocation.y ||
+        y > allocation.y + allocation.height
+      ) {
+        callBack();
+      }
     }
-  }
-};
+  };
 
 const hideLauncher = () => App.get_window("launcher")?.hide();
 
@@ -183,7 +184,9 @@ export function Launcher() {
         Astal.WindowAnchor.LEFT |
         Astal.WindowAnchor.RIGHT
       }
-      onButtonPressed={hideOnClickAway}
+      onButtonPressed={(self, state) =>
+        hideOnClickAway(() => self.hide())(self, state)
+      }
       exclusivity={Astal.Exclusivity.IGNORE}
       keymode={Astal.Keymode.ON_DEMAND}
       onShow={() => {

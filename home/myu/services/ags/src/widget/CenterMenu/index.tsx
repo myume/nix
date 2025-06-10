@@ -3,6 +3,7 @@ import { SharedState } from "../../app";
 import { derive } from "astal";
 import { Calender } from "./Calender";
 import { MediaControlMenu } from "./MediaControls";
+import { hideOnClickAway } from "../Launcher";
 
 export function CenterMenu({
   showCalender,
@@ -11,24 +12,30 @@ export function CenterMenu({
 }: SharedState) {
   return (
     <window
-      setup={(self) => {
-        showCalender.subscribe(() => self.queue_resize());
-        showMediaControls.subscribe(() => self.queue_resize());
-      }}
       visible={derive([showCalender, showMediaControls])(
         ([showCalender, showMediaControls]) =>
           showCalender || showMediaControls,
       )}
       namespace={"center-menu"}
-      cssClasses={["center-menu"]}
       layer={Astal.Layer.TOP}
       exclusivity={Astal.Exclusivity.NORMAL}
-      anchor={Astal.WindowAnchor.TOP}
+      anchor={
+        Astal.WindowAnchor.TOP |
+        Astal.WindowAnchor.LEFT |
+        Astal.WindowAnchor.RIGHT |
+        Astal.WindowAnchor.BOTTOM
+      }
       application={App}
-      resizable={false}
-      heightRequest={330}
+      onButtonPressed={hideOnClickAway(() => {
+        showCalender.set(false);
+        showMediaControls.set(false);
+      })}
       child={
-        <box>
+        <box
+          cssClasses={["center-menu"]}
+          halign={Gtk.Align.CENTER}
+          valign={Gtk.Align.START}
+        >
           <revealer
             revealChild={showCalender()}
             transitionType={Gtk.RevealerTransitionType.SLIDE_LEFT}

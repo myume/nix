@@ -1,6 +1,7 @@
-import { bind, derive, Variable } from "astal";
+import { bind, Variable } from "astal";
 import { Gtk } from "astal/gtk4";
 import AstalMpris from "gi://AstalMpris";
+import AstalApps from "gi://AstalApps";
 
 function formatDuration(length: number) {
   const totalSeconds = Math.floor(length);
@@ -22,6 +23,10 @@ export const MediaControlMenu = ({
 }) => {
   if (!currentPlayer) return <box></box>;
 
+  const apps = new AstalApps.Apps();
+  const appIcon = bind(currentPlayer, "entry").as(
+    (entry) => apps.exact_query(entry)[0].iconName,
+  );
   // Mpris seemed to be bugged. Even when the player is paused/not playing the position is ticking up
   const playbackPosition = Variable(currentPlayer.position);
   const playerPosition = bind(currentPlayer, "position");
@@ -33,6 +38,11 @@ export const MediaControlMenu = ({
     }
   });
 
+  const hasCoverArt = bind(currentPlayer, "coverArt").as(
+    (coverArt) =>
+      coverArt !== null && coverArt !== undefined && coverArt !== "",
+  );
+
   return (
     <box
       cssClasses={["media-control-menu"]}
@@ -41,16 +51,30 @@ export const MediaControlMenu = ({
       halign={Gtk.Align.CENTER}
       valign={Gtk.Align.CENTER}
     >
+      <box>
+        <label
+          label={bind(currentPlayer, "entry").as((entry) => entry ?? "unknown")}
+        />
+      </box>
       <box
         halign={Gtk.Align.CENTER}
-        child={
-          <image
-            cssClasses={["art"]}
-            pixelSize={169}
-            file={bind(currentPlayer, "coverArt")}
-            overflow={Gtk.Overflow.HIDDEN}
-          />
-        }
+        child={hasCoverArt.as((hasCoverArt) =>
+          hasCoverArt ? (
+            <image
+              cssClasses={["art"]}
+              pixelSize={128}
+              file={bind(currentPlayer, "coverArt")}
+              overflow={Gtk.Overflow.HIDDEN}
+            />
+          ) : (
+            <image
+              cssClasses={["art"]}
+              pixelSize={128}
+              iconName={appIcon}
+              overflow={Gtk.Overflow.HIDDEN}
+            />
+          ),
+        )}
       />
       <box
         cssClasses={["info"]}
@@ -58,9 +82,15 @@ export const MediaControlMenu = ({
         halign={Gtk.Align.CENTER}
       >
         <label
+          cssClasses={["title"]}
           label={bind(currentPlayer, "title").as((title) => title ?? "unknown")}
         />
         <label
+          cssClasses={["artist"]}
+          visible={bind(currentPlayer, "artist").as(
+            (artist) =>
+              artist !== "" && artist !== null && artist !== undefined,
+          )}
           label={bind(currentPlayer, "artist").as(
             (artist) => artist ?? "unknown",
           )}
@@ -86,7 +116,36 @@ export const MediaControlMenu = ({
             startWidget={<label label={playbackPosition(formatDuration)} />}
             centerWidget={<box hexpand />}
             endWidget={
-              <label label={bind(currentPlayer, "length").as(formatDuration)} />
+              <label
+                label={bind(currentPlayer, "length").as((length) => {
+                  // poll for length
+                  // idk if i care enough for this....
+                  // ideally this isn't a while loop too.......
+                  // if (length < 0) {
+                  //   const playerName = currentPlayer.busName.replace(
+                  //     "org.mpris.MediaPlayer2.",
+                  //     "",
+                  //   );
+                  //
+                  //   while (length < 0) {
+                  //     try {
+                  //       const result = exec([
+                  //         "playerctl",
+                  //         "-p",
+                  //         playerName,
+                  //         "metadata",
+                  //         "mpris:length",
+                  //       ]);
+                  //       length = Math.floor(Number(result) / 1000000);
+                  //     } catch (error) {
+                  //       print(error);
+                  //     }
+                  //   }
+                  // }
+
+                  return formatDuration(Math.max(length, 0));
+                })}
+              />
             }
           />
         </box>
