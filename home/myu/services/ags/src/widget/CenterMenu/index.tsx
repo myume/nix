@@ -1,7 +1,7 @@
 import { App, Astal, Gdk, Gtk } from "astal/gtk4";
 import { SharedState } from "../../app";
 import { derive } from "astal";
-import { Calender } from "./Calender";
+import { CalendarView } from "./Calender";
 import { MediaControlMenu } from "./MediaControls";
 import { hideOnClickAway } from "../../utils/util";
 
@@ -48,7 +48,7 @@ export function CenterMenu({
           <revealer
             revealChild={showCalender()}
             transitionType={Gtk.RevealerTransitionType.SLIDE_LEFT}
-            child={<Calender />}
+            child={<CalendarView />}
           />
           <box
             cssClasses={["separator"]}

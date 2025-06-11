@@ -86,6 +86,15 @@
   }
 
   .calender-container {
+    .datetime {
+      border-radius: 1rem;
+      padding-bottom: 8px;
+
+      &:hover {
+        background: rgba(colors.$bg-accent, 0.1);
+      }
+    }
+
     .time {
       font-size: 3rem;
       font-weight: 900;
@@ -94,7 +103,6 @@
     .date {
       font-size: 1rem;
     }
-
 
     calendar {
       border-radius: 12px;
