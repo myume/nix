@@ -14,10 +14,15 @@ export default function Time({
   );
 
   return (
-    <button
+    <box
       cssClasses={["time"]}
-      child={<label onDestroy={() => time.drop()} label={time()} />}
-      onClicked={() => showCalender.set(!showCalender.get())}
+      child={
+        <button
+          cssClasses={showCalender((show) => (show ? ["toggled"] : []))}
+          child={<label onDestroy={() => time.drop()} label={time()} />}
+          onClicked={() => showCalender.set(!showCalender.get())}
+        />
+      }
     />
   );
 }
