@@ -43,7 +43,7 @@ export function CenterMenu({
           cssClasses={["center-menu"]}
           halign={Gtk.Align.CENTER}
           valign={Gtk.Align.START}
-          heightRequest={335}
+          heightRequest={350}
         >
           <revealer
             revealChild={showCalender()}

@@ -84,4 +84,53 @@
       }
     }
   }
+
+  .calender-container {
+    .time {
+      font-size: 3rem;
+      font-weight: 900;
+    }
+
+    .date {
+      font-size: 1rem;
+    }
+
+
+    calendar {
+      border-radius: 12px;
+      background: colors.$bg-transparent;
+
+      header {
+        padding: 8px;
+        font-size: 14px;
+        background: rgba(colors.$lavender, 0.3);
+      }
+
+      button {
+        border-radius: 4px;
+
+        &:hover {
+          background: rgba(colors.$bg-accent, 0.5);
+        }
+      }
+
+      grid {
+        padding: 4px;
+
+        label {
+          border-radius: 4px;
+
+          &:hover {
+            background: rgba(colors.$bg-accent, 0.3);
+          }
+
+          &:selected {
+            background: rgba(colors.$lavender, 0.5);
+          }
+        }
+      }
+
+      margin: 0;
+    }
+  }
 }

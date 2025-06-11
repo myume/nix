@@ -94,69 +94,71 @@ export const MediaControlMenu = ({
   return (
     <box
       cssClasses={["media-control-menu"]}
-      spacing={12}
+      spacing={10}
       orientation={Gtk.Orientation.VERTICAL}
     >
       <PlayerSelect
         currentPlayer={currentPlayer}
         setCurrentPlayer={setCurrentPlayer}
       />
-      <box
-        orientation={Gtk.Orientation.VERTICAL}
-        halign={Gtk.Align.CENTER}
-        valign={Gtk.Align.BASELINE}
-        spacing={10}
-      >
+      <box orientation={Gtk.Orientation.VERTICAL} halign={Gtk.Align.CENTER}>
         <box
-          halign={Gtk.Align.CENTER}
-          child={hasCoverArt.as((hasCoverArt) =>
-            // there is a bug where the coverArt doesn't update correctly
-            // art -> icon -> go back go to art -> expect art -> actual icon
-            hasCoverArt ? (
-              <image
-                cssClasses={["art"]}
-                pixelSize={128}
-                file={bind(currentPlayer, "coverArt")}
-                overflow={Gtk.Overflow.HIDDEN}
-              />
-            ) : (
-              <image
-                cssClasses={["art"]}
-                pixelSize={128}
-                iconName={appIcon}
-                overflow={Gtk.Overflow.HIDDEN}
-              />
-            ),
-          )}
-        />
-        <box
-          cssClasses={["info"]}
           orientation={Gtk.Orientation.VERTICAL}
-          halign={Gtk.Align.CENTER}
+          spacing={8}
+          valign={Gtk.Align.CENTER}
+          vexpand
         >
-          <label
-            cssClasses={["title"]}
-            label={bind(currentPlayer, "title").as(
-              (title) => title ?? "unknown",
+          <box
+            halign={Gtk.Align.CENTER}
+            child={hasCoverArt.as((hasCoverArt) =>
+              // there is a bug where the coverArt doesn't update correctly
+              // art -> icon -> go back go to art -> expect art -> actual icon
+              hasCoverArt ? (
+                <image
+                  cssClasses={["art"]}
+                  pixelSize={128}
+                  file={bind(currentPlayer, "coverArt")}
+                  overflow={Gtk.Overflow.HIDDEN}
+                />
+              ) : (
+                <image
+                  cssClasses={["art"]}
+                  pixelSize={128}
+                  iconName={appIcon}
+                  overflow={Gtk.Overflow.HIDDEN}
+                />
+              ),
             )}
-            wrap
-            wrapMode={Pango.WrapMode.WORD_CHAR}
-            maxWidthChars={25}
           />
-          <label
-            cssClasses={["artist"]}
-            visible={bind(currentPlayer, "artist").as(
-              (artist) =>
-                artist !== "" && artist !== null && artist !== undefined,
-            )}
-            label={bind(currentPlayer, "artist").as(
-              (artist) => artist ?? "unknown",
-            )}
-            // wrap
-            // wrapMode={Pango.WrapMode.WORD_CHAR}
-            maxWidthChars={25}
-            ellipsize={Pango.EllipsizeMode.END}
-          />
+          <box
+            cssClasses={["info"]}
+            orientation={Gtk.Orientation.VERTICAL}
+            halign={Gtk.Align.CENTER}
+          >
+            <label
+              cssClasses={["title"]}
+              label={bind(currentPlayer, "title").as(
+                (title) => title ?? "unknown",
+              )}
+              wrap
+              wrapMode={Pango.WrapMode.CHAR}
+              maxWidthChars={20}
+            />
+            <label
+              cssClasses={["artist"]}
+              visible={bind(currentPlayer, "artist").as(
+                (artist) =>
+                  artist !== "" && artist !== null && artist !== undefined,
+              )}
+              label={bind(currentPlayer, "artist").as(
+                (artist) => artist ?? "unknown",
+              )}
+              // wrap
+              // wrapMode={Pango.WrapMode.WORD_CHAR}
+              maxWidthChars={15}
+              ellipsize={Pango.EllipsizeMode.END}
+            />
+          </box>
         </box>
         <box
           orientation={Gtk.Orientation.VERTICAL}
