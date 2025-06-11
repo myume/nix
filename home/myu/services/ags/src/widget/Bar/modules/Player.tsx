@@ -1,12 +1,11 @@
 import { bind, Gio, Variable } from "astal";
 import AstalMpris from "gi://AstalMpris";
-import AstalApps from "gi://AstalApps";
 import { Gtk } from "astal/gtk4";
 import Pango from "gi://Pango?version=1.0";
+import { getAppIcon } from "../../../utils/util";
 
 const PlayerWidget =
   (showMediaControls: Variable<boolean>) => (player: AstalMpris.Player) => {
-    const apps = new AstalApps.Apps();
     const artist = bind(player, "artist");
     const hasArtist = artist.as(
       (artist) => artist !== null && artist !== undefined && artist !== "",
@@ -22,12 +21,7 @@ const PlayerWidget =
             ])}
             spacing={6}
           >
-            <image
-              cssClasses={["icon"]}
-              iconName={bind(player, "entry").as(
-                (entry) => apps.exact_query(entry)[0].iconName,
-              )}
-            />
+            <image cssClasses={["icon"]} iconName={getAppIcon(player)} />
             <label
               label={bind(player, "title").as((title) => title ?? "unknown")}
               useMarkup

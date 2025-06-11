@@ -1,15 +1,20 @@
-import { App, Astal, Gtk } from "astal/gtk4";
+import { App, Astal, Gdk, Gtk } from "astal/gtk4";
 import { SharedState } from "../../app";
 import { derive } from "astal";
 import { Calender } from "./Calender";
 import { MediaControlMenu } from "./MediaControls";
-import { hideOnClickAway } from "../Launcher";
+import { hideOnClickAway } from "../../utils/util";
 
 export function CenterMenu({
   showCalender,
   showMediaControls,
   currentPlayer,
 }: SharedState) {
+  const hideMenu = () => {
+    showCalender.set(false);
+    showMediaControls.set(false);
+  };
+
   return (
     <window
       visible={derive([showCalender, showMediaControls])(
@@ -26,16 +31,19 @@ export function CenterMenu({
         Astal.WindowAnchor.BOTTOM
       }
       application={App}
-      onButtonPressed={hideOnClickAway(() => {
-        showCalender.set(false);
-        showMediaControls.set(false);
-      })}
+      onButtonPressed={hideOnClickAway(hideMenu)}
+      keymode={Astal.Keymode.ON_DEMAND}
+      focusable
+      onFocusLeave={hideMenu}
+      onKeyPressed={(_self, keyval) => {
+        if (keyval === Gdk.KEY_Escape) hideMenu();
+      }}
       child={
         <box
           cssClasses={["center-menu"]}
           halign={Gtk.Align.CENTER}
           valign={Gtk.Align.START}
-          heightRequest={360}
+          heightRequest={335}
         >
           <revealer
             revealChild={showCalender()}
@@ -54,7 +62,10 @@ export function CenterMenu({
             revealChild={showMediaControls()}
             transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}
             child={currentPlayer((player) => (
-              <MediaControlMenu currentPlayer={player} />
+              <MediaControlMenu
+                currentPlayer={player}
+                setCurrentPlayer={(player) => currentPlayer.set(player)}
+              />
             ))}
           />
         </box>

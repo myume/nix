@@ -3,26 +3,7 @@ import { App, Astal, Gdk, Gtk } from "astal/gtk4";
 import AstalApps from "gi://AstalApps";
 import { ScrolledWindow } from "../Gtk";
 import Hyprland from "gi://AstalHyprland";
-
-export const hideOnClickAway =
-  (callBack: () => void) => (self: Gtk.Window, event: Gdk.ButtonEvent) => {
-    if (
-      event.get_button() === Gdk.BUTTON_PRIMARY ||
-      event.get_button() === Gdk.BUTTON_SECONDARY
-    ) {
-      const [, x, y] = event.get_position();
-      const allocation = (self.get_child()! as Gtk.Box).get_allocation();
-
-      if (
-        x < allocation.x ||
-        x > allocation.x + allocation.width ||
-        y < allocation.y ||
-        y > allocation.y + allocation.height
-      ) {
-        callBack();
-      }
-    }
-  };
+import { hideOnClickAway } from "../../utils/util";
 
 const hideLauncher = () => App.get_window("launcher")?.hide();
 
@@ -195,6 +176,7 @@ export function Launcher() {
         entryRef?.set({ text: "" });
         entryRef?.grab_focus();
       }}
+      focusable
       onFocusLeave={(self) => self.hide()}
       onKeyPressed={(self, keyval, _, state) => {
         if (state === Gdk.ModifierType.CONTROL_MASK) {

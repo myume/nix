@@ -2,11 +2,20 @@
 @use "./colors.scss";
 
 .center-menu {
-  background: rgba(colors.$bg-secondary, 0.5);
+  background: rgba(colors.$bg-secondary, 0.75);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
   border-radius: 1rem;
   margin: 8px;
   padding: 1rem;
+
+  .title {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .artist {
+    font-size: 14px;
+  }
 
   .separator {
     min-width: 1px;
@@ -14,8 +23,32 @@
     margin: 0px 1.1rem;
   }
 
+  .center-progress {
+    label {
+      font-size: 11px;
+    }
+  }
+
   .media-control-menu {
-    padding: 0.5rem;
+    padding: 1rem;
+    padding-top: 0px;
+
+    .player-select {
+      .player-item {
+        padding: 8px;
+        border-radius: 0.5rem;
+
+        &:hover {
+          background: colors.$bg-accent
+        }
+      }
+
+      .players {
+        padding: 0.5rem;
+        background: colors.$bg-color;
+        border-radius: 1rem;
+      }
+    }
 
     .art {
       border-radius: 1rem;
@@ -36,6 +69,18 @@
         min-height: 8px;
         background-color: rgba(colors.$text, 0.3);
         border-radius: 2rem;
+      }
+    }
+  }
+
+  .controls {
+    button {
+      padding: 4px;
+      background: rgba(colors.$bg-accent, 0.2);
+      border-radius: 5px;
+
+      &:hover {
+        background: rgba(colors.$bg-accent, 0.4);
       }
     }
   }
