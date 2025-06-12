@@ -1,19 +1,30 @@
 import { Gtk } from "astal/gtk4";
-import { BluetoothPanel } from "./Panels/Bluetooth";
-import { NetworkPanel } from "./Panels/Network";
-import { PowerProfilePanel } from "./Panels/PowerProfile";
-import { DoNoDisturb } from "./Panels/DoNotDisturb";
-
-const Panels = [
-  [NetworkPanel, BluetoothPanel],
-  [PowerProfilePanel, DoNoDisturb],
-];
+import { Sliders } from "./Sliders";
+import { Panels } from "./Panels";
 
 export const ControlPanel = () => {
   const panelSpacing = 8;
   return (
-    <box cssClasses={["control-panel"]} halign={Gtk.Align.CENTER} hexpand>
-      <box cssClasses={["sliders"]}></box>
+    <box
+      cssClasses={["control-panel"]}
+      halign={Gtk.Align.CENTER}
+      orientation={Gtk.Orientation.VERTICAL}
+      hexpand
+      spacing={12}
+    >
+      <box
+        cssClasses={["sliders"]}
+        orientation={Gtk.Orientation.VERTICAL}
+        spacing={panelSpacing / 2}
+      >
+        {Sliders.map((row) => (
+          <box spacing={panelSpacing}>
+            {row.map((slider) => (
+              <box child={slider()} homogeneous />
+            ))}
+          </box>
+        ))}
+      </box>
       <box
         cssClasses={["panels"]}
         orientation={Gtk.Orientation.VERTICAL}

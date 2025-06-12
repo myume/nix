@@ -6,8 +6,38 @@
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 
   >* {
-    padding: 12px;
+    padding: 20px;
     background: rgba(colors.$bg-secondary, 0.75);
+  }
+
+  .sliders {
+    .info {
+      margin-left: 8px;
+    }
+
+    scale {
+      padding: 4px 0;
+
+      trough {
+        border-radius: 2rem;
+        background-color: rgba(colors.$bg-transparent, 0.4);
+        min-height: 24px;
+      }
+
+      highlight {
+        background-color: rgba(colors.$blue, 0.3);
+      }
+
+      slider {
+        min-width: 5px;
+        min-height: 28px;
+        background-color: colors.$text;
+        border-radius: 2rem;
+        margin: -10px 0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      }
+    }
+
   }
 
   .control-panel {
