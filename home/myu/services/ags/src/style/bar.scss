@@ -13,43 +13,34 @@
     border-radius: 2rem;
     padding: 6px;
   }
+}
 
+.workspaces {
+  padding: 4px;
 
-  .workspaces {
-    padding: 4px;
+  button {
+    margin: 4px;
+    min-width: 8px;
+    min-height: 8px;
 
-    button {
-      margin: 4px;
-      min-width: 8px;
-      min-height: 8px;
+    background-color: colors.$surface1;
+    border-radius: 2rem;
 
-      background-color: colors.$surface1;
-      border-radius: 2rem;
+    &.populated {
+      background: colors.$lavender;
+    }
 
-      &.populated {
-        background: colors.$lavender;
-      }
+    &:hover {
+      background: colors.$sky;
+    }
 
-      &:hover {
-        background: colors.$sky;
-      }
-
-      &.focused {
-        background: colors.$blue;
-        min-width: 36px;
-      }
-
+    &.focused {
+      background: colors.$blue;
+      min-width: 36px;
     }
   }
-
-  .end {
-    padding: 6px 10px;
-  }
-
-  .status {
-    margin: 0px 1px;
-  }
 }
+
 
 .center {
   .time {
@@ -63,7 +54,7 @@
     }
 
     .toggled {
-      background: rgba(colors.$bg-accent, 0.4);
+      background: rgba(colors.$bg-accent, 0.3);
     }
   }
 
@@ -80,7 +71,7 @@
     }
 
     .toggled {
-      background: rgba(colors.$bg-accent, 0.3);
+      background: rgba(colors.$bg-accent, 0.2);
     }
 
 
@@ -89,5 +80,27 @@
       min-height: 10px;
       background: rgba(colors.$text, 0.4);
     }
+  }
+}
+
+.end {
+  padding: 6px 8px;
+
+  .Tray {
+    margin-left: 4px;
+  }
+
+  .status {
+    padding: 0px 4px;
+    margin-left: 4px;
+    border-radius: 2rem;
+
+    &:hover {
+      background: rgba(colors.$bg-accent, 0.2);
+    }
+  }
+
+  .toggled {
+    background: rgba(colors.$bg-accent, 0.3);
   }
 }

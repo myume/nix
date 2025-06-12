@@ -12,6 +12,9 @@
 
       "blur ,center-menu"
       "ignorealpha .3, center-menu"
+
+      "blur ,control-panel"
+      "ignorealpha .3, control-panel"
     ];
 
     workspace = [

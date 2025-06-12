@@ -52,20 +52,14 @@ export default function Network() {
   const network = AstalNetwork.get_default();
   const wired = bind(network, "wired");
   const wifi = bind(network, "wifi");
-  const hasWiredConnection = bind(network, "wired").as(
-    (wired) =>
-      wired &&
-      (wired.internet === AstalNetwork.Internet.CONNECTED ||
-        wired.internet === AstalNetwork.Internet.CONNECTING),
+  const useWired = bind(network, "primary").as(
+    (primary) => primary === AstalNetwork.Primary.WIRED,
   );
 
   return (
     <box cssClasses={["network"]}>
-      <Wired connection={wired} visible={hasWiredConnection} />
-      <Wifi
-        connection={wifi}
-        visible={hasWiredConnection.as((visible) => !visible)}
-      />
+      <Wired connection={wired} visible={useWired} />
+      <Wifi connection={wifi} visible={useWired.as((visible) => !visible)} />
     </box>
   );
 }

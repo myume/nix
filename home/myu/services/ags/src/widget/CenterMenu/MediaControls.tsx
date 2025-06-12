@@ -155,7 +155,7 @@ export const MediaControlMenu = ({
               )}
               // wrap
               // wrapMode={Pango.WrapMode.WORD_CHAR}
-              maxWidthChars={15}
+              maxWidthChars={20}
               ellipsize={Pango.EllipsizeMode.END}
             />
           </box>

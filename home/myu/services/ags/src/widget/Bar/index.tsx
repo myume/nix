@@ -24,10 +24,10 @@ const Center = ({
   </box>
 );
 
-const End = () => (
+const End = ({ state: { showControlPanel } }: { state: SharedState }) => (
   <box cssClasses={["end", "section"]}>
     <Tray />
-    <Status />
+    <Status showControlPanel={showControlPanel} />
   </box>
 );
 
@@ -50,7 +50,7 @@ export const Bar = (state: SharedState) => (gdkmonitor: Gdk.Monitor) => {
         <centerbox>
           <Start />
           <Center state={state} />
-          <End />
+          <End state={state} />
         </centerbox>
       }
     />

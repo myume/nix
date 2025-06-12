@@ -1,0 +1,32 @@
+@use './colors';
+
+.control-panel-menu {
+  margin: 8px;
+  border-radius: 1rem;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+
+  >* {
+    padding: 12px;
+    background: rgba(colors.$bg-secondary, 0.5);
+  }
+
+  .control-panel {
+    .panel {
+      padding: 10px 16px;
+      border-radius: 1rem;
+
+      &:hover {
+        background: rgba(colors.$bg-accent, 0.4);
+      }
+    }
+
+    .enabled {
+      background: rgba(colors.$bg-accent, 0.3);
+    }
+
+    .disabled {
+      background: rgba(colors.$bg-color, 0.4);
+    }
+
+  }
+}

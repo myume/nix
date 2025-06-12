@@ -6,11 +6,13 @@ import { Launcher } from "./widget/Launcher";
 import { CenterMenu } from "./widget/CenterMenu";
 import { Variable } from "astal";
 import AstalMpris from "gi://AstalMpris";
+import { ControlPanelMenu } from "./widget/ControlPanel";
 
 // state shared between windows
 export type SharedState = {
   showMediaControls: Variable<boolean>;
   showCalender: Variable<boolean>;
+  showControlPanel: Variable<boolean>;
   currentPlayer: Variable<AstalMpris.Player | null>;
 };
 
@@ -22,6 +24,7 @@ App.start({
     const sharedState: SharedState = {
       showMediaControls: Variable(false),
       showCalender: Variable(false),
+      showControlPanel: Variable(false),
       currentPlayer: Variable(null),
     };
 
@@ -33,5 +36,6 @@ App.start({
 
     Launcher();
     CenterMenu(sharedState);
+    ControlPanelMenu(sharedState);
   },
 });

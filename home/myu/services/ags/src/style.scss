@@ -3,6 +3,7 @@
 @use "./style/notification";
 @use "./style/launcher";
 @use "./style/center-menu";
+@use "./style/control-panel";
 
 * {
   @include mixins.reset-props;
