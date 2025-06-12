@@ -10,7 +10,7 @@ const Panels = [
 ];
 
 export const ControlPanel = () => {
-  const panelSpacing = 6;
+  const panelSpacing = 8;
   return (
     <box cssClasses={["control-panel"]} halign={Gtk.Align.CENTER} hexpand>
       <box cssClasses={["sliders"]}></box>
@@ -20,9 +20,9 @@ export const ControlPanel = () => {
         spacing={panelSpacing}
       >
         {Panels.map((row) => (
-          <box cssClasses={["row"]} spacing={panelSpacing}>
+          <box cssClasses={["row"]} spacing={panelSpacing} homogeneous>
             {row.map((panel) => (
-              <box cssClasses={["item"]} child={panel()} />
+              <box cssClasses={["item"]} child={panel()} homogeneous />
             ))}
           </box>
         ))}

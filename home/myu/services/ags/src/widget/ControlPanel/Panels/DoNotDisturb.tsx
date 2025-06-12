@@ -9,7 +9,7 @@ export const DoNoDisturb = () => {
   return (
     <Panel
       title={"Do Not Disturb"}
-      description={dnd.as((dnd) => (dnd ? "on" : "off"))}
+      description={dnd.as((dnd) => (dnd ? "On" : "Off"))}
       icon={dnd.as((dnd) =>
         dnd ? "notification-disabled" : "notification-inactive",
       )}
