@@ -15,7 +15,7 @@ const Center = ({
 }: {
   state: SharedState;
 }) => (
-  <box spacing={3} cssClasses={["center", "section"]}>
+  <box cssClasses={["center", "section"]}>
     <Time showCalender={showCalender} />
     <Player
       showMediaControls={showMediaControls}

@@ -62,6 +62,7 @@ export default function Player({
       transitionDuration={1000}
       revealChild={players.as((ps) => ps.length > 0)}
       transitionType={Gtk.RevealerTransitionType.SLIDE_RIGHT}
+      marginStart={players.as((ps) => (ps.length > 0 ? 4 : 0))}
       child={players.as((ps) => {
         if (ps.length > 0) {
           currentPlayer.set(ps[0]);
