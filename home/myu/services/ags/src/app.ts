@@ -12,30 +12,33 @@ import { ControlPanelMenu } from "./widget/ControlPanel";
 export type SharedState = {
   showMediaControls: Variable<boolean>;
   showCalender: Variable<boolean>;
-  showControlPanel: Variable<boolean>;
   currentPlayer: Variable<AstalMpris.Player | null>;
+  showControlPanel: Variable<boolean>;
 };
+
+function main() {
+  // initialize shared state
+  const sharedState: SharedState = {
+    showMediaControls: Variable(false),
+    showCalender: Variable(false),
+    currentPlayer: Variable(null),
+    showControlPanel: Variable(false),
+  };
+
+  // these windows can be toggled by the bar...so initialize them first
+  Launcher();
+  CenterMenu(sharedState);
+  ControlPanelMenu(sharedState);
+
+  const allMonitorWindows = [Bar(sharedState), Notifications];
+
+  App.get_monitors().map((monitor) =>
+    allMonitorWindows.map((window) => window(monitor)),
+  );
+}
 
 App.start({
   css: style,
   iconTheme: "Papirus-Dark",
-  main() {
-    // initialize shared state
-    const sharedState: SharedState = {
-      showMediaControls: Variable(false),
-      showCalender: Variable(false),
-      showControlPanel: Variable(false),
-      currentPlayer: Variable(null),
-    };
-
-    const allMonitorWindows = [Bar(sharedState), Notifications];
-
-    App.get_monitors().map((monitor) =>
-      allMonitorWindows.map((window) => window(monitor)),
-    );
-
-    Launcher();
-    CenterMenu(sharedState);
-    ControlPanelMenu(sharedState);
-  },
+  main,
 });

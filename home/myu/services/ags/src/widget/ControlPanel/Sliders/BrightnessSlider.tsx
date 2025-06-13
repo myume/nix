@@ -1,4 +1,4 @@
-import BrightnessService from "../../Services/Brightness";
+import BrightnessService from "../../../Services/Brightness";
 import { bind } from "astal";
 import { Slider } from "./Slider";
 

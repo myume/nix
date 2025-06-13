@@ -1,5 +1,5 @@
 import { bind } from "astal";
-import BrightnessService from "../../Services/Brightness";
+import BrightnessService from "../../../Services/Brightness";
 
 export default function Brightness() {
   const brightness = BrightnessService.get_default();
