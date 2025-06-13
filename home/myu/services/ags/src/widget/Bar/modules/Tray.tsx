@@ -3,10 +3,17 @@ import AstalTray from "gi://AstalTray";
 
 export default function Tray() {
   const tray = AstalTray.get_default();
+  const items = bind(tray, "items");
+  const hasItems = items.as((items) => items.length > 0);
 
   return (
-    <box cssClasses={["Tray"]} spacing={4}>
-      {bind(tray, "items").as((items) =>
+    <box
+      visible={hasItems}
+      cssClasses={["Tray"]}
+      marginEnd={hasItems.as((hasItems) => (hasItems ? 4 : 0))}
+      spacing={4}
+    >
+      {items.as((items) =>
         items.map((item) => (
           <menubutton
             setup={(self) =>

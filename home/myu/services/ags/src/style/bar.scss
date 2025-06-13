@@ -23,7 +23,7 @@
     min-width: 8px;
     min-height: 8px;
 
-    background-color: colors.$surface1;
+    background-color: rgba(colors.$text, 0.3);
     border-radius: 2rem;
 
     &.populated {
@@ -31,7 +31,7 @@
     }
 
     &:hover {
-      background: colors.$sky;
+      background: colors.$sapphire;
     }
 
     &.focused {
@@ -49,7 +49,7 @@
       border-radius: 2rem;
 
       &:hover {
-        background: rgba(colors.$bg-accent, 0.1);
+        background: rgba(colors.$bg-accent, 0.2);
       }
     }
 
@@ -92,7 +92,6 @@
 
   .status {
     padding: 0px 4px;
-    margin-left: 4px;
     border-radius: 2rem;
 
     &:hover {
