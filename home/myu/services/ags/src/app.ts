@@ -1,4 +1,4 @@
-import { App } from "astal/gtk4";
+import { App, Gdk, Gtk } from "astal/gtk4";
 import style from "./style.scss";
 import { Bar } from "./widget/Bar";
 import { Notifications } from "./widget/Notification";
@@ -30,11 +30,30 @@ function main() {
   CenterMenu(sharedState);
   ControlPanelMenu(sharedState);
 
-  const allMonitorWindows = [Bar(sharedState), Notifications];
+  const initializedWidgets: Gtk.Window[] = [];
+  const initializeBar = () => {
+    const allMonitorWindows = [Bar(sharedState), Notifications];
+    App.get_monitors().map((monitor) =>
+      allMonitorWindows.map((window) =>
+        initializedWidgets.push(window(monitor) as Gtk.Window),
+      ),
+    );
+  };
 
-  App.get_monitors().map((monitor) =>
-    allMonitorWindows.map((window) => window(monitor)),
-  );
+  initializeBar();
+
+  // handle monitor (dis)connect
+  const display = Gdk.Display.get_default()?.get_monitors();
+  display?.connect("items-changed", () => {
+    // clear all widgets
+    let widget;
+    while ((widget = initializedWidgets.pop())) {
+      widget.destroy();
+    }
+
+    // reinitialize them on the updated monitors
+    initializeBar();
+  });
 }
 
 App.start({

@@ -13,7 +13,7 @@ export default function Workspaces() {
         const fw = bind(hypr, "focusedWorkspace");
 
         const wsState = derive([populatedWs, fw], (populatedWs, fw) => [
-          wsId === fw.id
+          fw && fw.id && wsId === fw.id
             ? "focused"
             : populatedWs.includes(wsId)
               ? "populated"
