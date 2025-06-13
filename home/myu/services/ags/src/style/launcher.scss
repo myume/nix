@@ -3,7 +3,7 @@
 .launcher-container {
   .launcher {
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
-    background: rgba(colors.$bg-secondary, 0.6);
+    background: rgba(colors.$bg-secondary, 0.85);
     padding: 20px;
 
     border-radius: 1.5rem;
@@ -40,7 +40,7 @@
       }
 
       .selected {
-        background: colors.$bg-accent;
+        background: rgba(colors.$bg-accent, 0.4);
       }
     }
   }
