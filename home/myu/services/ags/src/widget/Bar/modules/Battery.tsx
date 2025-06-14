@@ -33,18 +33,7 @@ export default function Battery() {
     >
       <box>
         <image
-          cssClasses={derive([percentage, charging])().as(
-            ([percentage, charging]) => {
-              const classes = [
-                percentage >= 80 ? "high" : percentage >= 50 ? "med" : "low",
-              ];
-
-              if (charging) classes.push("charging");
-
-              return classes;
-            },
-          )}
-          iconName={bind(battery, "iconName")}
+          iconName={bind(battery, "batteryIconName")} // iconName for BW version
         />
         <label
           cssClasses={["battery-percentage"]}
