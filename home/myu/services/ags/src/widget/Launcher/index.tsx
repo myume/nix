@@ -17,7 +17,8 @@ const launchApp = (app: AstalApps.Application) => {
 
   // why are you launching cli programs from outside of a cli
   if ((app.app as Gio.DesktopAppInfo).get_boolean("Terminal")) {
-    Hyprland.get_default().dispatch("exec", `$TERMINAL -e ${executable}`);
+    // Dear God, tinkle tinkle hoy! Please don't get injection attacked
+    Hyprland.get_default().dispatch("exec", `kitty -e ${executable}`);
   } else {
     Hyprland.get_default().dispatch("exec", executable);
   }
