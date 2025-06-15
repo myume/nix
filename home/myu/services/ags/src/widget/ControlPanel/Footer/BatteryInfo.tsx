@@ -2,7 +2,7 @@ import AstalBattery from "gi://AstalBattery";
 import { bind, derive } from "astal";
 import { secondsToTimeStamp } from "../../../utils/util";
 
-export default function Battery() {
+export const BatteryInfo = () => {
   const battery = AstalBattery.get_default();
   const percentage = bind(battery, "percentage").as((percentage) =>
     Math.floor(percentage * 100),
@@ -13,32 +13,32 @@ export default function Battery() {
 
   const charging = bind(battery, "charging");
 
-  const description = derive(
-    [percentage, timeToEmpty, timeToFull, charging],
-    (percentage, timeToEmpty, timeToFull, charging) =>
-      `Battery on ${percentage}%\n` +
-      (!charging
-        ? `${timeToEmpty} remaining`
-        : percentage == 100
-          ? "Fully Charged"
-          : `${timeToFull} until charged`),
-  );
-
   return (
-    <button
-      tooltipText={description()}
+    <box
+      hexpand
       child={
-        <box>
+        <box cssClasses={["battery-info"]}>
           <image
-            iconName={bind(battery, "batteryIconName")} // iconName for BW version
+            cssClasses={["icon"]}
+            iconName={bind(battery, "batteryIconName")}
           />
           <label
-            cssClasses={["battery-percentage"]}
-            visible={true}
+            cssClasses={["percentage"]}
             label={percentage.as((percentage) => `${percentage}%`)}
+          />
+          <box cssClasses={["separator"]} />
+          <label
+            cssClasses={["description"]}
+            label={derive(
+              [charging, timeToFull, timeToEmpty],
+              (charging, timeToFull, timeToEmpty) =>
+                charging
+                  ? `${timeToFull} until fully charged`
+                  : `${timeToEmpty} remaining`,
+            )()}
           />
         </box>
       }
     />
   );
-}
+};

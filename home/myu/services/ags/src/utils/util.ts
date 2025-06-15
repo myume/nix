@@ -46,3 +46,14 @@ export function formatDuration(length: number) {
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   }
 }
+
+export const secondsToTimeStamp = (seconds: number) => {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+
+  if (h === 0) {
+    return `${m}m`;
+  }
+
+  return `${h}h ${m}m`;
+};

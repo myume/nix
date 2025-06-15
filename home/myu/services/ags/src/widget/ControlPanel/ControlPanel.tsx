@@ -1,6 +1,8 @@
 import { Gtk } from "astal/gtk4";
 import { Sliders } from "./Sliders";
 import { Panels } from "./Panels";
+import { BatteryInfo } from "./Footer/BatteryInfo";
+import { PowerMenu } from "./Footer/PowerMenu";
 
 export const ControlPanel = () => {
   const panelSpacing = 8;
@@ -37,6 +39,10 @@ export const ControlPanel = () => {
             ))}
           </box>
         ))}
+      </box>
+      <box cssClasses={["footer"]} spacing={8}>
+        <BatteryInfo />
+        <PowerMenu />
       </box>
     </box>
   );
