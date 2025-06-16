@@ -35,7 +35,9 @@ export const ControlPanelMenu = ({ showControlPanel }: SharedState) => {
               cssClasses={["control-panel-menu"]}
               overflow={Gtk.Overflow.HIDDEN}
             >
-              <ControlPanel />
+              <ControlPanel
+                closeControlPanel={() => showControlPanel.set(false)}
+              />
               <box visible={false} cssClasses={["separator"]} />
             </box>
           }

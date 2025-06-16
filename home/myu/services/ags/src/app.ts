@@ -7,6 +7,7 @@ import { CenterMenu } from "./widget/CenterMenu";
 import { Variable } from "astal";
 import AstalMpris from "gi://AstalMpris";
 import { ControlPanelMenu } from "./widget/ControlPanel";
+import { PowerMenu } from "./widget/PowerMenu";
 
 // state shared between windows
 export type SharedState = {
@@ -26,7 +27,9 @@ function main() {
   };
 
   // these windows can be toggled by the bar...so initialize them first
+  // order matters here
   Launcher();
+  PowerMenu();
   CenterMenu(sharedState);
   ControlPanelMenu(sharedState);
 

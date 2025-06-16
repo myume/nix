@@ -1,0 +1,56 @@
+@use './colors';
+
+.power-menu {
+  background: rgba(0, 0, 0, 0.6);
+
+  .selection {
+    background: colors.$bg-color;
+    padding: 16px;
+    border-radius: 2rem;
+
+    >* {
+      border-radius: 2rem;
+      padding: 8px;
+    }
+
+    .shutdown {
+      color: colors.$red;
+
+      &:hover {
+        background: rgba(colors.$red, 0.2);
+      }
+    }
+
+    .reboot {
+      color: colors.$peach;
+
+      &:hover {
+        background: rgba(colors.$peach, 0.2);
+      }
+    }
+
+    .suspend {
+      color: colors.$yellow;
+
+      &:hover {
+        background: rgba(colors.$yellow, 0.2);
+      }
+    }
+
+    .log-out {
+      color: colors.$teal;
+
+      &:hover {
+        background: rgba(colors.$teal, 0.2);
+      }
+    }
+
+    .lock {
+      color: colors.$subtext0;
+
+      &:hover {
+        background: rgba(colors.$subtext0, 0.2);
+      }
+    }
+  }
+}

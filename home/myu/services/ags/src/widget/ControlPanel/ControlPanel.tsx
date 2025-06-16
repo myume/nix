@@ -2,9 +2,13 @@ import { Gtk } from "astal/gtk4";
 import { Sliders } from "./Sliders";
 import { Panels } from "./Panels";
 import { BatteryInfo } from "./Footer/BatteryInfo";
-import { PowerMenu } from "./Footer/PowerMenu";
+import { PowerButton } from "./Footer/PowerButton";
 
-export const ControlPanel = () => {
+export const ControlPanel = ({
+  closeControlPanel,
+}: {
+  closeControlPanel: () => void;
+}) => {
   const panelSpacing = 8;
   return (
     <box
@@ -42,7 +46,7 @@ export const ControlPanel = () => {
       </box>
       <box cssClasses={["footer"]} spacing={8}>
         <BatteryInfo />
-        <PowerMenu />
+        <PowerButton closeControlPanel={closeControlPanel} />
       </box>
     </box>
   );

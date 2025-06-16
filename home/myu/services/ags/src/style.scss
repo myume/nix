@@ -4,6 +4,7 @@
 @use "./style/launcher";
 @use "./style/center-menu";
 @use "./style/control-panel";
+@use "./style/power-menu";
 
 * {
   @include mixins.reset-props;
