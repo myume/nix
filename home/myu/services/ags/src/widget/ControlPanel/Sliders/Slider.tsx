@@ -1,7 +1,6 @@
 import { Binding } from "astal";
-import { Astal, astalify, Gtk } from "astal/gtk4";
-
-const Overlay = astalify<Gtk.Overlay>(Gtk.Overlay);
+import { Astal, Gtk } from "astal/gtk4";
+import { Overlay } from "astal/gtk4/widget";
 
 export const Slider = ({
   min,
@@ -20,6 +19,17 @@ export const Slider = ({
 }) => (
   <Overlay
     cssClasses={["slider"]}
+    child={
+      <slider
+        min={min}
+        widthRequest={200}
+        max={max}
+        value={value}
+        onChangeValue={onChange}
+        overflow={Gtk.Overflow.HIDDEN}
+        hexpand
+      />
+    }
     setup={(self) => {
       self.add_overlay(
         <box cssClasses={["info"]} canTarget={false} spacing={4}>
@@ -27,13 +37,13 @@ export const Slider = ({
             cssClasses={["icon"]}
             pixelSize={16}
             iconName={icon}
-            halign={Gtk.Align.END}
+            halign={Gtk.Align.START}
           />
           {label ? (
             <label
               cssClasses={["value"]}
               label={label}
-              halign={Gtk.Align.END}
+              halign={Gtk.Align.START}
             />
           ) : (
             <box visible={false} />
@@ -41,15 +51,5 @@ export const Slider = ({
         </box>,
       );
     }}
-  >
-    <slider
-      min={min}
-      widthRequest={200}
-      max={max}
-      value={value}
-      onChangeValue={onChange}
-      overflow={Gtk.Overflow.HIDDEN}
-      hexpand
-    />
-  </Overlay>
+  />
 );

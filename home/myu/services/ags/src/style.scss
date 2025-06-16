@@ -5,6 +5,7 @@
 @use "./style/center-menu";
 @use "./style/control-panel";
 @use "./style/power-menu";
+@use "./style/OSD";
 
 * {
   @include mixins.reset-props;

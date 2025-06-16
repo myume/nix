@@ -8,11 +8,11 @@ import { exec, execAsync } from "astal/process";
 const get = (args: string) => Number(exec(`brightnessctl ${args}`));
 const screen = exec(`bash -c "ls -w1 /sys/class/backlight | head -1"`);
 
-@register({ GTypeName: "Brightness" })
-export default class Brightness extends GObject.Object {
-  static instance: Brightness;
+@register({ GTypeName: "BrightnessService" })
+export default class BrightnessService extends GObject.Object {
+  static instance: BrightnessService;
   static get_default() {
-    if (!this.instance) this.instance = new Brightness();
+    if (!this.instance) this.instance = new BrightnessService();
 
     return this.instance;
   }

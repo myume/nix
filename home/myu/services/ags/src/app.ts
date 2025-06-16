@@ -4,10 +4,18 @@ import { Bar } from "./widget/Bar";
 import { Notifications } from "./widget/Notification";
 import { Launcher } from "./widget/Launcher";
 import { CenterMenu } from "./widget/CenterMenu";
-import { Variable } from "astal";
+import { timeout, Variable } from "astal";
 import AstalMpris from "gi://AstalMpris";
+import AstalWp from "gi://AstalWp";
+import BrightnessService from "./Services/Brightness";
 import { ControlPanelMenu } from "./widget/ControlPanel";
 import { PowerMenu } from "./widget/PowerMenu";
+import {
+  OSD,
+  OSDMode,
+  OSDState,
+  windowName as OSDWindowName,
+} from "./widget/OSD";
 
 // state shared between windows
 export type SharedState = {
@@ -15,6 +23,7 @@ export type SharedState = {
   showCalender: Variable<boolean>;
   currentPlayer: Variable<AstalMpris.Player | null>;
   showControlPanel: Variable<boolean>;
+  osdState: OSDState;
 };
 
 function main() {
@@ -24,6 +33,10 @@ function main() {
     showCalender: Variable(false),
     currentPlayer: Variable(null),
     showControlPanel: Variable(false),
+    osdState: {
+      timer: Variable(null),
+      mode: Variable(null),
+    },
   };
 
   // these windows can be toggled by the bar...so initialize them first
@@ -32,6 +45,7 @@ function main() {
   PowerMenu();
   CenterMenu(sharedState);
   ControlPanelMenu(sharedState);
+  OSD(sharedState.osdState);
 
   const initializedWidgets: Gtk.Window[] = [];
   const initializeBar = () => {
@@ -44,6 +58,26 @@ function main() {
   };
 
   initializeBar();
+
+  const triggerOSD = (inputMode: OSDMode) => {
+    const {
+      osdState: { mode, timer },
+    } = sharedState;
+    mode.set(inputMode);
+    timer.get()?.cancel();
+    timer.set(null);
+    const osd = App.get_window(OSDWindowName);
+    osd?.show();
+
+    if (!timer.get()) timer.set(timeout(3000, () => osd?.hide()));
+  };
+
+  const { defaultSpeaker: speaker } = AstalWp.get_default()!;
+  speaker.connect("notify::volume", () => triggerOSD(OSDMode.Volume));
+  speaker.connect("notify::mute", () => triggerOSD(OSDMode.Volume));
+
+  const brightness = BrightnessService.get_default();
+  brightness.connect("notify::screen", () => triggerOSD(OSDMode.Brightness));
 
   // handle monitor (dis)connect
   const display = Gdk.Display.get_default()?.get_monitors();

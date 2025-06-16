@@ -1,0 +1,33 @@
+@use "./colors";
+
+.OSD {
+  margin: 8px;
+
+  .slider {
+    border: solid 4px colors.$bg-transparent;
+    border-radius: 1.2rem;
+
+
+    trough {
+      background-color: colors.$bg-secondary;
+      border-radius: 1rem;
+      min-width: 28px;
+      min-height: 120px;
+
+      highlight {
+        background-color: colors.$blue;
+        border-radius: 1rem;
+      }
+
+      /* slider { */
+      /*   min-height: 5px; */
+      /*   min-width: 32px; */
+      /*   background-color: colors.$text; */
+      /*   border-radius: 2rem; */
+      /*   margin: 0 -10px; */
+      /*   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); */
+      /* } */
+
+    }
+  }
+}

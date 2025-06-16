@@ -8,3 +8,5 @@ export const ScrolledWindow = astalify<
   Gtk.ScrolledWindow,
   Gtk.ScrolledWindow.ConstructorProps
 >(Gtk.ScrolledWindow);
+
+export const Overlay = astalify<Gtk.Overlay>(Gtk.Overlay);

@@ -15,6 +15,9 @@
 
       "blur ,control-panel"
       "ignorealpha .3, control-panel"
+
+      "blur ,OSD"
+      "ignorealpha .3, OSD"
     ];
 
     workspace = [

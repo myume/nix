@@ -9,7 +9,7 @@ export const PowerMenu = () => {
 
   const hideWindow = (window: Gtk.Window) => {
     reveal.set(false);
-    window.hide();
+    window.close();
   };
 
   <window
