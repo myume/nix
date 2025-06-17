@@ -1,4 +1,4 @@
-import { bind, GLib } from "astal";
+import { AstalIO, bind, GLib } from "astal";
 import { Gtk } from "astal/gtk4";
 import AstalNotifd from "gi://AstalNotifd";
 import AstalApps from "gi://AstalApps";
@@ -18,9 +18,13 @@ const urgencyToString = (urgency: AstalNotifd.Urgency) => {
 
 type Props = {
   notification: AstalNotifd.Notification;
+  hideNotification?: () => AstalIO.Time;
 };
 
-export default function Notification({ notification }: Props) {
+export default function Notification({
+  notification,
+  hideNotification,
+}: Props) {
   const apps = new AstalApps.Apps();
   let appIcon = notification.appIcon;
   if (appIcon === "") {
@@ -41,12 +45,31 @@ export default function Notification({ notification }: Props) {
     )),
   );
 
+  const notifd = AstalNotifd.get_default();
+  let timer: AstalIO.Time | null = null;
+
   return (
     <box
       cssClasses={["notification", urgencyToString(notification.urgency)]}
       orientation={Gtk.Orientation.VERTICAL}
       widthRequest={256}
       spacing={8}
+      onHoverEnter={() => {
+        notifd.set_ignore_timeout(true);
+        timer?.cancel();
+        timer = null;
+      }}
+      onHoverLeave={() => {
+        notifd.set_ignore_timeout(false);
+        if (hideNotification) {
+          timer = hideNotification();
+        }
+      }}
+      setup={() => {
+        if (hideNotification) {
+          timer = hideNotification();
+        }
+      }}
       hexpand
     >
       <box cssClasses={["notification-header"]} hexpand>
@@ -97,7 +120,6 @@ export default function Notification({ notification }: Props) {
             cssClasses={["summary"]}
             label={bind(notification, "summary")}
             xalign={0}
-            useMarkup
             ellipsize={Pango.EllipsizeMode.END}
             widthChars={widthChars}
             maxWidthChars={widthChars}
@@ -106,7 +128,6 @@ export default function Notification({ notification }: Props) {
             cssClasses={["body"]}
             label={bind(notification, "body")}
             xalign={0}
-            useMarkup
             wrap
             wrapMode={Pango.WrapMode.WORD_CHAR}
             widthChars={widthChars}

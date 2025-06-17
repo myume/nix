@@ -1,19 +1,23 @@
-import { bind } from "astal";
+import { bind, timeout } from "astal";
 import { App, Astal, Gdk, Gtk } from "astal/gtk4";
-import AstalNotifd from "gi://AstalNotifd";
 import Notification from "./Notification";
+import NotificationService from "../Services/NotificationManager";
+
+const notifTimeout = 4000;
+const windowName = "floating-notifications";
 
 export function Notifications(gdkmonitor: Gdk.Monitor) {
   const { TOP, RIGHT } = Astal.WindowAnchor;
 
-  const notifd = AstalNotifd.get_default();
-  const notifications = bind(notifd, "notifications");
+  const notificationManger = NotificationService.get_default();
+  const notifications = bind(notificationManger, "notifications");
 
   return (
     <window
       visible={notifications.as((notifications) => notifications.length > 0)}
-      namespace={"floating-notifications"}
-      cssClasses={["bar"]}
+      name={windowName}
+      namespace={windowName}
+      cssClasses={[windowName]}
       layer={Astal.Layer.OVERLAY}
       exclusivity={Astal.Exclusivity.NORMAL}
       gdkmonitor={gdkmonitor}
@@ -22,9 +26,18 @@ export function Notifications(gdkmonitor: Gdk.Monitor) {
       child={
         <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
           {notifications.as((notifs) =>
-            notifs.map((notification) => (
-              <Notification notification={notification} />
-            )),
+            notifs.map((notification) => {
+              return (
+                <Notification
+                  notification={notification}
+                  hideNotification={() =>
+                    timeout(notifTimeout, () => {
+                      notificationManger.hideNotification(notification);
+                    })
+                  }
+                />
+              );
+            }),
           )}
         </box>
       }
