@@ -3,6 +3,7 @@ import { Sliders } from "./Sliders";
 import { Panels } from "./Panels";
 import { BatteryInfo } from "./Footer/BatteryInfo";
 import { PowerButton } from "./Footer/PowerButton";
+import { NotificationCenter } from "./NotificationCenter";
 
 export const ControlPanel = ({
   closeControlPanel,
@@ -48,6 +49,7 @@ export const ControlPanel = ({
         <BatteryInfo />
         <PowerButton closeControlPanel={closeControlPanel} />
       </box>
+      <NotificationCenter />
     </box>
   );
 };
