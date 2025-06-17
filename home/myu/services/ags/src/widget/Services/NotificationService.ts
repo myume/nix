@@ -11,8 +11,9 @@ export default class NotificationService extends GObject.Object {
   }
 
   #notifd = AstalNotifd.get_default();
-  #notifications = this.#notifd.notifications;
-  #hidden_notifications: AstalNotifd.Notification[] = [];
+
+  #notifications: AstalNotifd.Notification[] = [];
+  #hidden_notifications = this.#notifd.notifications;
 
   @property()
   get notifications() {

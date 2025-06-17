@@ -1,7 +1,7 @@
 import { bind, timeout } from "astal";
 import { App, Astal, Gdk, Gtk } from "astal/gtk4";
 import Notification from "./Notification";
-import NotificationService from "../Services/NotificationManager";
+import NotificationService from "../Services/NotificationService";
 
 const notifTimeout = 4000;
 const windowName = "floating-notifications";
@@ -9,8 +9,8 @@ const windowName = "floating-notifications";
 export function Notifications(gdkmonitor: Gdk.Monitor) {
   const { TOP, RIGHT } = Astal.WindowAnchor;
 
-  const notificationManger = NotificationService.get_default();
-  const notifications = bind(notificationManger, "notifications");
+  const notificationService = NotificationService.get_default();
+  const notifications = bind(notificationService, "notifications");
 
   return (
     <window
@@ -32,7 +32,7 @@ export function Notifications(gdkmonitor: Gdk.Monitor) {
                   notification={notification}
                   hideNotification={() =>
                     timeout(notifTimeout, () => {
-                      notificationManger.hideNotification(notification);
+                      notificationService.hideNotification(notification);
                     })
                   }
                 />
