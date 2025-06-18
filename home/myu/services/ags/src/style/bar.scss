@@ -84,10 +84,34 @@
 }
 
 .end {
-  padding: 6px 8px;
-
   .Tray {
     margin-left: 2px;
+
+    popover.background.menu {
+
+      arrow {
+        background-color: colors.$bg-color;
+      }
+
+      contents {
+        background-color: colors.$bg-color;
+        border-radius: 1rem;
+        padding: 12px;
+
+        label {
+          padding: 4px;
+          color: colors.$fg-color;
+          border-radius: 0.5rem;
+
+          &:hover {
+            color: colors.$blue;
+            background-color: rgba(colors.$blue, 0.1);
+          }
+        }
+      }
+    }
+
+
   }
 
   .status {
