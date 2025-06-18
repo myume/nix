@@ -75,8 +75,12 @@ function main() {
   };
 
   const { defaultSpeaker: speaker } = AstalWp.get_default()!;
-  speaker.connect("notify::volume", () => triggerOSD(OSDMode.Volume));
-  speaker.connect("notify::mute", () => triggerOSD(OSDMode.Volume));
+
+  // timeout to avoid catching signals firing from startup
+  timeout(100, () => {
+    speaker.connect("notify::volume", () => triggerOSD(OSDMode.Volume));
+    speaker.connect("notify::mute", () => triggerOSD(OSDMode.Volume));
+  });
 
   const brightness = BrightnessService.get_default();
   brightness.connect("notify::screen", () => triggerOSD(OSDMode.Brightness));
