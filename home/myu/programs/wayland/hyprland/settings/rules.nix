@@ -23,7 +23,11 @@
     workspace = [
     ];
 
-    windowrulev3 = [
+    windowrulev2 = [
+      # why is it impossible for anyone to get idle inhibit right
+      "idleinhibit focus, class:^(mpv)$"
+      "idleinhibit focus, class:^(zen), title:^(.*YouTube.*)$"
+      "idleinhibit fullscreen, class:^(zen)"
     ];
   };
 }
