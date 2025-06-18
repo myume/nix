@@ -48,10 +48,10 @@ export const Panel = ({
       }
       hexpand
     />
-
     <button
+      cssClasses={["show-page"]}
       visible={showPage !== undefined}
-      label={""}
+      label={""}
       onClicked={() => {
         if (showPage) showPage();
       }}

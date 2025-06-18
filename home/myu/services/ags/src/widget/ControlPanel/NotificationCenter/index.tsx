@@ -22,25 +22,35 @@ export const NotificationCenter = () => {
       cssClasses={["notifications", "page"]}
       orientation={Gtk.Orientation.VERTICAL}
       spacing={12}
-      visible={allNotifications((notifications) => notifications.length > 0)}
     >
       <box cssClasses={["separator"]} />
-      <ScrolledWindow
-        cssClasses={["scrolled-window"]}
+      <box
         heightRequest={360}
-        max_content_height={360}
-        child={
-          <box orientation={Gtk.Orientation.VERTICAL} spacing={10}>
-            {allNotifications((notifications) =>
-              notifications.map((notification) => (
-                <Notification notification={notification} />
-              )),
-            )}
-          </box>
-        }
+        child={allNotifications((notifications) =>
+          notifications.length > 0 ? (
+            <ScrolledWindow
+              cssClasses={["scrolled-window"]}
+              max_content_height={360}
+              vexpand
+              hexpand
+              child={
+                <box orientation={Gtk.Orientation.VERTICAL} spacing={10}>
+                  {allNotifications((notifications) =>
+                    notifications.map((notification) => (
+                      <Notification notification={notification} />
+                    )),
+                  )}
+                </box>
+              }
+            />
+          ) : (
+            <label xalign={0.5} hexpand label={"No Notifications"} />
+          ),
+        )}
       />
       <button
         cssClasses={["clear-button"]}
+        visible={allNotifications((notifications) => notifications.length > 0)}
         halign={Gtk.Align.END}
         onClicked={() => {
           allNotifications

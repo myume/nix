@@ -46,9 +46,9 @@
   }
 
   .control-panel {
-
     .panel {
       padding: 10px 16px;
+      padding-right: 8px;
       border-radius: 1rem;
 
       &:hover {
@@ -61,6 +61,16 @@
 
       .description {
         font-size: 12px;
+      }
+
+      .show-page {
+        padding-left: 12.5px;
+        padding-right: 10.5px;
+        border-radius: 2rem;
+
+        &:hover {
+          background: rgba(colors.$bg-color, 0.2);
+        }
       }
     }
 
