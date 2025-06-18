@@ -36,5 +36,7 @@
 
     brightnessctl
     bluez
+
+    powertop
   ];
 }
