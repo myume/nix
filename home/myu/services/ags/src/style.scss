@@ -6,6 +6,7 @@
 @use "./style/control-panel";
 @use "./style/power-menu";
 @use "./style/OSD";
+@use "./style/colors";
 
 * {
   @include mixins.reset-props;
@@ -28,4 +29,10 @@ scrolledwindow scrollbar {
     min-width: 4px;
     min-height: 12px;
   }
+}
+
+tooltip {
+  padding: 8px;
+  border-radius: 1rem;
+  background-color: colors.$bg-color;
 }
