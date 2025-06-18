@@ -3,6 +3,7 @@ import { SharedState } from "../../app";
 import { hideOnClickAway } from "../../utils/util";
 import { derive } from "astal";
 import { ControlPanel } from "./ControlPanel";
+import { NotificationCenter } from "./NotificationCenter";
 
 export const windowName = "control-panel";
 
@@ -34,13 +35,15 @@ export const ControlPanelMenu = ({ showControlPanel }: SharedState) => {
           transitionType={Gtk.RevealerTransitionType.SLIDE_LEFT}
           child={
             <box
+              orientation={Gtk.Orientation.VERTICAL}
               cssClasses={["control-panel-menu"]}
               overflow={Gtk.Overflow.HIDDEN}
+              spacing={12}
             >
               <ControlPanel
                 closeControlPanel={() => showControlPanel.set(false)}
               />
-              <box visible={false} cssClasses={["separator"]} />
+              <NotificationCenter />
             </box>
           }
         />
