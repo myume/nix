@@ -1,8 +1,9 @@
 import { Binding, Variable } from "astal";
 import { App, Astal, Gdk, Gtk } from "astal/gtk4";
 import { hideOnClickAway } from "../../utils/util";
-import { AppSearch } from "./Plugins/AppSearch.1";
 import { LauncherPlugin } from "./Plugins/Plugin";
+import { AppSearch } from "./Plugins/AppSearch";
+import { Calculator } from "./Plugins/Calculator";
 
 enum Mode {
   App,
@@ -25,10 +26,15 @@ export function Launcher() {
   const plugin: Binding<LauncherPlugin> = mode.as((mode) => {
     switch (mode) {
       case Mode.App:
-        return new AppSearch(searchString);
+        return AppSearch.get_default(searchString);
       case Mode.Calc:
-        return new AppSearch(searchString);
+        return Calculator.get_default(searchString);
     }
+  });
+
+  plugin.subscribe(() => {
+    entryRef?.set({ text: "" });
+    entryRef?.grab_focus();
   });
 
   return (
@@ -50,14 +56,12 @@ export function Launcher() {
       exclusivity={Astal.Exclusivity.IGNORE}
       keymode={Astal.Keymode.ON_DEMAND}
       onShow={() => {
+        plugin.get().cleanup();
         modeIndex.set(0);
         searchString.set("");
         entryRef?.set({ text: "" });
         entryRef?.grab_focus();
-        plugin.get().cleanup();
       }}
-      focusable
-      onFocusLeave={(self) => self.hide()}
       onKeyPressed={(self, keyval, keycode, state) => {
         if (keyval === Gdk.KEY_Tab) {
           modeIndex.set((modeIndex.get() + 1) % modes.length);

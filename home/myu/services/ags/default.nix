@@ -11,6 +11,7 @@ in {
   home.packages = [
     agsPkgs.io # expose the astal cli
     pkgs.papirus-icon-theme # use paprius icons
+    pkgs.rink
   ];
 
   programs.ags = {

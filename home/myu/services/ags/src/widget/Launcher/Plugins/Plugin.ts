@@ -2,10 +2,12 @@ import { Variable } from "astal";
 import { Astal, Gdk, Gtk } from "astal/gtk4";
 
 export abstract class LauncherPlugin {
-  searchString: Variable<string>;
+  static instance: LauncherPlugin;
+
+  input: Variable<string>;
 
   constructor(input: Variable<string>) {
-    this.searchString = input;
+    this.input = input;
   }
 
   abstract activate(): void;

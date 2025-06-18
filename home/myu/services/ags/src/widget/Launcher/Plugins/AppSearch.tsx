@@ -143,28 +143,31 @@ const AppSearchResults = ({
 };
 
 export class AppSearch extends LauncherPlugin {
+  static get_default(input: Variable<string>): LauncherPlugin {
+    if (!AppSearch.instance) AppSearch.instance = new AppSearch(input);
+    return AppSearch.instance;
+  }
+
   static apps = new AstalApps.Apps();
 
   // doesn't work if not static for some reason
-  static selected = Variable(0);
+  selected = Variable(0);
 
-  appSearchResults = this.searchString((str) =>
-    AppSearch.apps.fuzzy_query(str),
-  );
+  appSearchResults = this.input((str) => AppSearch.apps.fuzzy_query(str));
 
   constructor(input: Variable<string>) {
     super(input);
-    this.appSearchResults.subscribe(() => AppSearch.selected.set(0));
+    this.appSearchResults.subscribe(() => this.selected.set(0));
   }
 
   activate(): void {
-    launchApp(this.appSearchResults.get()[AppSearch.selected.get()]);
+    launchApp(this.appSearchResults.get()[this.selected.get()]);
   }
 
   getWidget(): Gtk.Widget {
     return (
       <AppSearchResults
-        selected={AppSearch.selected}
+        selected={this.selected}
         searchResults={this.appSearchResults}
       />
     );
@@ -178,41 +181,35 @@ export class AppSearch extends LauncherPlugin {
   ): void {
     if (state === Gdk.ModifierType.CONTROL_MASK) {
       if (keyval === Gdk.KEY_p) {
-        return AppSearch.selected.set(
+        this.selected.set(
           wrapIndex(
-            AppSearch.selected.get() - 1,
+            this.selected.get() - 1,
             this.appSearchResults.get().length,
           ),
         );
       }
       if (keyval === Gdk.KEY_n) {
-        return AppSearch.selected.set(
+        this.selected.set(
           wrapIndex(
-            AppSearch.selected.get() + 1,
+            this.selected.get() + 1,
             this.appSearchResults.get().length,
           ),
         );
       }
     }
     if (keyval === Gdk.KEY_Up) {
-      return AppSearch.selected.set(
-        wrapIndex(
-          AppSearch.selected.get() - 1,
-          this.appSearchResults.get().length,
-        ),
+      return this.selected.set(
+        wrapIndex(this.selected.get() - 1, this.appSearchResults.get().length),
       );
     }
 
     if (keyval === Gdk.KEY_Down)
-      return AppSearch.selected.set(
-        wrapIndex(
-          AppSearch.selected.get() + 1,
-          this.appSearchResults.get().length,
-        ),
+      return this.selected.set(
+        wrapIndex(this.selected.get() + 1, this.appSearchResults.get().length),
       );
   }
 
   cleanup(): void {
-    AppSearch.selected.set(0);
+    this.selected.set(0);
   }
 }

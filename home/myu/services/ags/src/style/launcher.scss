@@ -43,5 +43,17 @@
         background: rgba(colors.$bg-accent, 0.4);
       }
     }
+
+    .calculator {
+      padding: 4px;
+      font-size: 1.1rem;
+
+      .copy {
+        margin-top: 16px;
+
+        font-size: 0.9rem;
+        color: rgba(colors.$text, 0.5);
+      }
+    }
   }
 }
