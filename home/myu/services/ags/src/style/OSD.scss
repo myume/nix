@@ -2,9 +2,10 @@
 
 .OSD {
   margin: 8px;
+  padding: 1px;
 
   .slider {
-    border: solid 4px colors.$bg-transparent;
+    border: solid 2.5px colors.$bg-color;
     border-radius: 1.2rem;
 
 
@@ -15,7 +16,7 @@
       min-height: 120px;
 
       highlight {
-        background-color: colors.$blue;
+        background-color: rgba(colors.$blue, 0.5);
         border-radius: 1rem;
       }
 

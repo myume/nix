@@ -8,7 +8,7 @@ import { timeout, Variable } from "astal";
 import AstalMpris from "gi://AstalMpris";
 import AstalWp from "gi://AstalWp";
 import BrightnessService from "./Services/Brightness";
-import { ControlPanelMenu } from "./widget/ControlPanel";
+import { ControlPanelMenu, windowName } from "./widget/ControlPanel";
 import { PowerMenu } from "./widget/PowerMenu";
 import {
   OSD,
@@ -60,6 +60,8 @@ function main() {
   initializeBar();
 
   const triggerOSD = (inputMode: OSDMode) => {
+    if (App.get_window(windowName)?.is_visible()) return;
+
     const {
       osdState: { mode, timer },
     } = sharedState;

@@ -49,7 +49,7 @@ export const OSD = ({ mode, timer }: OSDState) => {
       cssClasses={[windowName]}
       layer={Astal.Layer.OVERLAY}
       exclusivity={Astal.Exclusivity.IGNORE}
-      anchor={Astal.WindowAnchor.LEFT}
+      anchor={Astal.WindowAnchor.RIGHT}
       application={App}
       onHoverEnter={() => {
         timer.get()?.cancel();

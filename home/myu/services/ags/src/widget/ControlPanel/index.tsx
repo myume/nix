@@ -4,6 +4,8 @@ import { hideOnClickAway } from "../../utils/util";
 import { derive } from "astal";
 import { ControlPanel } from "./ControlPanel";
 
+export const windowName = "control-panel";
+
 export const ControlPanelMenu = ({ showControlPanel }: SharedState) => {
   const { TOP, BOTTOM, LEFT, RIGHT } = Astal.WindowAnchor;
 
@@ -11,8 +13,8 @@ export const ControlPanelMenu = ({ showControlPanel }: SharedState) => {
   return (
     <window
       visible={showWindow()}
-      name={"control-panel"}
-      namespace={"control-panel"}
+      name={windowName}
+      namespace={windowName}
       layer={Astal.Layer.TOP}
       exclusivity={Astal.Exclusivity.NORMAL}
       anchor={TOP | BOTTOM | LEFT | RIGHT}
