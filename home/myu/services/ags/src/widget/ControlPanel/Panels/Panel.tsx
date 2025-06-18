@@ -8,6 +8,7 @@ type PanelProps = {
   enabled: Binding<boolean>;
   onEnable: (b: Gtk.Button) => void;
   onDisable: (b: Gtk.Button) => void;
+  showPage?: () => void;
 };
 
 export const Panel = ({
@@ -17,26 +18,43 @@ export const Panel = ({
   enabled,
   onEnable,
   onDisable,
+  showPage,
 }: PanelProps) => (
-  <button
+  <box
     cssClasses={enabled.as((enabled) => [
       "panel",
       enabled ? "enabled" : "disabled",
     ])}
     widthRequest={150}
-    onClicked={(self) => {
-      const handler = enabled.get() ? onDisable : onEnable;
-      handler(self);
-    }}
-    valign={Gtk.Align.START}
-    child={
-      <box spacing={10}>
-        <image iconName={icon} pixelSize={16} />
-        <box orientation={Gtk.Orientation.VERTICAL}>
-          <label cssClasses={["title"]} label={title} xalign={0} />
-          <label cssClasses={["description"]} label={description} xalign={0} />
+  >
+    <button
+      onClicked={(self) => {
+        const handler = enabled.get() ? onDisable : onEnable;
+        handler(self);
+      }}
+      valign={Gtk.Align.START}
+      child={
+        <box spacing={10}>
+          <image iconName={icon} pixelSize={16} />
+          <box orientation={Gtk.Orientation.VERTICAL}>
+            <label cssClasses={["title"]} label={title} xalign={0} />
+            <label
+              cssClasses={["description"]}
+              label={description}
+              xalign={0}
+            />
+          </box>
         </box>
-      </box>
-    }
-  />
+      }
+      hexpand
+    />
+
+    <button
+      visible={showPage !== undefined}
+      label={""}
+      onClicked={() => {
+        if (showPage) showPage();
+      }}
+    />
+  </box>
 );

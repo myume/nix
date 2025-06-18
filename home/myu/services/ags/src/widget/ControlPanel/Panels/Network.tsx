@@ -1,8 +1,9 @@
 import AstalNetwork from "gi://AstalNetwork";
 import { bind, derive, exec, execAsync, Variable } from "astal";
 import { Panel } from "./Panel";
+import { networkPageName } from "../Pages/NetworkPage";
 
-export const NetworkPanel = () => {
+export const NetworkPanel = (setPageName: (name: string) => void) => {
   const network = AstalNetwork.get_default();
   const wired = bind(network, "wired");
   const wifi = bind(network, "wifi");
@@ -38,6 +39,7 @@ export const NetworkPanel = () => {
         execAsync(["nmcli", "n", "off"]);
         enabled.set(false);
       }}
+      showPage={() => setPageName(networkPageName)}
     />
   ));
 };

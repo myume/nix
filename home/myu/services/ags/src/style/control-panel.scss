@@ -8,6 +8,14 @@
   padding: 20px;
   background: rgba(colors.$bg-secondary, 0.65);
 
+  .page {
+    >.separator {
+      min-height: 1px;
+      margin: 4px 0px;
+      background: rgba(colors.$text, 0.3);
+    }
+  }
+
   .sliders {
     .info {
       margin-left: 8px;
@@ -100,11 +108,6 @@
   }
 
   .notifications {
-    >.separator {
-      min-height: 1px;
-      margin: 4px 0px;
-      background: rgba(colors.$text, 0.3);
-    }
 
     .clear-button {
       padding: 6px;

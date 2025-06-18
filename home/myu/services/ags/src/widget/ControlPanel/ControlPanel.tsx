@@ -6,8 +6,10 @@ import { PowerButton } from "./Footer/PowerButton";
 
 export const ControlPanel = ({
   closeControlPanel,
+  setPageName,
 }: {
   closeControlPanel: () => void;
+  setPageName: (name: string) => void;
 }) => {
   const panelSpacing = 8;
   return (
@@ -39,7 +41,11 @@ export const ControlPanel = ({
         {Panels.map((row) => (
           <box cssClasses={["row"]} spacing={panelSpacing} homogeneous>
             {row.map((panel) => (
-              <box cssClasses={["item"]} child={panel()} homogeneous />
+              <box
+                cssClasses={["item"]}
+                child={panel(setPageName)}
+                homogeneous
+              />
             ))}
           </box>
         ))}

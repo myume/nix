@@ -4,6 +4,8 @@ import NotificationService from "../../Services/NotificationService";
 import Notification from "../../Notification/Notification";
 import { Gtk } from "astal/gtk4";
 
+export const notificationCenterName = "notification-center";
+
 export const NotificationCenter = () => {
   const notificationService = NotificationService.get_default();
   const allNotifications = derive(
@@ -16,7 +18,8 @@ export const NotificationCenter = () => {
 
   return (
     <box
-      cssClasses={["notifications"]}
+      name={notificationCenterName}
+      cssClasses={["notifications", "page"]}
       orientation={Gtk.Orientation.VERTICAL}
       spacing={12}
       visible={allNotifications((notifications) => notifications.length > 0)}
