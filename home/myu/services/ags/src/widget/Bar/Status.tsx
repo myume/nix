@@ -4,6 +4,7 @@ import Audio from "./modules/Audio";
 import Brightness from "./modules/Brightness";
 import Bluetooth from "./modules/Bluetooth";
 import { Variable } from "astal";
+import Notifications from "./modules/Notifications";
 
 export default function Status({
   showControlPanel,
@@ -26,6 +27,7 @@ export default function Status({
           <Brightness />
           <Audio />
           <Battery />
+          <Notifications />
         </box>
       }
     ></button>
