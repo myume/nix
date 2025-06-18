@@ -8,6 +8,9 @@ export default function Notifications() {
 
   return (
     <image
+      tooltipText={notifications.as(
+        (notifications) => `${notifications.length} unread notifications`,
+      )}
       pixelSize={14}
       iconName={derive([notifications, dnd], (notifications, dnd) =>
         dnd
