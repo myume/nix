@@ -10,7 +10,7 @@ export default function Tray() {
     <box
       visible={hasItems}
       cssClasses={["Tray"]}
-      marginEnd={hasItems.as((hasItems) => (hasItems ? 4 : 0))}
+      marginEnd={hasItems.as((hasItems) => (hasItems ? 2 : 0))}
       spacing={4}
     >
       {items.as((items) =>
