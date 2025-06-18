@@ -36,5 +36,6 @@
 
     brightnessctl
     bluez
+    rink
   ];
 }
