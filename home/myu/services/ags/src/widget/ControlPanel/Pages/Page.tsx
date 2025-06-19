@@ -1,14 +1,13 @@
 import { Gtk } from "astal/gtk4";
-import { notificationCenterName } from "../NotificationCenter";
 import { toTitleCase } from "../../../utils/util";
 
 type PageProps = {
   name: string;
   child: Gtk.Widget;
-  setPageName: (name: string) => void;
+  returnHome: () => void;
 };
 
-export const Page = ({ name, child: content, setPageName }: PageProps) => {
+export const Page = ({ name, child: content, returnHome }: PageProps) => {
   return (
     <box
       cssClasses={["page"]}
@@ -19,12 +18,7 @@ export const Page = ({ name, child: content, setPageName }: PageProps) => {
       <box cssClasses={["separator"]} />
       <centerbox
         cssClasses={["header"]}
-        startWidget={
-          <button
-            label={" Back"}
-            onClicked={() => setPageName(notificationCenterName)}
-          />
-        }
+        startWidget={<button label={" Back"} onClicked={returnHome} />}
         centerWidget={
           <label halign={Gtk.Align.END} label={toTitleCase(name)} />
         }

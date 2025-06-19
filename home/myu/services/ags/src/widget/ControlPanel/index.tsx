@@ -21,6 +21,9 @@ export const ControlPanelMenu = ({ showControlPanel }: SharedState) => {
     showControlPanel.set(false);
     pageName.set(notificationCenterName);
   };
+
+  const returnToNotifications = () => pageName.set(notificationCenterName);
+
   return (
     <window
       visible={showWindow()}
@@ -56,7 +59,10 @@ export const ControlPanelMenu = ({ showControlPanel }: SharedState) => {
               />
               <stack visibleChildName={pageName()} homogeneous>
                 <NotificationCenter />
-                <NetworkPage setPageName={(name) => pageName.set(name)} />
+                <NetworkPage
+                  returnHome={returnToNotifications}
+                  currentPageName={pageName}
+                />
               </stack>
             </box>
           }
