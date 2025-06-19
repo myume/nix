@@ -1,7 +1,7 @@
 import { bind, Gio, Variable } from "astal";
 import AstalMpris from "gi://AstalMpris";
 import { Gtk } from "astal/gtk4";
-import Pango from "gi://Pango?version=1.0";
+import Pango from "gi://Pango";
 import { getAppIcon } from "../../../utils/util";
 
 const PlayerWidget =

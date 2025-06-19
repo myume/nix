@@ -2,7 +2,7 @@ import { AstalIO, bind, GLib } from "astal";
 import { Gtk } from "astal/gtk4";
 import AstalNotifd from "gi://AstalNotifd";
 import AstalApps from "gi://AstalApps";
-import Pango from "gi://Pango?version=1.0";
+import Pango from "gi://Pango";
 import { toTitleCase } from "../../utils/util";
 
 const urgencyToString = (urgency: AstalNotifd.Urgency) => {

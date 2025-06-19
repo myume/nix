@@ -1,7 +1,7 @@
 import { bind, Variable } from "astal";
 import { Gtk } from "astal/gtk4";
 import AstalMpris from "gi://AstalMpris";
-import Pango from "gi://Pango?version=1.0";
+import Pango from "gi://Pango";
 import { formatDuration, getAppIcon, toTitleCase } from "../../utils/util";
 
 const PlayerItem = ({ player }: { player: AstalMpris.Player }) => (
@@ -101,7 +101,11 @@ export const MediaControlMenu = ({
         currentPlayer={currentPlayer}
         setCurrentPlayer={setCurrentPlayer}
       />
-      <box orientation={Gtk.Orientation.VERTICAL} halign={Gtk.Align.CENTER}>
+      <box
+        orientation={Gtk.Orientation.VERTICAL}
+        halign={Gtk.Align.CENTER}
+        spacing={8}
+      >
         <box
           orientation={Gtk.Orientation.VERTICAL}
           spacing={8}
@@ -142,7 +146,7 @@ export const MediaControlMenu = ({
               )}
               wrap
               wrapMode={Pango.WrapMode.CHAR}
-              maxWidthChars={20}
+              maxWidthChars={25}
             />
             <label
               cssClasses={["artist"]}
@@ -155,7 +159,7 @@ export const MediaControlMenu = ({
               )}
               // wrap
               // wrapMode={Pango.WrapMode.WORD_CHAR}
-              maxWidthChars={20}
+              maxWidthChars={25}
               ellipsize={Pango.EllipsizeMode.END}
             />
           </box>

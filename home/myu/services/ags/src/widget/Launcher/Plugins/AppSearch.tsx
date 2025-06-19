@@ -1,6 +1,6 @@
 import { Binding, Gio, Variable } from "astal";
 import { Astal, Gdk, Gtk } from "astal/gtk4";
-import AstalApps from "gi://AstalApps?version=0.1";
+import AstalApps from "gi://AstalApps";
 import Hyprland from "gi://AstalHyprland";
 import { hideLauncher } from "..";
 import { ScrolledWindow } from "../../Gtk";
