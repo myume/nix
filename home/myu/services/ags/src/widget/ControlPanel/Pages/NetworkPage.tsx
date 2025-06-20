@@ -1,52 +1,12 @@
 import { Page } from "./Page";
-import { derive, execAsync, GLib, Variable } from "astal";
+import { bind, Binding, derive, GLib, Variable } from "astal";
 import { PasswordEntry, ScrolledWindow } from "../../Gtk";
 import { Gtk } from "astal/gtk4";
+import NetworkManagerCliService, {
+  NetworkEntry,
+} from "../../../Services/NetworkManagerCliService";
 
 export const networkPageName = "network";
-
-const forgetNetwork = async (ssid: string) =>
-  await execAsync(["nmcli", "connection", "delete", ssid]);
-
-const columns = [
-  "ssid",
-  "mode",
-  "chan",
-  "rate",
-  "signal",
-  "bars",
-  "security",
-] as const;
-
-type NetworkEntry = {
-  [x in (typeof columns)[number]]: string;
-};
-
-const nmcliOutputToJson = (output: string) => {
-  const seen = new Set();
-  const parts = output
-    .split("\n")
-    .map((row) => row.split(":"))
-    .filter((row) => {
-      const ssid = row[0];
-      const include = ssid !== "" && !seen.has(ssid);
-      seen.add(ssid);
-      return include;
-    });
-
-  const result: NetworkEntry[] = [];
-
-  for (let entry of parts) {
-    const entries = entry.map((val, i) => [columns[i], val]);
-    result.push(Object.fromEntries(entries));
-  }
-
-  // idk if i should filter out meshes or anything else...nmtui doesn't so i'll follow it
-  // result = items.filter(({ mode }) => mode.toLowerCase() !== "mesh");
-  result.sort((a, b) => Number(b.signal) - Number(a.signal));
-
-  return result;
-};
 
 const NetworkItem = ({
   network: { signal, ssid, security },
@@ -55,10 +15,11 @@ const NetworkItem = ({
   network: NetworkEntry;
   selected: Variable<string>;
 }) => {
+  const networkManager = NetworkManagerCliService.get_default();
   const signalValue = Number(signal);
   let entry: Gtk.PasswordEntry | null = null;
-  const passwdRequired = Variable(false);
-  const connecting = Variable(false);
+  const passwordRequired = Variable(false);
+  const connecting = bind(networkManager, "connecting");
   return (
     <box
       cssClasses={selected((selectedSSid) => [
@@ -71,20 +32,16 @@ const NetworkItem = ({
       <box spacing={8}>
         <button
           onClicked={async () => {
-            if (connecting.get()) return;
             selected.set(ssid);
 
-            connecting.set(true);
             try {
-              await execAsync(["nmcli", "dev", "wifi", "connect", ssid]);
-              connecting.set(false);
+              await networkManager.connectToNetwork(ssid);
             } catch (e) {
               if (e instanceof GLib.Error) {
                 const requiresPassword = /password .* not given/gi;
                 if (requiresPassword.test(e.message)) {
-                  passwdRequired.set(true);
+                  passwordRequired.set(true);
                   entry?.grab_focus();
-                  connecting.set(false);
                 }
               }
             }
@@ -106,10 +63,17 @@ const NetworkItem = ({
             </box>
           }
         />
-        <label visible={connecting()} label={"Connecting..."} marginEnd={8} />
+        <label
+          visible={derive(
+            [connecting, selected],
+            (connecting, selected) => connecting && selected === ssid,
+          )()}
+          label={"Connecting..."}
+          marginEnd={8}
+        />
         <button
           label={"󰕑 "}
-          onClicked={() => forgetNetwork(ssid)}
+          onClicked={() => networkManager.forgetNetwork(ssid)}
           tooltipText={"Forget Network"}
         />
         <image visible={security !== ""} iconName={"object-locked-symbolic"} />
@@ -121,32 +85,13 @@ const NetworkItem = ({
         showPeekIcon
         placeholderText={"Enter Password"}
         visible={derive(
-          [selected, passwdRequired],
+          [selected, passwordRequired],
           (selectedSSid, passwdRequired) =>
             selectedSSid === ssid && security !== "" && passwdRequired,
         )()}
         onActivate={async (self) => {
-          if (connecting.get()) return;
-
-          connecting.set(true);
-          try {
-            // need to do this first otherwise it might not work. idk why lol
-            await forgetNetwork(ssid);
-
-            await execAsync([
-              "nmcli",
-              "dev",
-              "wifi",
-              "connect",
-              ssid,
-              "password",
-              self.text,
-            ]);
-          } catch (e) {
-            logError(e);
-          }
-          connecting.set(false);
-          passwdRequired.set(false);
+          await networkManager.connectWithPassword(ssid, self.text);
+          passwordRequired.set(false);
         }}
       />
     </box>
@@ -158,7 +103,7 @@ const NetworksList = ({
   selected,
 }: {
   selected: Variable<string>;
-  networks: Variable<NetworkEntry[]>;
+  networks: Binding<NetworkEntry[]>;
 }) => {
   return (
     <ScrolledWindow
@@ -170,7 +115,7 @@ const NetworksList = ({
           orientation={Gtk.Orientation.VERTICAL}
           spacing={8}
         >
-          {networks((nets) =>
+          {networks.as((nets) =>
             nets.map((network) => {
               return <NetworkItem network={network} selected={selected} />;
             }),
@@ -189,29 +134,14 @@ export const NetworkPage = ({
   currentPageName: Variable<string>;
 }) => {
   const selectedSsid = Variable("");
-  const networks = Variable<NetworkEntry[]>([]);
-  const scanning = Variable(false);
+  const networkManager = NetworkManagerCliService.get_default();
+  const networks = bind(networkManager, "networks");
+  // const scanning = bind(networkManager, "scanning");
 
-  const refreshNetworks = async () => {
-    if (scanning.get()) return;
-
-    scanning.set(true);
-    const output = await execAsync([
-      "nmcli",
-      "-t",
-      "-f",
-      columns.join(","),
-      "dev",
-      "wifi",
-      "list",
-    ]);
-    const results = nmcliOutputToJson(output);
-    networks.set(results);
+  const refreshNetworks = () => {
+    networkManager.scan();
     selectedSsid.set("");
-    scanning.set(false);
   };
-
-  refreshNetworks();
 
   currentPageName.subscribe((name) => {
     if (name === networkPageName) {
