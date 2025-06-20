@@ -1,8 +1,11 @@
 import AstalBluetooth from "gi://AstalBluetooth";
 import { Panel } from "./Panel";
 import { bind, derive } from "astal";
+import { launchApp } from "../../Launcher/Plugins/AppSearch";
+import AstalApps from "gi://AstalApps";
 
 export const BluetoothPanel = () => {
+  const apps = new AstalApps.Apps();
   const bluetooth = AstalBluetooth.get_default();
   const devices = bind(bluetooth, "devices");
   const isPowered = bind(bluetooth, "isPowered");
@@ -29,6 +32,9 @@ export const BluetoothPanel = () => {
         }
         onEnable={() => bluetooth.toggle()}
         onDisable={() => bluetooth.toggle()}
+        onExpand={() => {
+          launchApp(apps.exact_query("Bluetooth Manager")[0]);
+        }}
       />
     );
   });

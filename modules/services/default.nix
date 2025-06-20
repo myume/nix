@@ -4,5 +4,6 @@
     ./tumbler.nix
     ./pipewire.nix
     ./gvfs.nix
+    ./bluetooth.nix
   ];
 }
