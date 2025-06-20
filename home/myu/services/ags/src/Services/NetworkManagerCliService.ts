@@ -29,6 +29,7 @@ export default class NetworkManagerCliService extends GObject.Object {
   #scanning = false;
   #connecting = false;
   #networks: NetworkEntry[] = [];
+  #saved_connections: Set<string> = new Set();
 
   @property()
   get networks() {
@@ -60,6 +61,16 @@ export default class NetworkManagerCliService extends GObject.Object {
     this.notify("connecting");
   }
 
+  @property()
+  get saved_connections() {
+    return this.#saved_connections;
+  }
+
+  set saved_connections(connections) {
+    this.#saved_connections = connections;
+    this.notify("saved_connections");
+  }
+
   private nmcliOutputToJson = (output: string) => {
     const seen = new Set();
     const parts = output
@@ -86,8 +97,10 @@ export default class NetworkManagerCliService extends GObject.Object {
     return result;
   };
 
-  forgetNetwork = async (ssid: string) =>
+  forgetNetwork = async (ssid: string) => {
     await execAsync(["nmcli", "connection", "delete", ssid]);
+    await this.scanSavedConnections();
+  };
 
   scan = async (rescan: boolean = false) => {
     if (this.#scanning) return;
@@ -106,6 +119,9 @@ export default class NetworkManagerCliService extends GObject.Object {
     const results = this.nmcliOutputToJson(output);
     this.#networks = results;
     this.notify("networks");
+
+    await this.scanSavedConnections();
+
     this.#scanning = false;
     this.notify("scanning");
   };
@@ -153,5 +169,18 @@ export default class NetworkManagerCliService extends GObject.Object {
     }
     this.#connecting = false;
     this.notify("connecting");
+  };
+
+  scanSavedConnections = async () => {
+    const output = await execAsync([
+      "nmcli",
+      "-t",
+      "-f",
+      "NAME",
+      "connection",
+      "show",
+    ]);
+    this.saved_connections = new Set(output.split("\n"));
+    this.notify("saved_connections");
   };
 }

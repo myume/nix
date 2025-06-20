@@ -16,6 +16,7 @@ const NetworkItem = ({
   selected: Variable<string>;
 }) => {
   const networkManager = NetworkManagerCliService.get_default();
+  const savedConnections = bind(networkManager, "saved_connections");
   const signalValue = Number(signal);
   let entry: Gtk.PasswordEntry | null = null;
   const passwordRequired = Variable(false);
@@ -72,6 +73,7 @@ const NetworkItem = ({
           marginEnd={8}
         />
         <button
+          visible={savedConnections.as((connections) => connections.has(ssid))}
           label={"󰕑 "}
           onClicked={() => networkManager.forgetNetwork(ssid)}
           tooltipText={"Forget Network"}
