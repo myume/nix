@@ -5,6 +5,9 @@ import { Gtk } from "astal/gtk4";
 
 export const networkPageName = "network";
 
+const forgetNetwork = async (ssid: string) =>
+  await execAsync(["nmcli", "connection", "delete", ssid]);
+
 const columns = [
   "ssid",
   "mode",
@@ -65,45 +68,52 @@ const NetworkItem = ({
       orientation={Gtk.Orientation.VERTICAL}
       spacing={8}
     >
-      <button
-        onClicked={async () => {
-          selected.set(ssid);
-          entry?.grab_focus();
+      <box spacing={8}>
+        <button
+          onClicked={async () => {
+            if (connecting.get()) return;
+            selected.set(ssid);
 
-          connecting.set(true);
-          try {
-            await execAsync(["nmcli", "dev", "wifi", "connect", ssid]);
-          } catch (e) {
-            if (e instanceof GLib.Error) {
-              const requiresPassword = /password .* not given/gi;
-              if (requiresPassword.test(e.message)) {
-                passwdRequired.set(true);
-                connecting.set(false);
+            connecting.set(true);
+            try {
+              await execAsync(["nmcli", "dev", "wifi", "connect", ssid]);
+              connecting.set(false);
+            } catch (e) {
+              if (e instanceof GLib.Error) {
+                const requiresPassword = /password .* not given/gi;
+                if (requiresPassword.test(e.message)) {
+                  passwdRequired.set(true);
+                  entry?.grab_focus();
+                  connecting.set(false);
+                }
               }
             }
+          }}
+          child={
+            <box spacing={8}>
+              <image
+                iconName={
+                  signalValue >= 75
+                    ? "network-wireless-signal-excellent"
+                    : signalValue >= 50
+                      ? "network-wireless-signal-ok"
+                      : signalValue >= 25
+                        ? "network-wireless-signal-weak"
+                        : "network-wireless-signal-none"
+                }
+              />
+              <label xalign={0} label={ssid} hexpand />
+            </box>
           }
-        }}
-        child={
-          <box spacing={8}>
-            <image
-              iconName={
-                signalValue >= 75
-                  ? "network-wireless-signal-excellent"
-                  : signalValue >= 50
-                    ? "network-wireless-signal-ok"
-                    : signalValue >= 25
-                      ? "network-wireless-signal-weak"
-                      : "network-wireless-signal-none"
-              }
-            />
-            <label xalign={0} label={ssid} hexpand />
-            <image
-              visible={security !== ""}
-              iconName={"object-locked-symbolic"}
-            />
-          </box>
-        }
-      />
+        />
+        <label visible={connecting()} label={"Connecting..."} marginEnd={8} />
+        <button
+          label={"󰕑 "}
+          onClicked={() => forgetNetwork(ssid)}
+          tooltipText={"Forget Network"}
+        />
+        <image visible={security !== ""} iconName={"object-locked-symbolic"} />
+      </box>
       <PasswordEntry
         setup={(self) => {
           entry = self;
@@ -116,10 +126,12 @@ const NetworkItem = ({
             selectedSSid === ssid && security !== "" && passwdRequired,
         )()}
         onActivate={async (self) => {
+          if (connecting.get()) return;
+
           connecting.set(true);
           try {
             // need to do this first otherwise it might not work. idk why lol
-            await execAsync(["nmcli", "connection", "delete", ssid]);
+            await forgetNetwork(ssid);
 
             await execAsync([
               "nmcli",
@@ -134,6 +146,7 @@ const NetworkItem = ({
             logError(e);
           }
           connecting.set(false);
+          passwdRequired.set(false);
         }}
       />
     </box>
