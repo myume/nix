@@ -138,14 +138,10 @@ export const NetworkPage = ({
   const networks = bind(networkManager, "networks");
   const scanning = bind(networkManager, "scanning");
 
-  const refreshNetworks = () => {
-    networkManager.scan();
-    selectedSsid.set("");
-  };
-
   currentPageName.subscribe((name) => {
     if (name === networkPageName) {
-      refreshNetworks();
+      networkManager.scan();
+      selectedSsid.set("");
     }
   });
 
@@ -160,6 +156,16 @@ export const NetworkPage = ({
         ),
       )}
       returnHome={returnHome}
+      endWidget={
+        <button
+          onClicked={() => {
+            networkManager.scan(true);
+            selectedSsid.set("");
+          }}
+          iconName={"view-refresh"}
+          visible={scanning.as((scanning) => !scanning)}
+        />
+      }
     />
   );
 };

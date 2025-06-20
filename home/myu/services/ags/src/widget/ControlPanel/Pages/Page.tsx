@@ -6,9 +6,15 @@ type PageProps = {
   name: string;
   child: Gtk.Widget | Binding<Gtk.Widget>;
   returnHome: () => void;
+  endWidget?: Gtk.Widget | Binding<Gtk.Widget>;
 };
 
-export const Page = ({ name, child: content, returnHome }: PageProps) => {
+export const Page = ({
+  name,
+  child: content,
+  returnHome,
+  endWidget,
+}: PageProps) => {
   return (
     <box
       cssClasses={["page", name]}
@@ -23,6 +29,7 @@ export const Page = ({ name, child: content, returnHome }: PageProps) => {
         centerWidget={
           <label halign={Gtk.Align.END} label={toTitleCase(name)} />
         }
+        endWidget={endWidget}
       />
       {content}
     </box>

@@ -89,20 +89,20 @@ export default class NetworkManagerCliService extends GObject.Object {
   forgetNetwork = async (ssid: string) =>
     await execAsync(["nmcli", "connection", "delete", ssid]);
 
-  scan = async () => {
+  scan = async (rescan: boolean = false) => {
     if (this.#scanning) return;
 
     this.#scanning = true;
     this.notify("scanning");
-    const output = await execAsync([
-      "nmcli",
-      "-t",
-      "-f",
-      columns.join(","),
-      "dev",
-      "wifi",
-      "list",
-    ]);
+
+    const cmd = ["nmcli", "-t", "-f", columns.join(","), "dev", "wifi", "list"];
+
+    if (rescan) {
+      cmd.push("--rescan");
+      cmd.push("yes");
+    }
+
+    const output = await execAsync(cmd);
     const results = this.nmcliOutputToJson(output);
     this.#networks = results;
     this.notify("networks");
