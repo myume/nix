@@ -136,7 +136,7 @@ export const NetworkPage = ({
   const selectedSsid = Variable("");
   const networkManager = NetworkManagerCliService.get_default();
   const networks = bind(networkManager, "networks");
-  // const scanning = bind(networkManager, "scanning");
+  const scanning = bind(networkManager, "scanning");
 
   const refreshNetworks = () => {
     networkManager.scan();
@@ -152,7 +152,13 @@ export const NetworkPage = ({
   return (
     <Page
       name={networkPageName}
-      child={<NetworksList networks={networks} selected={selectedSsid} />}
+      child={scanning.as((scanning) =>
+        scanning ? (
+          <label hexpand vexpand label={"Scanning for networks..."} />
+        ) : (
+          <NetworksList networks={networks} selected={selectedSsid} />
+        ),
+      )}
       returnHome={returnHome}
     />
   );
