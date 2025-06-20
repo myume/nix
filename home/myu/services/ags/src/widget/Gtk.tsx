@@ -10,3 +10,8 @@ export const ScrolledWindow = astalify<
 >(Gtk.ScrolledWindow);
 
 export const Overlay = astalify<Gtk.Overlay>(Gtk.Overlay);
+
+export const PasswordEntry = astalify<
+  Gtk.PasswordEntry,
+  Gtk.PasswordEntry.ConstructorProps
+>(Gtk.PasswordEntry);

@@ -130,6 +130,31 @@
         background: rgba(colors.$bg-accent, 0.4);
       }
     }
-
   }
+
+  .network {
+
+    .network-entry {
+      padding: 16px;
+      font-size: 1.1rem;
+
+      background: rgba(colors.$bg-color, 0.4);
+      border-radius: 0.8rem;
+
+
+
+      &:hover {
+        background: rgba(colors.$bg-color, 0.7);
+      }
+    }
+
+    .selected {
+      background: colors.$bg-color;
+    }
+
+    .network-list {
+      padding: 0px 8px;
+    }
+  }
+
 }

@@ -1,16 +1,17 @@
 import { Gtk } from "astal/gtk4";
 import { toTitleCase } from "../../../utils/util";
+import { Binding } from "astal";
 
 type PageProps = {
   name: string;
-  child: Gtk.Widget;
+  child: Gtk.Widget | Binding<Gtk.Widget>;
   returnHome: () => void;
 };
 
 export const Page = ({ name, child: content, returnHome }: PageProps) => {
   return (
     <box
-      cssClasses={["page"]}
+      cssClasses={["page", name]}
       name={name}
       orientation={Gtk.Orientation.VERTICAL}
       spacing={12}
