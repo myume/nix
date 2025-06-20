@@ -17,10 +17,18 @@ const NetworkItem = ({
 }) => {
   const networkManager = NetworkManagerCliService.get_default();
   const savedConnections = bind(networkManager, "saved_connections");
+  const isCurrentConnection = bind(networkManager, "current_connection").as(
+    (current) => current === ssid,
+  );
+
+  const connecting = bind(networkManager, "connecting");
+  const isConnecting = derive(
+    [connecting, selected],
+    (connecting, selected) => connecting && selected === ssid,
+  );
   let entry: Gtk.PasswordEntry | null = null;
 
   const passwordRequired = Variable(false);
-  const connecting = bind(networkManager, "connecting");
 
   return (
     <box
@@ -34,6 +42,7 @@ const NetworkItem = ({
       <box spacing={8}>
         <button
           onClicked={async () => {
+            passwordRequired.set(false);
             selected.set(ssid);
 
             try {
@@ -44,7 +53,11 @@ const NetworkItem = ({
                 if (requiresPassword.test(e.message)) {
                   passwordRequired.set(true);
                   entry?.grab_focus();
+                } else {
+                  logError(e);
                 }
+              } else {
+                logError(e);
               }
             }
           }}
@@ -65,14 +78,17 @@ const NetworkItem = ({
             </box>
           }
         />
-        <label
-          visible={derive(
-            [connecting, selected],
-            (connecting, selected) => connecting && selected === ssid,
-          )()}
-          label={"Connecting..."}
-          marginEnd={8}
-        />
+        <box marginEnd={8}>
+          <label
+            visible={derive(
+              [isCurrentConnection, isConnecting],
+              (isCurrentConnection, isConnecting) =>
+                isCurrentConnection && !isConnecting,
+            )()}
+            label={"Connected"}
+          />
+          <label visible={isConnecting()} label={"Connecting..."} />
+        </box>
         <button
           visible={savedConnections.as((connections) => connections.has(ssid))}
           label={"󰕑 "}
@@ -89,8 +105,8 @@ const NetworkItem = ({
         placeholderText={"Enter Password"}
         visible={derive(
           [selected, passwordRequired],
-          (selectedSSid, passwdRequired) =>
-            selectedSSid === ssid && security !== "" && passwdRequired,
+          (selectedSSid, passwordRequired) =>
+            selectedSSid === ssid && security !== "" && passwordRequired,
         )()}
         onActivate={async (self) => {
           await networkManager.connectWithPassword(ssid, self.text);
@@ -138,6 +154,7 @@ export const NetworkPage = ({
 }) => {
   const selectedSsid = Variable("");
   const networkManager = NetworkManagerCliService.get_default();
+
   const networks = bind(networkManager, "networks");
   const scanning = bind(networkManager, "scanning");
 

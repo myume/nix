@@ -1,4 +1,5 @@
 import { execAsync, GObject, property, register } from "astal";
+import AstalNetwork from "gi://AstalNetwork";
 
 export const columns = [
   "ssid",
@@ -19,6 +20,8 @@ export type NetworkEntry = Omit<
 
 @register({ GTypeName: "NetworkManagerCliService" })
 export default class NetworkManagerCliService extends GObject.Object {
+  static astalNetwork = AstalNetwork.get_default();
+
   static instance: NetworkManagerCliService;
   static get_default() {
     if (!this.instance) this.instance = new NetworkManagerCliService();
@@ -26,10 +29,25 @@ export default class NetworkManagerCliService extends GObject.Object {
     return this.instance;
   }
 
+  constructor() {
+    super();
+    NetworkManagerCliService.astalNetwork.wifi.connect(
+      "state-changed",
+      ({ ssid }) => {
+        this.#current_connection = ssid;
+        this.notify("current_connection");
+
+        this.#networks = this.orderNetworks();
+        this.notify("networks");
+      },
+    );
+  }
+
   #scanning = false;
   #connecting = false;
   #networks: NetworkEntry[] = [];
   #saved_connections: Set<string> = new Set();
+  #current_connection: string = NetworkManagerCliService.astalNetwork.wifi.ssid;
 
   @property()
   get networks() {
@@ -69,6 +87,16 @@ export default class NetworkManagerCliService extends GObject.Object {
   set saved_connections(connections) {
     this.#saved_connections = connections;
     this.notify("saved_connections");
+  }
+
+  @property()
+  get current_connection() {
+    return this.#current_connection;
+  }
+
+  set current_connection(ssid) {
+    this.#current_connection = ssid;
+    this.notify("current_connection");
   }
 
   private nmcliOutputToJson = (output: string) => {
@@ -119,22 +147,35 @@ export default class NetworkManagerCliService extends GObject.Object {
     }
 
     const output = await execAsync(cmd);
-    const results = this.nmcliOutputToJson(output);
+
+    this.#networks = this.nmcliOutputToJson(output);
+
+    // needs to scan saved connections before ordering the networks
     await this.scanSavedConnections();
 
-    // order by saved connections first
-    const saved = results.filter(({ ssid }) =>
-      this.#saved_connections.has(ssid),
-    );
-    const rest = results.filter(
-      ({ ssid }) => !this.#saved_connections.has(ssid),
-    );
-    this.#networks = [...saved, ...rest];
-
+    this.#networks = this.orderNetworks();
     this.notify("networks");
 
     this.#scanning = false;
     this.notify("scanning");
+  };
+
+  private orderNetworks = () => {
+    const current: NetworkEntry[] = [];
+    const saved: NetworkEntry[] = [];
+    const rest: NetworkEntry[] = [];
+
+    this.#networks.forEach((net) => {
+      if (net.ssid === this.#current_connection) {
+        current.push(net);
+      } else if (this.#saved_connections.has(net.ssid)) {
+        saved.push(net);
+      } else {
+        rest.push(net);
+      }
+    });
+
+    return [...current, ...saved, ...rest];
   };
 
   connectToNetwork = async (ssid: string) => {
@@ -154,6 +195,7 @@ export default class NetworkManagerCliService extends GObject.Object {
     } finally {
       this.#connecting = false;
       this.notify("connecting");
+      this.scanSavedConnections();
     }
   };
 
@@ -165,7 +207,11 @@ export default class NetworkManagerCliService extends GObject.Object {
     try {
       // need to do this first otherwise it might not work. idk why lol
       await this.forgetNetwork(ssid);
+    } catch (e) {
+      // don't need to handle if can't forget
+    }
 
+    try {
       await execAsync([
         "nmcli",
         "dev",
@@ -180,6 +226,8 @@ export default class NetworkManagerCliService extends GObject.Object {
     }
     this.#connecting = false;
     this.notify("connecting");
+
+    this.scanSavedConnections();
   };
 
   scanSavedConnections = async () => {
