@@ -29,20 +29,6 @@ export default class NetworkManagerCliService extends GObject.Object {
     return this.instance;
   }
 
-  constructor() {
-    super();
-    NetworkManagerCliService.astalNetwork.wifi.connect(
-      "state-changed",
-      ({ ssid }) => {
-        this.#current_connection = ssid;
-        this.notify("current_connection");
-
-        this.#networks = this.orderNetworks();
-        this.notify("networks");
-      },
-    );
-  }
-
   #scanning = false;
   #connecting = false;
   #networks: NetworkEntry[] = [];
@@ -185,6 +171,12 @@ export default class NetworkManagerCliService extends GObject.Object {
       this.#connecting = true;
       this.notify("connecting");
       await execAsync(["nmcli", "dev", "wifi", "connect", ssid]);
+
+      this.#current_connection = ssid;
+      this.notify("current_connection");
+
+      this.#networks = this.orderNetworks();
+      this.notify("networks");
     } catch (e) {
       // i remember i saw something like this once and thought why tf would anybody do this
       // 3 years later, here we are...
@@ -221,6 +213,12 @@ export default class NetworkManagerCliService extends GObject.Object {
         "password",
         password,
       ]);
+
+      this.#current_connection = ssid;
+      this.notify("current_connection");
+
+      this.#networks = this.orderNetworks();
+      this.notify("networks");
     } catch (e) {
       logError(e);
     }
