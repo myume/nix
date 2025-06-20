@@ -86,7 +86,10 @@ export default class NetworkManagerCliService extends GObject.Object {
     const result: NetworkEntry[] = [];
 
     for (let entry of parts) {
-      const entries = entry.map((val, i) => [columns[i], val]);
+      const entries = entry.map((val, i) => {
+        const column = columns[i];
+        return [column, column === "signal" ? Number(val) : val];
+      });
       result.push(Object.fromEntries(entries));
     }
 

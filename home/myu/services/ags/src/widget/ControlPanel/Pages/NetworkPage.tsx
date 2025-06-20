@@ -17,10 +17,11 @@ const NetworkItem = ({
 }) => {
   const networkManager = NetworkManagerCliService.get_default();
   const savedConnections = bind(networkManager, "saved_connections");
-  const signalValue = Number(signal);
   let entry: Gtk.PasswordEntry | null = null;
+
   const passwordRequired = Variable(false);
   const connecting = bind(networkManager, "connecting");
+
   return (
     <box
       cssClasses={selected((selectedSSid) => [
@@ -51,11 +52,11 @@ const NetworkItem = ({
             <box spacing={8}>
               <image
                 iconName={
-                  signalValue >= 75
+                  signal >= 75
                     ? "network-wireless-signal-excellent"
-                    : signalValue >= 50
+                    : signal >= 50
                       ? "network-wireless-signal-ok"
-                      : signalValue >= 25
+                      : signal >= 25
                         ? "network-wireless-signal-weak"
                         : "network-wireless-signal-none"
                 }
