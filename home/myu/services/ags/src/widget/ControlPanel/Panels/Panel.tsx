@@ -8,7 +8,7 @@ type PanelProps = {
   enabled: Binding<boolean>;
   onEnable: (b: Gtk.Button) => void;
   onDisable: (b: Gtk.Button) => void;
-  showPage?: () => void;
+  onExpand?: () => void;
 };
 
 export const Panel = ({
@@ -18,7 +18,7 @@ export const Panel = ({
   enabled,
   onEnable,
   onDisable,
-  showPage,
+  onExpand,
 }: PanelProps) => (
   <box
     cssClasses={enabled.as((enabled) => [
@@ -50,10 +50,10 @@ export const Panel = ({
     />
     <button
       cssClasses={["show-page"]}
-      visible={showPage !== undefined}
+      visible={onExpand !== undefined}
       label={""}
       onClicked={() => {
-        if (showPage) showPage();
+        if (onExpand) onExpand();
       }}
     />
   </box>

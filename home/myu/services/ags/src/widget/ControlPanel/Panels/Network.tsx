@@ -39,7 +39,7 @@ export const NetworkPanel = (setPageName: (name: string) => void) => {
         execAsync(["nmcli", "n", "off"]);
         enabled.set(false);
       }}
-      showPage={() => setPageName(networkPageName)}
+      onExpand={() => setPageName(networkPageName)}
     />
   ));
 };
