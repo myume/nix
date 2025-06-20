@@ -26,8 +26,8 @@
     windowrulev2 = [
       # why is it impossible for anyone to get idle inhibit right
       "idleinhibit focus, class:^(mpv)$"
-      "idleinhibit focus, class:^(zen), title:^(.*YouTube.*)$"
-      "idleinhibit fullscreen, class:^(zen)"
+      "idleinhibit focus, class:^(zen|zen-twilight)$, title:^(.*YouTube.*)$"
+      "idleinhibit fullscreen, class:^(zen|zen-twilight)$"
     ];
   };
 }

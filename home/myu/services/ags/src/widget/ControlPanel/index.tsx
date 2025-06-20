@@ -7,7 +7,7 @@ import {
   NotificationCenter,
   notificationCenterName,
 } from "./NotificationCenter";
-import { NetworkPage } from "./Pages/NetworkPage";
+import { NetworkPage, networkPageName } from "./Pages/NetworkPage";
 
 export const windowName = "control-panel";
 
@@ -57,7 +57,15 @@ export const ControlPanelMenu = ({ showControlPanel }: SharedState) => {
                 closeControlPanel={closeMenu}
                 setPageName={(name) => pageName.set(name)}
               />
-              <stack visibleChildName={pageName()} homogeneous>
+              <stack
+                visibleChildName={pageName()}
+                transitionType={pageName((name) =>
+                  name === networkPageName
+                    ? Gtk.StackTransitionType.SLIDE_RIGHT
+                    : Gtk.StackTransitionType.SLIDE_LEFT,
+                )}
+                homogeneous
+              >
                 <NotificationCenter />
                 <NetworkPage
                   returnHome={returnToNotifications}
