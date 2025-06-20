@@ -1,7 +1,7 @@
 import { AstalIO, bind, derive, timeout, Variable } from "astal";
 import { App, Astal, Gtk } from "astal/gtk4";
 import AstalWp from "gi://AstalWp";
-import BrightnessService from "../Services/Brightness";
+import BrightnessService from "../../Services/Brightness";
 import { Overlay } from "astal/gtk4/widget";
 
 export const windowName = "OSD";

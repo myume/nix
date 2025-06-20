@@ -1,7 +1,7 @@
 import { bind, timeout } from "astal";
 import { App, Astal, Gdk, Gtk } from "astal/gtk4";
 import Notification from "./Notification";
-import NotificationService from "../Services/NotificationService";
+import NotificationService from "../../Services/NotificationService";
 
 const notifTimeout = 4000;
 const windowName = "floating-notifications";

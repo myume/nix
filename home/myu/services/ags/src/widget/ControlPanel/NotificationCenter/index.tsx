@@ -1,6 +1,6 @@
 import { bind, derive } from "astal";
 import { ScrolledWindow } from "../../Gtk";
-import NotificationService from "../../Services/NotificationService";
+import NotificationService from "../../../Services/NotificationService";
 import Notification from "../../Notification/Notification";
 import { Gtk } from "astal/gtk4";
 
