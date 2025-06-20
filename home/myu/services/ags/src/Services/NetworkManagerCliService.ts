@@ -120,10 +120,18 @@ export default class NetworkManagerCliService extends GObject.Object {
 
     const output = await execAsync(cmd);
     const results = this.nmcliOutputToJson(output);
-    this.#networks = results;
-    this.notify("networks");
-
     await this.scanSavedConnections();
+
+    // order by saved connections first
+    const saved = results.filter(({ ssid }) =>
+      this.#saved_connections.has(ssid),
+    );
+    const rest = results.filter(
+      ({ ssid }) => !this.#saved_connections.has(ssid),
+    );
+    this.#networks = [...saved, ...rest];
+
+    this.notify("networks");
 
     this.#scanning = false;
     this.notify("scanning");
