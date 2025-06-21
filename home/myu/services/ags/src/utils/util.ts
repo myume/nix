@@ -57,3 +57,6 @@ export const secondsToTimeStamp = (seconds: number) => {
 
   return `${h}h ${m}m`;
 };
+
+export const wrapIndex = (index: number, length: number) =>
+  ((index % length) + length) % length;

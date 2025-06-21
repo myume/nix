@@ -5,11 +5,9 @@ import Hyprland from "gi://AstalHyprland";
 import { hideLauncher } from "..";
 import { ScrolledWindow } from "../../Gtk";
 import { LauncherPlugin } from "./Plugin";
+import { wrapIndex } from "../../../utils/util";
 
 const appItemHeight = 56;
-
-const wrapIndex = (index: number, length: number) =>
-  ((index % length) + length) % length;
 
 // didn't want to use the app.launch() method
 // since it executes everything from the .config/ags dir

@@ -1,6 +1,6 @@
 import { Binding, Variable } from "astal";
 import { App, Astal, Gdk, Gtk } from "astal/gtk4";
-import { hideOnClickAway } from "../../utils/util";
+import { hideOnClickAway, wrapIndex } from "../../utils/util";
 import { LauncherPlugin } from "./Plugins/Plugin";
 import { AppSearch } from "./Plugins/AppSearch";
 import { Calculator } from "./Plugins/Calculator";
@@ -22,7 +22,7 @@ export function Launcher() {
   let entryRef: Gtk.Entry | null = null;
 
   const modeIndex = Variable(0);
-  const mode = modeIndex((index) => modes[index]);
+  const mode = modeIndex((index) => modes[index % modes.length]);
   const plugin: Binding<LauncherPlugin> = mode.as((mode) => {
     switch (mode) {
       case Mode.App:
@@ -50,6 +50,8 @@ export function Launcher() {
         Astal.WindowAnchor.LEFT |
         Astal.WindowAnchor.RIGHT
       }
+      focusable
+      onFocusLeave={(self) => self.hide()}
       onButtonPressed={(self, state) =>
         hideOnClickAway(() => self.hide())(self, state)
       }
@@ -64,17 +66,20 @@ export function Launcher() {
       }}
       onKeyPressed={(self, keyval, keycode, state) => {
         if (keyval === Gdk.KEY_Tab) {
-          modeIndex.set((modeIndex.get() + 1) % modes.length);
+          modeIndex.set(wrapIndex(modeIndex.get() + 1, modes.length));
+          return true;
         }
         // how the hell was i supposed to figure out that shift tab is this magical number
         if (keyval === Gdk.KEY_ISO_Left_Tab) {
-          modeIndex.set((modeIndex.get() - 1) % modes.length);
+          modeIndex.set(wrapIndex(modeIndex.get() - 1, modes.length));
+          return true;
         }
 
         plugin.get().handleKeyPress(self, keyval, keycode, state);
 
         if (keyval === Gdk.KEY_Escape) {
           self.hide();
+          return true;
         }
       }}
       onDestroy={() => {
