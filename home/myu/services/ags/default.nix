@@ -8,6 +8,7 @@
   dependencies = with pkgs; [
     papirus-icon-theme # use paprius icons
     rink
+    gammastep
   ];
 in {
   # add the home manager module

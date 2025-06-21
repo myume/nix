@@ -9,7 +9,7 @@ export const Caffeine = () => {
   return (
     <Panel
       title={"Caffeine"}
-      description={enabled.as((enabled) => (enabled ? "Active" : "Inactive"))}
+      description={enabled.as((enabled) => (enabled ? "Enabled" : "Disabled"))}
       enabled={enabled}
       icon={bind(caffeine, "icon")}
       onEnable={() => caffeine.activate()}

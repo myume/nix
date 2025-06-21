@@ -3,9 +3,10 @@ import { NetworkPanel } from "./Network";
 import { PowerProfilePanel } from "./PowerProfile";
 import { DoNoDisturb } from "./DoNotDisturb";
 import { Caffeine } from "./Caffeine";
+import { NightLight } from "./NightLight";
 
 export const Panels = [
   [NetworkPanel, BluetoothPanel],
-  [Caffeine, Caffeine],
+  [Caffeine, NightLight],
   [PowerProfilePanel, DoNoDisturb],
 ];
