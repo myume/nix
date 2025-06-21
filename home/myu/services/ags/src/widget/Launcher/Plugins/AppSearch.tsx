@@ -79,6 +79,7 @@ const AppItem = ({
         }
         return classes;
       })}
+      hexpand
       child={
         <box spacing={8}>
           <image pixelSize={36} iconName={app.iconName} />
