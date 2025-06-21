@@ -1,6 +1,9 @@
 import { GObject, property, register, subprocess } from "astal";
 import AstalIO from "gi://AstalIO?version=0.1";
 
+const disabledIcon = "night-light-disabled-symbolic";
+const enabledIcon = "night-light-symbolic";
+
 @register({ GTypeName: "NightLight" })
 export default class NightLight extends GObject.Object {
   static instance: NightLight;
@@ -12,7 +15,7 @@ export default class NightLight extends GObject.Object {
 
   private process: AstalIO.Process | null = null;
   #enabled = false;
-  #icon = "night-light-disabled-symbolic";
+  #icon = disabledIcon;
   #temperature = 4500;
 
   @property()
@@ -54,7 +57,7 @@ export default class NightLight extends GObject.Object {
 
     this.#enabled = true;
     this.notify("enabled");
-    this.#icon = "night-light-symbolic";
+    this.#icon = enabledIcon;
     this.notify("icon");
   };
 
@@ -66,7 +69,7 @@ export default class NightLight extends GObject.Object {
 
     this.#enabled = false;
     this.notify("enabled");
-    this.#icon = "night-light-disabled-symbolic";
+    this.#icon = disabledIcon;
     this.notify("icon");
   };
 }

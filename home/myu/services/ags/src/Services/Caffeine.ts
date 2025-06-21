@@ -1,6 +1,9 @@
 import { GObject, property, register, subprocess } from "astal";
 import AstalIO from "gi://AstalIO?version=0.1";
 
+const disabledIcon = "caffeine-cup-empty";
+const enabledIcon = "caffeine-cup-full";
+
 @register({ GTypeName: "Caffeine" })
 export default class Caffeine extends GObject.Object {
   static instance: Caffeine;
@@ -13,7 +16,7 @@ export default class Caffeine extends GObject.Object {
   private process: AstalIO.Process | null = null;
 
   #enabled = false;
-  #icon = "caffeine-cup-empty";
+  #icon = disabledIcon;
 
   @property()
   get enabled() {
@@ -49,7 +52,7 @@ export default class Caffeine extends GObject.Object {
 
     this.#enabled = true;
     this.notify("enabled");
-    this.#icon = "caffeine-cup-full";
+    this.#icon = enabledIcon;
     this.notify("icon");
   };
 
@@ -61,7 +64,7 @@ export default class Caffeine extends GObject.Object {
     this.process = null;
     this.#enabled = false;
     this.notify("enabled");
-    this.#icon = "caffeine-cup-full";
+    this.#icon = disabledIcon;
     this.notify("icon");
   };
 }
