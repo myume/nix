@@ -3,6 +3,7 @@ import { Sliders } from "./Sliders";
 import { Panels } from "./Panels";
 import { BatteryInfo } from "./Footer/BatteryInfo";
 import { PowerButton } from "./Footer/PowerButton";
+import { ScreenshotButton } from "./Footer/ScreenshotButton";
 
 export const ControlPanel = ({
   closeControlPanel,
@@ -50,8 +51,9 @@ export const ControlPanel = ({
           </box>
         ))}
       </box>
-      <box cssClasses={["footer"]} spacing={8}>
+      <box cssClasses={["footer"]} spacing={4}>
         <BatteryInfo />
+        <ScreenshotButton />
         <PowerButton closeControlPanel={closeControlPanel} />
       </box>
     </box>

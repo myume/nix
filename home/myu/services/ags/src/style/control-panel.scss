@@ -106,13 +106,22 @@
       }
     }
 
-    .power-menu {
+    button {
       padding: 4px;
-      border-radius: 2rem;
-      background: rgba(colors.$bg-transparent, 0.6);
+      border-radius: 4px;
 
       &:hover {
         background: rgba(colors.$bg-accent, 0.25);
+        /* background: rgba(colors.$bg-transparent, 0.6); */
+      }
+    }
+
+    .power-menu {
+      border-radius: 2rem;
+      background: rgba(colors.$bg-accent, 0.25);
+
+      &:hover {
+        background: rgba(colors.$bg-accent, 0.5);
         /* background: rgba(colors.$bg-transparent, 0.6); */
       }
     }
