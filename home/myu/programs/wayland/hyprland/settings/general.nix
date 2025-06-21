@@ -1,5 +1,10 @@
 {
   wayland.windowManager.hyprland.settings = {
+    ecosystem = {
+      no_update_news = true;
+      no_donation_nag = true;
+    };
+
     general = {
       gaps_in = 4;
       gaps_out = "6, 8, 8, 8";
