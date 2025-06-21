@@ -66,6 +66,10 @@ export function Launcher() {
         if (keyval === Gdk.KEY_Tab) {
           modeIndex.set((modeIndex.get() + 1) % modes.length);
         }
+        // how the hell was i supposed to figure out that shift tab is this magical number
+        if (keyval === Gdk.KEY_ISO_Left_Tab) {
+          modeIndex.set((modeIndex.get() - 1) % modes.length);
+        }
 
         plugin.get().handleKeyPress(self, keyval, keycode, state);
 
@@ -104,7 +108,7 @@ export function Launcher() {
             }}
           />
           <box cssClasses={["separator"]} />
-          {plugin.as((plugin) => plugin.getWidget())}
+          <box child={plugin.as((plugin) => plugin.getWidget())} />
         </box>
       }
     />

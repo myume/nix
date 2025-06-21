@@ -135,7 +135,7 @@ const AppSearchResults = ({
             ))}
           </box>
         ) : (
-          <label>No Applications Found</label>
+          <label hexpand vexpand label={"No Applications Found"} />
         ),
       )}
     />
