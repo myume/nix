@@ -9,12 +9,7 @@ type PageProps = {
   endWidget?: Gtk.Widget | Binding<Gtk.Widget>;
 };
 
-export const Page = ({
-  name,
-  child: content,
-  returnHome,
-  endWidget,
-}: PageProps) => {
+export const Page = ({ name, child, returnHome, endWidget }: PageProps) => {
   return (
     <box
       cssClasses={["page", name]}
@@ -31,7 +26,7 @@ export const Page = ({
         }
         endWidget={endWidget}
       />
-      {content}
+      <box child={child} />
     </box>
   );
 };
