@@ -1,7 +1,5 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    fastfetch
-
     # desktop applications
     gimp3
     discord

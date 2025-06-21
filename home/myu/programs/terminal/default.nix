@@ -5,5 +5,6 @@
     ./tools
     ./kitty
     ./hyprlock
+    ./fastfetch
   ];
 }
