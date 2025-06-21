@@ -5,6 +5,8 @@ import Brightness from "./modules/Brightness";
 import Bluetooth from "./modules/Bluetooth";
 import { Variable } from "astal";
 import Notifications from "./modules/Notifications";
+import Caffeine from "./modules/Caffeine";
+import NightLight from "./modules/NightLight";
 
 export default function Status({
   showControlPanel,
@@ -27,6 +29,8 @@ export default function Status({
           <Brightness />
           <Audio />
           <Battery />
+          <Caffeine />
+          <NightLight />
           <Notifications />
         </box>
       }
