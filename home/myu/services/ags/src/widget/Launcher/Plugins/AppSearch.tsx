@@ -155,6 +155,10 @@ export class AppSearch extends LauncherPlugin {
 
   appSearchResults = this.input((str) => AppSearch.apps.fuzzy_query(str));
 
+  iconName = "system-search";
+
+  placeholderText = "Search";
+
   constructor(input: Variable<string>) {
     super(input);
     this.appSearchResults.subscribe(() => this.selected.set(0));

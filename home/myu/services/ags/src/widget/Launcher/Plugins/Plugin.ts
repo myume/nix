@@ -5,6 +5,8 @@ export abstract class LauncherPlugin {
   static instance: LauncherPlugin;
 
   input: Variable<string>;
+  iconName = "system-search";
+  placeholderText = "";
 
   constructor(input: Variable<string>) {
     this.input = input;

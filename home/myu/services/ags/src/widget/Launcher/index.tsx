@@ -86,12 +86,14 @@ export function Launcher() {
           spacing={12}
         >
           <entry
-            cssClasses={["search"]}
-            primaryIconName={"system-search"}
+            cssClasses={["input"]}
+            primaryIconName={plugin.as(({ iconName }) => iconName)}
             setup={(self) => {
               entryRef = self;
             }}
-            placeholderText={"Search"}
+            placeholderText={plugin.as(
+              ({ placeholderText }) => placeholderText,
+            )}
             onChanged={(self) => {
               if (self.text !== searchString.get()) {
                 searchString.set(self.text);

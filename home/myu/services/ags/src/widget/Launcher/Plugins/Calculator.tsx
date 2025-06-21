@@ -9,6 +9,8 @@ export class Calculator extends LauncherPlugin {
   result = this.input((searchString) => execAsync(["rink", searchString]));
   label = Variable("");
   showCopied = Variable(false);
+  iconName = "accessories-calculator-symbolic";
+  placeholderText = "Calculate";
 
   static get_default(input: Variable<string>) {
     if (!Calculator.instance) Calculator.instance = new Calculator(input);
