@@ -8,6 +8,7 @@ import {
   notificationCenterName,
 } from "./NotificationCenter";
 import { NetworkPage, networkPageName } from "./Pages/NetworkPage";
+import { PowerProfilePage } from "./Pages/PowerProfile";
 
 export const windowName = "control-panel";
 
@@ -71,6 +72,7 @@ export const ControlPanelMenu = ({ showControlPanel }: SharedState) => {
                   returnHome={returnToNotifications}
                   currentPageName={pageName}
                 />
+                <PowerProfilePage returnHome={returnToNotifications} />
               </stack>
             </box>
           }

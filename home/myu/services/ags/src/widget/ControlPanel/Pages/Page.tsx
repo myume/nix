@@ -12,7 +12,7 @@ type PageProps = {
 export const Page = ({ name, child, returnHome, endWidget }: PageProps) => {
   return (
     <box
-      cssClasses={["page", name]}
+      cssClasses={["page", name.toLowerCase().replaceAll(" ", "-")]}
       name={name}
       orientation={Gtk.Orientation.VERTICAL}
       spacing={12}

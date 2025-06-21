@@ -133,7 +133,6 @@
   }
 
   .network {
-
     .network-entry {
       padding: 16px;
       font-size: 1.1rem;
@@ -154,6 +153,23 @@
 
     .network-list {
       padding: 0px 8px;
+    }
+  }
+
+  .power-profiles {
+    .selected {
+      background: rgba(colors.$bg-color, 0.5);
+    }
+
+    .profiles {
+      button {
+        border-radius: 1rem;
+        padding: 16px;
+
+        &:hover {
+          background: rgba(colors.$bg-color, 0.5);
+        }
+      }
     }
   }
 
