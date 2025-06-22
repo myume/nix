@@ -18,6 +18,7 @@ in {
       "${modPath}/locale"
       "${modPath}/displayManager"
       "${modPath}/services"
+      "${modPath}/fonts"
 
       ./hardware-configuration.nix
     ]
@@ -95,14 +96,6 @@ in {
       VISUAL = "vim";
     };
   };
-
-  fonts.packages = with pkgs; [
-    nerd-fonts.fira-code
-
-    noto-fonts
-    noto-fonts-cjk-sans
-    inter
-  ];
 
   hardware = {
     framework.laptop13.audioEnhancement.enable = true;
