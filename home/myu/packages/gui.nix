@@ -5,5 +5,6 @@
     discord
     spotify
     obs-studio
+    mpv
   ];
 }
