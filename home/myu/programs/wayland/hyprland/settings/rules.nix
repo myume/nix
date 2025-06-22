@@ -26,8 +26,10 @@
     windowrulev2 = [
       # why is it impossible for anyone to get idle inhibit right
       "idleinhibit focus, class:^(mpv)$"
-      "idleinhibit focus, class:^(zen|zen-twilight)$, title:^(.*YouTube.*)$"
       "idleinhibit fullscreen, class:^(zen|zen-twilight)$"
+
+      # apparently the order matters and this needs to be second
+      "idleinhibit focus, class:^(zen|zen-twilight)$, title:^(.*YouTube.*)$"
     ];
   };
 }
