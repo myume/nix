@@ -3,5 +3,6 @@
     ./terminal
     ./wayland
     ./browser
+    ./desktop
   ];
 }
