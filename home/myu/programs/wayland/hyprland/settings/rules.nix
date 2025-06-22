@@ -30,6 +30,10 @@
 
       # apparently the order matters and this needs to be second
       "idleinhibit focus, class:^(zen|zen-twilight)$, title:^(.*YouTube.*)$"
+
+      "float, title:^(Media viewer)$"
+
+      "float, title:^(Save File|Open.*|Choose.*|Select.*)$"
     ];
   };
 }
