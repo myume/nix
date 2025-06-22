@@ -4,6 +4,7 @@ import { Panels } from "./Panels";
 import { BatteryInfo } from "./Footer/BatteryInfo";
 import { PowerButton } from "./Footer/PowerButton";
 import { ScreenshotButton } from "./Footer/ScreenshotButton";
+import { ReloadButton } from "./Footer/ReloadButton";
 
 export const ControlPanel = ({
   closeControlPanel,
@@ -54,6 +55,7 @@ export const ControlPanel = ({
       <box cssClasses={["footer"]} spacing={4}>
         <BatteryInfo />
         <ScreenshotButton />
+        <ReloadButton />
         <PowerButton closeControlPanel={closeControlPanel} />
       </box>
     </box>

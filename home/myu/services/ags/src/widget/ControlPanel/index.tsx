@@ -2,13 +2,13 @@ import { App, Astal, Gdk, Gtk } from "astal/gtk4";
 import { SharedState } from "../../app";
 import { hideOnClickAway } from "../../utils/util";
 import { derive, Variable } from "astal";
-import { ControlPanel } from "./ControlPanel";
 import {
   NotificationCenter,
   notificationCenterName,
 } from "./NotificationCenter";
 import { NetworkPage, networkPageName } from "./Pages/NetworkPage";
 import { PowerProfilePage } from "./Pages/PowerProfile";
+import { ControlPanel } from "./ControlPanel";
 
 export const windowName = "control-panel";
 

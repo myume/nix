@@ -108,7 +108,7 @@
 
     button {
       padding: 4px;
-      border-radius: 4px;
+      border-radius: 2rem;
 
       &:hover {
         background: rgba(colors.$bg-accent, 0.25);
@@ -116,8 +116,11 @@
       }
     }
 
+    .screenshot-button {
+      border-radius: 4px;
+    }
+
     .power-menu {
-      border-radius: 2rem;
       background: rgba(colors.$bg-accent, 0.25);
 
       &:hover {
