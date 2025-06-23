@@ -42,7 +42,7 @@ in {
 
   wayland.windowManager.hyprland.settings = {
     exec-once = [
-      "ags run --gtk4"
+      "ags run --gtk4 --log-file /tmp/ags.log"
     ];
   };
 }

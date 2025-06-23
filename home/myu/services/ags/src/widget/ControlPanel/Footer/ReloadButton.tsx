@@ -11,7 +11,10 @@ export const ReloadButton = () => {
         // night light will not work after unless we kill the process here
         NightLight.get_default().deactivate();
 
-        Hyprland.get_default().dispatch("exec", "pkill gjs && ags run --gtk4");
+        Hyprland.get_default().dispatch(
+          "exec",
+          "pkill gjs && ags run --gtk4 --log-file /tmp/ags.log",
+        );
       }}
     />
   );
