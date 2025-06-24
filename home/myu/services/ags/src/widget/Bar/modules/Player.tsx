@@ -24,7 +24,6 @@ const PlayerWidget =
             <image cssClasses={["icon"]} iconName={getAppIcon(player)} />
             <label
               label={bind(player, "title").as((title) => title ?? "unknown")}
-              useMarkup
               ellipsize={Pango.EllipsizeMode.END}
               maxWidthChars={40}
             />
