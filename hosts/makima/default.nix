@@ -67,7 +67,6 @@ in {
 
   nix = {
     settings.experimental-features = ["nix-command" "flakes"];
-    # boot.loader.grub.configurationLimit = 10;
 
     # Perform garbage collection weekly to maintain low disk usage
     gc = {
@@ -76,12 +75,12 @@ in {
       options = "--delete-older-than 1w";
     };
 
-    # Optimize storage
-    # You can also manually optimize the store via:
-    #    nix-store --optimise
-    # Refer to the following link for more details:
-    # https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf-auto-optimise-store
-    settings.auto-optimise-store = true;
+    settings = {
+      auto-optimise-store = true;
+
+      # increase to avoid warning and since I have a lot of memory
+      download-buffer-size = 524288000; # 500 MB
+    };
   };
   environment = {
     systemPackages = with pkgs; [
