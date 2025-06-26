@@ -152,9 +152,7 @@ export class AppSearch extends LauncherPlugin {
   // doesn't work if not static for some reason
   selected = Variable(0);
 
-  appSearchResults = this.input((str) =>
-    AppSearch.apps.fuzzy_query(str).sort((a, b) => b.frequency - a.frequency),
-  );
+  appSearchResults = this.input((str) => AppSearch.apps.fuzzy_query(str));
 
   iconName = "system-search";
 
