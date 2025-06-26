@@ -1,5 +1,6 @@
 import Hyprland from "gi://AstalHyprland";
 import NightLight from "../../../Services/NightLight";
+import Caffeine from "../../../Services/Caffeine";
 
 export const ReloadButton = () => {
   return (
@@ -8,8 +9,8 @@ export const ReloadButton = () => {
       iconName={"view-refresh"}
       tooltipText={"Reload AGS"}
       onClicked={() => {
-        // night light will not work after unless we kill the process here
         NightLight.get_default().deactivate();
+        Caffeine.get_default().deactivate();
 
         Hyprland.get_default().dispatch(
           "exec",
