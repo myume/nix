@@ -99,6 +99,11 @@ in {
   hardware = {
     framework.laptop13.audioEnhancement.enable = true;
 
+    opengl = {
+      enable = true;
+      driSupport32Bit = true;
+    };
+
     bluetooth = {
       enable = true;
       powerOnBoot = true;
