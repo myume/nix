@@ -3,21 +3,21 @@
     "ags": {
       "inputs": {
         "astal": "astal",
+        "gnim": "gnim",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1738087375,
-        "narHash": "sha256-GLyNtU9A2VN22jNRHZ2OXuFfTJLh8uEVVt+ftsKUX0c=",
+        "lastModified": 1751041811,
+        "narHash": "sha256-NGty9sYgiB5gSa1r0nN4vfaRZcARCQ5TgbpSAPq+umk=",
         "owner": "aylur",
         "repo": "ags",
-        "rev": "a6a7a0adb17740f4c34a59902701870d46fbb6a4",
+        "rev": "5ee4f3c40f47e12334187ba9305f7c80ee1543fa",
         "type": "github"
       },
       "original": {
         "owner": "aylur",
-        "ref": "v2.3.0",
         "repo": "ags",
         "type": "github"
       }
@@ -76,6 +76,22 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "gnim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1751057426,
+        "narHash": "sha256-cfG2+iCr/bwcQXRXF/3iBmYsujPOWME9yNrlZv9V7Gc=",
+        "owner": "aylur",
+        "repo": "gnim",
+        "rev": "1db9c5a6d1320ce2ba36f79f3a1ae84265167fe3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "aylur",
+        "repo": "gnim",
         "type": "github"
       }
     },
