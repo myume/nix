@@ -1,6 +1,5 @@
 {
-  "name": "astal-shell",
   "dependencies": {
-    "astal": "/home/myu/.local/share/ags"
+    "ags": "*"
   }
 }

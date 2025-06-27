@@ -1,10 +1,11 @@
-import { App, Gdk, Gtk } from "astal/gtk4";
+import App from "ags/gtk4/app";
+import { Gdk, Gtk } from "ags/gtk4";
 import style from "./style.scss";
 import { Bar } from "./widget/Bar";
 import { Notifications } from "./widget/Notification";
 import { Launcher } from "./widget/Launcher";
 import { CenterMenu } from "./widget/CenterMenu";
-import { timeout, Variable } from "astal";
+import { timeout } from "ags/time";
 import AstalMpris from "gi://AstalMpris";
 import AstalWp from "gi://AstalWp";
 import BrightnessService from "./Services/Brightness";
