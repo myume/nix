@@ -22,7 +22,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     ags = {
-      url = "github:aylur/ags";
+      url = "github:aylur/ags?ref=v2.3.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
