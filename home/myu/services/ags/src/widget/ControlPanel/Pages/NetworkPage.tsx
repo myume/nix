@@ -1,34 +1,43 @@
 import { Page } from "./Page";
-import { bind, Binding, derive, GLib, Variable } from "astal";
 import { PasswordEntry, ScrolledWindow } from "../../Gtk";
-import { Gtk } from "astal/gtk4";
+import { Gtk } from "ags/gtk4";
 import NetworkManagerCliService, {
   NetworkEntry,
 } from "../../../Services/NetworkManagerCliService";
+import {
+  Accessor,
+  createBinding,
+  createComputed,
+  createState,
+  For,
+  State,
+} from "ags";
+import GLib from "gi://GLib";
 
 export const networkPageName = "network";
 
 const NetworkItem = ({
   network: { signal, ssid, security },
-  selected,
+  selected: [selected, setSelected],
 }: {
   network: NetworkEntry;
-  selected: Variable<string>;
+  selected: State<string>;
 }) => {
   const networkManager = NetworkManagerCliService.get_default();
-  const savedConnections = bind(networkManager, "saved_connections");
-  const isCurrentConnection = bind(networkManager, "current_connection").as(
-    (current) => current === ssid,
-  );
+  const savedConnections = createBinding(networkManager, "saved_connections");
+  const isCurrentConnection = createBinding(
+    networkManager,
+    "current_connection",
+  ).as((current) => current === ssid);
 
-  const connecting = bind(networkManager, "connecting");
-  const isConnecting = derive(
+  const connecting = createBinding(networkManager, "connecting");
+  const isConnecting = createComputed(
     [connecting, selected],
     (connecting, selected) => connecting && selected === ssid,
   );
   let entry: Gtk.PasswordEntry | null = null;
 
-  const passwordRequired = Variable(false);
+  const [passwordRequired, setPasswordRequired] = createState(false);
 
   return (
     <box
@@ -42,8 +51,8 @@ const NetworkItem = ({
       <box spacing={8}>
         <button
           onClicked={async () => {
-            passwordRequired.set(false);
-            selected.set(ssid);
+            setPasswordRequired(false);
+            setSelected(ssid);
 
             try {
               await networkManager.connectToNetwork(ssid);
@@ -51,7 +60,7 @@ const NetworkItem = ({
               if (e instanceof GLib.Error) {
                 const requiresPassword = /password .* not given/gi;
                 if (requiresPassword.test(e.message)) {
-                  passwordRequired.set(true);
+                  setPasswordRequired(true);
                   entry?.grab_focus();
                 } else {
                   logError(e);
@@ -61,33 +70,32 @@ const NetworkItem = ({
               }
             }
           }}
-          child={
-            <box spacing={8}>
-              <image
-                iconName={
-                  signal >= 75
-                    ? "network-wireless-signal-excellent"
-                    : signal >= 50
-                      ? "network-wireless-signal-ok"
-                      : signal >= 25
-                        ? "network-wireless-signal-weak"
-                        : "network-wireless-signal-none"
-                }
-              />
-              <label xalign={0} label={ssid} hexpand />
-            </box>
-          }
-        />
+        >
+          <box spacing={8}>
+            <image
+              iconName={
+                signal >= 75
+                  ? "network-wireless-signal-excellent"
+                  : signal >= 50
+                    ? "network-wireless-signal-ok"
+                    : signal >= 25
+                      ? "network-wireless-signal-weak"
+                      : "network-wireless-signal-none"
+              }
+            />
+            <label xalign={0} label={ssid} hexpand />
+          </box>
+        </button>
         <box marginEnd={8}>
           <label
-            visible={derive(
+            visible={createComputed(
               [isCurrentConnection, isConnecting],
               (isCurrentConnection, isConnecting) =>
                 isCurrentConnection && !isConnecting,
-            )()}
+            )}
             label={"Connected"}
           />
-          <label visible={isConnecting()} label={"Connecting..."} />
+          <label visible={isConnecting} label={"Connecting..."} />
         </box>
         <button
           visible={savedConnections.as((connections) => connections.has(ssid))}
@@ -98,19 +106,19 @@ const NetworkItem = ({
         <image visible={security !== ""} iconName={"object-locked-symbolic"} />
       </box>
       <PasswordEntry
-        setup={(self) => {
+        $={(self) => {
           entry = self;
         }}
         showPeekIcon
         placeholderText={"Enter Password"}
-        visible={derive(
+        visible={createComputed(
           [selected, passwordRequired],
           (selectedSSid, passwordRequired) =>
             selectedSSid === ssid && security !== "" && passwordRequired,
-        )()}
+        )}
         onActivate={async (self) => {
           await networkManager.connectWithPassword(ssid, self.text);
-          passwordRequired.set(false);
+          setPasswordRequired(false);
         }}
       />
     </box>
@@ -121,8 +129,8 @@ const NetworksList = ({
   networks,
   selected,
 }: {
-  selected: Variable<string>;
-  networks: Binding<NetworkEntry[]>;
+  selected: Accessor<string>;
+  networks: Accessor<NetworkEntry[]>;
 }) => {
   return (
     <ScrolledWindow
@@ -134,11 +142,9 @@ const NetworksList = ({
           orientation={Gtk.Orientation.VERTICAL}
           spacing={8}
         >
-          {networks.as((nets) =>
-            nets.map((network) => {
-              return <NetworkItem network={network} selected={selected} />;
-            }),
-          )}
+          <For each={networks}>
+            {(network) => <NetworkItem network={network} selected={selected} />}
+          </For>
         </box>
       }
     />
@@ -147,21 +153,21 @@ const NetworksList = ({
 
 export const NetworkPage = ({
   returnHome,
-  currentPageName,
+  currentPageName: [currentPageName, setCurrentPageName],
 }: {
   returnHome: () => void;
-  currentPageName: Variable<string>;
+  currentPageName: State<string>;
 }) => {
-  const selectedSsid = Variable("");
+  const [selectedSsid, setSelectedSsid] = createState("");
   const networkManager = NetworkManagerCliService.get_default();
 
-  const networks = bind(networkManager, "networks");
-  const scanning = bind(networkManager, "scanning");
+  const networks = createBinding(networkManager, "networks");
+  const scanning = createBinding(networkManager, "scanning");
 
-  currentPageName.subscribe((name) => {
-    if (name === networkPageName) {
+  currentPageName.subscribe(() => {
+    if (currentPageName.get() === networkPageName) {
       networkManager.scan();
-      selectedSsid.set("");
+      setSelectedSsid("");
     }
   });
 
@@ -180,7 +186,7 @@ export const NetworkPage = ({
         <button
           onClicked={() => {
             networkManager.scan(true);
-            selectedSsid.set("");
+            setSelectedSsid("");
           }}
           iconName={"view-refresh"}
           visible={scanning.as((scanning) => !scanning)}

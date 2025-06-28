@@ -1,8 +1,8 @@
 import PowerProfiles from "gi://AstalPowerProfiles";
 import { Panel } from "./Panel";
-import { bind, Variable } from "astal";
 import { toTitleCase } from "../../../utils/util";
 import { powerProfilePageName } from "../Pages/PowerProfile";
+import { createBinding, createState } from "ags";
 
 export const profiles = ["power-saver", "balanced", "performance"];
 
@@ -20,9 +20,11 @@ export const PowerProfilePanel = (setPageName: (name: string) => void) => {
   return (
     <Panel
       title={"Power Profile"}
-      description={bind(powerProfiles, "activeProfile").as(toTitleCase)}
-      icon={bind(powerProfiles, "iconName")}
-      enabled={Variable(true)()} // always enabled
+      description={createBinding(powerProfiles, "activeProfile").as(
+        toTitleCase,
+      )}
+      icon={createBinding(powerProfiles, "iconName")}
+      enabled={createState(true)[0]} // always enabled
       onDisable={cycleNextProfile}
       onEnable={cycleNextProfile} // should never run since always enabled
       onExpand={() => setPageName(powerProfilePageName)}

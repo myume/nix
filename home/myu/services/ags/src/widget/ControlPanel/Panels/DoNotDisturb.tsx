@@ -1,10 +1,10 @@
 import AstalNotifd from "gi://AstalNotifd";
 import { Panel } from "./Panel";
-import { bind } from "astal";
+import { createBinding } from "ags";
 
 export const DoNoDisturb = () => {
   const notifd = AstalNotifd.get_default();
-  const dnd = bind(notifd, "dontDisturb");
+  const dnd = createBinding(notifd, "dontDisturb");
 
   return (
     <Panel

@@ -1,4 +1,4 @@
-import { Gtk } from "astal/gtk4";
+import { Gtk } from "ags/gtk4";
 import { Sliders } from "./Sliders";
 import { Panels } from "./Panels";
 import { BatteryInfo } from "./Footer/BatteryInfo";
@@ -43,11 +43,9 @@ export const ControlPanel = ({
         {Panels.map((row) => (
           <box cssClasses={["row"]} spacing={panelSpacing} homogeneous>
             {row.map((panel) => (
-              <box
-                cssClasses={["item"]}
-                child={panel(setPageName)}
-                homogeneous
-              />
+              <box cssClasses={["item"]} homogeneous>
+                {panel(setPageName)}
+              </box>
             ))}
           </box>
         ))}

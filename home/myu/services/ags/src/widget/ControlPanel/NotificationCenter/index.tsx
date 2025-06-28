@@ -1,17 +1,17 @@
-import { bind, derive } from "astal";
 import { ScrolledWindow } from "../../Gtk";
 import NotificationService from "../../../Services/NotificationService";
 import Notification from "../../Notification/Notification";
-import { Gtk } from "astal/gtk4";
+import { Gtk } from "ags/gtk4";
+import { createBinding, createComputed, For } from "ags";
 
 export const notificationCenterName = "notification-center";
 
 export const NotificationCenter = () => {
   const notificationService = NotificationService.get_default();
-  const allNotifications = derive(
+  const allNotifications = createComputed(
     [
-      bind(notificationService, "notifications"),
-      bind(notificationService, "hidden_notifications"),
+      createBinding(notificationService, "notifications"),
+      createBinding(notificationService, "hidden_notifications"),
     ],
     (unresolved, hidden) => unresolved.concat(hidden),
   );
@@ -35,11 +35,11 @@ export const NotificationCenter = () => {
               hexpand
               child={
                 <box orientation={Gtk.Orientation.VERTICAL} spacing={10}>
-                  {allNotifications((notifications) =>
-                    notifications.map((notification) => (
+                  <For each={allNotifications}>
+                    {(notification) => (
                       <Notification notification={notification} />
-                    )),
-                  )}
+                    )}
+                  </For>
                 </box>
               }
             />
@@ -57,13 +57,12 @@ export const NotificationCenter = () => {
             .get()
             .forEach((notification) => notification.dismiss());
         }}
-        child={
-          <box spacing={2}>
-            <image iconName={"edit-clear-list"} />
-            <label>Clear</label>
-          </box>
-        }
-      />
+      >
+        <box spacing={2}>
+          <image iconName={"edit-clear-list"} />
+          <label>Clear</label>
+        </box>
+      </button>
     </box>
   );
 };

@@ -1,11 +1,11 @@
-import { Binding } from "astal";
-import { Gtk } from "astal/gtk4";
+import { Accessor } from "ags";
+import { Gtk } from "ags/gtk4";
 
 type PanelProps = {
-  title: string | Binding<string>;
-  icon: string | Binding<string>;
-  description: string | Binding<string>;
-  enabled: Binding<boolean>;
+  title: string | Accessor<string>;
+  icon: string | Accessor<string>;
+  description: string | Accessor<string>;
+  enabled: Accessor<boolean>;
   onEnable: (b: Gtk.Button) => void;
   onDisable: (b: Gtk.Button) => void;
   onExpand?: () => void;
@@ -33,21 +33,16 @@ export const Panel = ({
         handler(self);
       }}
       valign={Gtk.Align.START}
-      child={
-        <box spacing={10}>
-          <image iconName={icon} pixelSize={16} />
-          <box orientation={Gtk.Orientation.VERTICAL}>
-            <label cssClasses={["title"]} label={title} xalign={0} />
-            <label
-              cssClasses={["description"]}
-              label={description}
-              xalign={0}
-            />
-          </box>
-        </box>
-      }
       hexpand
-    />
+    >
+      <box spacing={10}>
+        <image iconName={icon} pixelSize={16} />
+        <box orientation={Gtk.Orientation.VERTICAL}>
+          <label cssClasses={["title"]} label={title} xalign={0} />
+          <label cssClasses={["description"]} label={description} xalign={0} />
+        </box>
+      </box>
+    </button>
     <button
       cssClasses={["show-page"]}
       visible={onExpand !== undefined}

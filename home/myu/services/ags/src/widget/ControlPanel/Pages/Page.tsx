@@ -1,12 +1,12 @@
-import { Gtk } from "astal/gtk4";
+import { Gtk } from "ags/gtk4";
 import { toTitleCase } from "../../../utils/util";
-import { Binding } from "astal";
+import { Accessor, With } from "ags";
 
 type PageProps = {
   name: string;
-  child: Gtk.Widget | Binding<Gtk.Widget>;
+  child: Accessor<Gtk.Widget>;
   returnHome: () => void;
-  endWidget?: Gtk.Widget | Binding<Gtk.Widget>;
+  endWidget?: Gtk.Widget | Accessor<Gtk.Widget>;
 };
 
 export const Page = ({ name, child, returnHome, endWidget }: PageProps) => {
@@ -20,13 +20,19 @@ export const Page = ({ name, child, returnHome, endWidget }: PageProps) => {
       <box cssClasses={["separator"]} />
       <centerbox
         cssClasses={["header"]}
-        startWidget={<button label={" Back"} onClicked={returnHome} />}
-        centerWidget={
-          <label halign={Gtk.Align.END} label={toTitleCase(name)} />
+        startWidget={
+          (<button label={" Back"} onClicked={returnHome} />) as Gtk.Widget
         }
-        endWidget={endWidget}
+        centerWidget={
+          (
+            <label halign={Gtk.Align.END} label={toTitleCase(name)} />
+          ) as Gtk.Widget
+        }
+        endWidget={endWidget ?? <box visible={false} />}
       />
-      <box child={child} />
+      <box>
+        <With value={child}>{(child) => child}</With>
+      </box>
     </box>
   );
 };

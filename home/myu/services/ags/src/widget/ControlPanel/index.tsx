@@ -1,7 +1,7 @@
-import { App, Astal, Gdk, Gtk } from "astal/gtk4";
+import App from "ags/gtk4/app";
+import { Astal, Gdk, Gtk } from "ags/gtk4";
 import { SharedState } from "../../app";
 import { hideOnClickAway } from "../../utils/util";
-import { derive, Variable } from "astal";
 import {
   NotificationCenter,
   notificationCenterName,
@@ -9,25 +9,29 @@ import {
 import { NetworkPage, networkPageName } from "./Pages/NetworkPage";
 import { PowerProfilePage } from "./Pages/PowerProfile";
 import { ControlPanel } from "./ControlPanel";
+import { createComputed, createState } from "ags";
 
 export const windowName = "control-panel";
 
-export const ControlPanelMenu = ({ showControlPanel }: SharedState) => {
+export const ControlPanelMenu = ({
+  showControlPanel: [showControlPanel, setShowControlPanel],
+}: SharedState) => {
   const { TOP, BOTTOM, LEFT, RIGHT } = Astal.WindowAnchor;
 
-  const showWindow = derive([showControlPanel], (show) => show);
+  const showWindow = createComputed([showControlPanel], (show) => show);
 
-  const pageName = Variable(notificationCenterName);
+  const pageName = createState(notificationCenterName);
+  const [getPageName, setPageName] = pageName;
   const closeMenu = () => {
-    showControlPanel.set(false);
-    pageName.set(notificationCenterName);
+    setShowControlPanel(false);
+    setPageName(notificationCenterName);
   };
 
   const returnToNotifications = () => pageName.set(notificationCenterName);
 
   return (
     <window
-      visible={showWindow()}
+      visible={showWindow}
       name={windowName}
       namespace={windowName}
       layer={Astal.Layer.TOP}
@@ -41,43 +45,41 @@ export const ControlPanelMenu = ({ showControlPanel }: SharedState) => {
       onKeyPressed={(_self, keyval) => {
         if (keyval === Gdk.KEY_Escape) closeMenu();
       }}
-      child={
-        <revealer
-          valign={Gtk.Align.START}
-          halign={Gtk.Align.END}
-          revealChild={showControlPanel()}
-          transitionType={Gtk.RevealerTransitionType.SLIDE_LEFT}
-          child={
-            <box
-              orientation={Gtk.Orientation.VERTICAL}
-              cssClasses={["control-panel-menu"]}
-              overflow={Gtk.Overflow.HIDDEN}
-              spacing={12}
-            >
-              <ControlPanel
-                closeControlPanel={closeMenu}
-                setPageName={(name) => pageName.set(name)}
-              />
-              <stack
-                visibleChildName={pageName()}
-                transitionType={pageName((name) =>
-                  name === networkPageName
-                    ? Gtk.StackTransitionType.SLIDE_RIGHT
-                    : Gtk.StackTransitionType.SLIDE_LEFT,
-                )}
-                homogeneous
-              >
-                <NotificationCenter />
-                <NetworkPage
-                  returnHome={returnToNotifications}
-                  currentPageName={pageName}
-                />
-                <PowerProfilePage returnHome={returnToNotifications} />
-              </stack>
-            </box>
-          }
-        />
-      }
-    />
+    >
+      <revealer
+        valign={Gtk.Align.START}
+        halign={Gtk.Align.END}
+        revealChild={showControlPanel}
+        transitionType={Gtk.RevealerTransitionType.SLIDE_LEFT}
+      >
+        <box
+          orientation={Gtk.Orientation.VERTICAL}
+          cssClasses={["control-panel-menu"]}
+          overflow={Gtk.Overflow.HIDDEN}
+          spacing={12}
+        >
+          <ControlPanel
+            closeControlPanel={closeMenu}
+            setPageName={(name) => pageName.set(name)}
+          />
+          <stack
+            visibleChildName={getPageName}
+            transitionType={getPageName((name) =>
+              name === networkPageName
+                ? Gtk.StackTransitionType.SLIDE_RIGHT
+                : Gtk.StackTransitionType.SLIDE_LEFT,
+            )}
+            homogeneous
+          >
+            <NotificationCenter />
+            <NetworkPage
+              returnHome={returnToNotifications}
+              currentPageName={pageName}
+            />
+            <PowerProfilePage returnHome={returnToNotifications} />
+          </stack>
+        </box>
+      </revealer>
+    </window>
   );
 };
