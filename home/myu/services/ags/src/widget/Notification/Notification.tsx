@@ -1,9 +1,11 @@
-import { AstalIO, bind, GLib } from "astal";
-import { Gtk } from "astal/gtk4";
+import { Gtk } from "ags/gtk4";
 import AstalNotifd from "gi://AstalNotifd";
 import AstalApps from "gi://AstalApps";
 import Pango from "gi://Pango";
 import { toTitleCase } from "../../utils/util";
+import AstalIO from "gi://AstalIO";
+import { createBinding, For } from "ags";
+import GLib from "gi://GLib";
 
 const urgencyToString = (urgency: AstalNotifd.Urgency) => {
   switch (urgency) {
@@ -32,7 +34,7 @@ export default function Notification({
   }
 
   const widthChars = 20;
-  const actions = bind(notification, "actions").as((actions) =>
+  const actions = createBinding(notification, "actions").as((actions) =>
     actions.map((action) => (
       <button
         cssClasses={["action", action.label]}
@@ -50,39 +52,41 @@ export default function Notification({
 
   return (
     <box
+      $={() => {
+        if (hideNotification) {
+          timer = hideNotification();
+        }
+      }}
       cssClasses={["notification", urgencyToString(notification.urgency)]}
       orientation={Gtk.Orientation.VERTICAL}
       widthRequest={256}
       spacing={8}
-      onHoverEnter={() => {
-        notifd.set_ignore_timeout(true);
-        timer?.cancel();
-        timer = null;
-      }}
-      onHoverLeave={() => {
-        notifd.set_ignore_timeout(false);
-        if (hideNotification) {
-          timer = hideNotification();
-        }
-      }}
-      setup={() => {
-        if (hideNotification) {
-          timer = hideNotification();
-        }
-      }}
       hexpand
     >
+      <Gtk.EventControllerMotion
+        onEnter={() => {
+          notifd.set_ignore_timeout(true);
+          timer?.cancel();
+          timer = null;
+        }}
+        onLeave={() => {
+          notifd.set_ignore_timeout(false);
+          if (hideNotification) {
+            timer = hideNotification();
+          }
+        }}
+      />
       <box cssClasses={["notification-header"]} hexpand>
         <box halign={Gtk.Align.START} hexpand spacing={4}>
           <image visible={appIcon !== ""} iconName={appIcon} />
           <label
-            label={bind(notification, "appName").as(toTitleCase)}
+            label={createBinding(notification, "appName").as(toTitleCase)}
             xalign={0}
           />
         </box>
         <box halign={Gtk.Align.END} spacing={2}>
           <label
-            label={bind(notification, "time").as((time) => {
+            label={createBinding(notification, "time").as((time) => {
               const datetime = GLib.DateTime.new_from_unix_local(time);
               let format = "%H:%M";
               if (datetime.compare(GLib.DateTime.new_now_local()) === 1) {
@@ -95,30 +99,29 @@ export default function Notification({
           <button
             cssClasses={["close-button"]}
             onClicked={() => notification.dismiss()}
-            child={
-              <image
-                cssClasses={["close-icon"]}
-                iconName={"window-close-symbolic"}
-              />
-            }
-          />
+          >
+            <image
+              cssClasses={["close-icon"]}
+              iconName={"window-close-symbolic"}
+            />
+          </button>
         </box>
       </box>
       <box cssClasses={["separator"]} />
       <box cssClasses={["notificiation-content"]} spacing={8} hexpand>
         <image
-          visible={bind(notification, "image").as(
+          visible={createBinding(notification, "image").as(
             (image) => image !== null && image !== "",
           )}
           overflow={Gtk.Overflow.HIDDEN}
           cssClasses={["notification-image"]}
-          file={bind(notification, "image")}
+          file={createBinding(notification, "image")}
           pixelSize={64}
         />
         <box orientation={Gtk.Orientation.VERTICAL} valign={Gtk.Align.CENTER}>
           <label
             cssClasses={["summary"]}
-            label={bind(notification, "summary")}
+            label={createBinding(notification, "summary")}
             xalign={0}
             ellipsize={Pango.EllipsizeMode.END}
             widthChars={widthChars}
@@ -126,7 +129,7 @@ export default function Notification({
           />
           <label
             cssClasses={["body"]}
-            label={bind(notification, "body")}
+            label={createBinding(notification, "body")}
             xalign={0}
             wrap
             wrapMode={Pango.WrapMode.WORD_CHAR}
@@ -140,7 +143,7 @@ export default function Notification({
         visible={actions.as((actions) => actions.length > 0)}
         spacing={4}
       >
-        {actions}
+        <For each={actions}>{(action) => action}</For>
       </box>
     </box>
   );

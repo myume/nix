@@ -1,8 +1,8 @@
 import { Page } from "./Page";
 import { profiles } from "../Panels/PowerProfile";
 import PowerProfiles from "gi://AstalPowerProfiles";
-import { Gtk } from "astal/gtk4";
-import { bind } from "astal";
+import { Gtk } from "ags/gtk4";
+import { createBinding } from "ags";
 
 export const powerProfilePageName = "Power Profiles";
 
@@ -28,22 +28,21 @@ export const PowerProfilePage = ({
         >
           {profiles.map((profile) => (
             <button
-              cssClasses={bind(powerProfiles, "activeProfile").as(
+              cssClasses={createBinding(powerProfiles, "activeProfile").as(
                 (activeProfile) => [
                   activeProfile === profile ? "selected" : "",
                 ],
               )}
               onClicked={() => powerProfiles.set_active_profile(profile)}
-              child={
-                <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
-                  <image
-                    iconName={`power-profile-${profile}-symbolic`}
-                    pixelSize={64}
-                  />
-                  <label>{profile}</label>
-                </box>
-              }
-            />
+            >
+              <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
+                <image
+                  iconName={`power-profile-${profile}-symbolic`}
+                  pixelSize={64}
+                />
+                <label label={profile} />
+              </box>
+            </button>
           ))}
         </box>
       }

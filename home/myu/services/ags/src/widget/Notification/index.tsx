@@ -1,7 +1,9 @@
-import { bind, timeout } from "astal";
-import { App, Astal, Gdk, Gtk } from "astal/gtk4";
+import App from "ags/gtk4/app";
+import { Astal, Gdk, Gtk } from "ags/gtk4";
 import Notification from "./Notification";
 import NotificationService from "../../Services/NotificationService";
+import { createBinding, For } from "ags";
+import { timeout } from "ags/time";
 
 const notifTimeout = 4000;
 const windowName = "floating-notifications";
@@ -10,7 +12,7 @@ export function Notifications(gdkmonitor: Gdk.Monitor) {
   const { TOP, RIGHT } = Astal.WindowAnchor;
 
   const notificationService = NotificationService.get_default();
-  const notifications = bind(notificationService, "notifications");
+  const notifications = createBinding(notificationService, "notifications");
 
   return (
     <window
@@ -23,24 +25,21 @@ export function Notifications(gdkmonitor: Gdk.Monitor) {
       gdkmonitor={gdkmonitor}
       anchor={TOP | RIGHT}
       application={App}
-      child={
-        <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
-          {notifications.as((notifs) =>
-            notifs.map((notification) => {
-              return (
-                <Notification
-                  notification={notification}
-                  hideNotification={() =>
-                    timeout(notifTimeout, () => {
-                      notificationService.hideNotification(notification);
-                    })
-                  }
-                />
-              );
-            }),
+    >
+      <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
+        <For each={notifications}>
+          {(notification) => (
+            <Notification
+              notification={notification}
+              hideNotification={() =>
+                timeout(notifTimeout, () => {
+                  notificationService.hideNotification(notification);
+                })
+              }
+            />
           )}
-        </box>
-      }
-    />
+        </For>
+      </box>
+    </window>
   );
 }

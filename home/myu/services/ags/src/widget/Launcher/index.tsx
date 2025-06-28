@@ -1,9 +1,9 @@
-import { Binding, Variable } from "astal";
-import { App, Astal, Gdk, Gtk } from "astal/gtk4";
+import App from "ags/gtk4/app";
+import { Astal, Gdk, Gtk } from "ags/gtk4";
 import { hideOnClickAway, wrapIndex } from "../../utils/util";
-import { LauncherPlugin } from "./Plugins/Plugin";
 import { AppSearch } from "./Plugins/AppSearch";
 import { Calculator } from "./Plugins/Calculator";
+import { createState, With } from "ags";
 
 enum Mode {
   App,
@@ -17,13 +17,13 @@ const modes = Object.values(Mode).filter(
 export const hideLauncher = () => App.get_window("launcher")?.hide();
 
 export function Launcher() {
-  const searchString = Variable("");
+  const [searchString, setSearchString] = createState("");
 
   let entryRef: Gtk.Entry | null = null;
 
-  const modeIndex = Variable(0);
+  const [modeIndex, setModeIndex] = createState(0);
   const mode = modeIndex((index) => modes[index % modes.length]);
-  const plugin: Binding<LauncherPlugin> = mode.as((mode) => {
+  const plugin = mode((mode) => {
     switch (mode) {
       case Mode.App:
         return AppSearch.get_default(searchString);
@@ -37,8 +37,13 @@ export function Launcher() {
     entryRef?.grab_focus();
   });
 
+  let window: Astal.Window;
+
   return (
     <window
+      $={(self) => {
+        window = self;
+      }}
       name={"launcher"}
       namespace={"launcher"}
       cssClasses={["launcher-container"]}
@@ -50,72 +55,72 @@ export function Launcher() {
         Astal.WindowAnchor.LEFT |
         Astal.WindowAnchor.RIGHT
       }
-      focusable
-      onFocusLeave={(self) => self.hide()}
-      onButtonPressed={(self, state) =>
-        hideOnClickAway(() => self.hide())(self, state)
-      }
       exclusivity={Astal.Exclusivity.IGNORE}
       keymode={Astal.Keymode.ON_DEMAND}
       onShow={() => {
         plugin.get().cleanup();
-        modeIndex.set(0);
-        searchString.set("");
+        setModeIndex(0);
+        setSearchString("");
         entryRef?.set({ text: "" });
         entryRef?.grab_focus();
       }}
-      onKeyPressed={(self, keyval, keycode, state) => {
-        if (keyval === Gdk.KEY_Tab) {
-          modeIndex.set(wrapIndex(modeIndex.get() + 1, modes.length));
-          return true;
+      focusable
+    >
+      <Gtk.EventControllerFocus onLeave={() => window.hide()} />
+      <Gtk.GestureClick
+        onPressed={(_self, _, x, y) =>
+          hideOnClickAway(() => window.hide())(window, x, y)
         }
-        // how the hell was i supposed to figure out that shift tab is this magical number
-        if (keyval === Gdk.KEY_ISO_Left_Tab) {
-          modeIndex.set(wrapIndex(modeIndex.get() - 1, modes.length));
-          return true;
-        }
+      />
+      <Gtk.EventControllerKey
+        onKeyPressed={(_self, keyval, keycode, state) => {
+          if (keyval === Gdk.KEY_Tab) {
+            setModeIndex(wrapIndex(modeIndex.get() + 1, modes.length));
+            return true;
+          }
+          // how the hell was i supposed to figure out that shift tab is this magical number
+          if (keyval === Gdk.KEY_ISO_Left_Tab) {
+            setModeIndex(wrapIndex(modeIndex.get() - 1, modes.length));
+            return true;
+          }
 
-        plugin.get().handleKeyPress(self, keyval, keycode, state);
+          plugin.get().handleKeyPress(window, keyval, keycode, state);
 
-        if (keyval === Gdk.KEY_Escape) {
-          self.hide();
-          return true;
-        }
-      }}
-      onDestroy={() => {
-        searchString.drop();
-      }}
-      child={
-        <box
-          cssClasses={["launcher"]}
-          valign={Gtk.Align.CENTER}
-          halign={Gtk.Align.CENTER}
-          orientation={Gtk.Orientation.VERTICAL}
-          widthRequest={700}
-          spacing={12}
-        >
-          <entry
-            cssClasses={["input"]}
-            primaryIconName={plugin.as(({ iconName }) => iconName)}
-            setup={(self) => {
-              entryRef = self;
-            }}
-            placeholderText={plugin.as(
-              ({ placeholderText }) => placeholderText,
-            )}
-            onChanged={(self) => {
-              if (self.text !== searchString.get()) {
-                searchString.set(self.text);
-              }
-            }}
-            onActivate={() => {
-              plugin.get().activate();
-            }}
-          />
-          <box cssClasses={["separator"]} />
-          <box child={plugin.as((plugin) => plugin.getWidget())} />
+          if (keyval === Gdk.KEY_Escape) {
+            window.hide();
+            return true;
+          }
+        }}
+      />
+      <box
+        cssClasses={["launcher"]}
+        valign={Gtk.Align.CENTER}
+        halign={Gtk.Align.CENTER}
+        orientation={Gtk.Orientation.VERTICAL}
+        widthRequest={700}
+        spacing={12}
+      >
+        <entry
+          cssClasses={["input"]}
+          primaryIconName={plugin.as(({ iconName }) => iconName)}
+          $={(self) => {
+            entryRef = self;
+          }}
+          placeholderText={plugin.as(({ placeholderText }) => placeholderText)}
+          onNotifyText={({ text }) => {
+            if (text !== searchString.get()) {
+              setSearchString(text);
+            }
+          }}
+          onActivate={() => {
+            plugin.get().activate();
+          }}
+        />
+        <box cssClasses={["separator"]} />
+        <box>
+          <With value={plugin}>{(plugin) => plugin.getWidget()}</With>
         </box>
-      }
-    />
+      </box>
+    </window>
   );
 }

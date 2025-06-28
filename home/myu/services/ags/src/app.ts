@@ -1,10 +1,11 @@
-import { App, Gdk, Gtk } from "astal/gtk4";
+import App from "ags/gtk4/app";
+import { Gdk, Gtk } from "ags/gtk4";
 import style from "./style.scss";
 import { Bar } from "./widget/Bar";
 import { Notifications } from "./widget/Notification";
 import { Launcher } from "./widget/Launcher";
 import { CenterMenu } from "./widget/CenterMenu";
-import { timeout, Variable } from "astal";
+import { timeout } from "ags/time";
 import AstalMpris from "gi://AstalMpris";
 import AstalWp from "gi://AstalWp";
 import BrightnessService from "./Services/Brightness";
@@ -16,26 +17,28 @@ import {
   OSDState,
   windowName as OSDWindowName,
 } from "./widget/OSD";
+import { createState, State } from "ags";
+import AstalIO from "gi://AstalIO?version=0.1";
 
 // state shared between windows
 export type SharedState = {
-  showMediaControls: Variable<boolean>;
-  showCalender: Variable<boolean>;
-  currentPlayer: Variable<AstalMpris.Player | null>;
-  showControlPanel: Variable<boolean>;
+  showMediaControls: State<boolean>;
+  showCalender: State<boolean>;
+  currentPlayer: State<AstalMpris.Player | null>;
+  showControlPanel: State<boolean>;
   osdState: OSDState;
 };
 
 function main() {
   // initialize shared state
   const sharedState: SharedState = {
-    showMediaControls: Variable(false),
-    showCalender: Variable(false),
-    currentPlayer: Variable(null),
-    showControlPanel: Variable(false),
+    showMediaControls: createState(false),
+    showCalender: createState(false),
+    currentPlayer: createState<AstalMpris.Player | null>(null),
+    showControlPanel: createState(false),
     osdState: {
-      timer: Variable(null),
-      mode: Variable(null),
+      timer: createState<AstalIO.Time | null>(null),
+      mode: createState<OSDMode | null>(null),
     },
   };
 
@@ -63,15 +66,18 @@ function main() {
     if (App.get_window(windowName)?.is_visible()) return;
 
     const {
-      osdState: { mode, timer },
+      osdState: {
+        mode: [, setMode],
+        timer: [timer, setTimer],
+      },
     } = sharedState;
-    mode.set(inputMode);
+    setMode(inputMode);
     timer.get()?.cancel();
-    timer.set(null);
+    setTimer(null);
     const osd = App.get_window(OSDWindowName);
     osd?.show();
 
-    if (!timer.get()) timer.set(timeout(3000, () => osd?.hide()));
+    if (!timer.get()) setTimer(timeout(3000, () => osd?.hide()));
   };
 
   const { defaultSpeaker: speaker } = AstalWp.get_default()!;

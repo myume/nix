@@ -1,6 +1,5 @@
-import { Binding } from "astal";
-import { Astal, Gtk } from "astal/gtk4";
-import { Overlay } from "astal/gtk4/widget";
+import { Accessor } from "ags";
+import { Astal, Gtk } from "ags/gtk4";
 
 export const Slider = ({
   min,
@@ -10,46 +9,47 @@ export const Slider = ({
   icon,
   label,
 }: {
-  min: number | Binding<number>;
-  max: number | Binding<number>;
-  value: number | Binding<number>;
+  min: number | Accessor<number>;
+  max: number | Accessor<number>;
+  value: number | Accessor<number>;
   onChange: (s: Astal.Slider) => void;
-  icon: string | Binding<string>;
-  label?: string | Binding<string>;
+  icon: string | Accessor<string>;
+  label?: string | Accessor<string>;
 }) => (
-  <Overlay
+  <Gtk.Overlay
     cssClasses={["slider"]}
-    child={
-      <slider
-        min={min}
-        widthRequest={200}
-        max={max}
-        value={value}
-        onChangeValue={onChange}
-        overflow={Gtk.Overflow.HIDDEN}
-        hexpand
-      />
-    }
-    setup={(self) => {
+    $={(self) => {
       self.add_overlay(
-        <box cssClasses={["info"]} canTarget={false} spacing={4}>
-          <image
-            cssClasses={["icon"]}
-            pixelSize={16}
-            iconName={icon}
-            halign={Gtk.Align.START}
-          />
-          {label ? (
-            <label
-              cssClasses={["value"]}
-              label={label}
+        (
+          <box cssClasses={["info"]} canTarget={false} spacing={4}>
+            <image
+              cssClasses={["icon"]}
+              pixelSize={16}
+              iconName={icon}
               halign={Gtk.Align.START}
             />
-          ) : (
-            <box visible={false} />
-          )}
-        </box>,
+            {label ? (
+              <label
+                cssClasses={["value"]}
+                label={label}
+                halign={Gtk.Align.START}
+              />
+            ) : (
+              <box visible={false} />
+            )}
+          </box>
+        ) as Gtk.Widget,
       );
     }}
-  />
+  >
+    <slider
+      min={min}
+      widthRequest={200}
+      max={max}
+      value={value}
+      onChangeValue={onChange}
+      overflow={Gtk.Overflow.HIDDEN}
+      hexpand
+    />
+  </Gtk.Overlay>
 );

@@ -1,4 +1,5 @@
-import { GObject, property, register, subprocess } from "astal";
+import GObject, { register, getter, setter } from "ags/gobject";
+import { subprocess } from "ags/process";
 import AstalIO from "gi://AstalIO?version=0.1";
 
 const disabledIcon = "caffeine-cup-empty";
@@ -18,21 +19,23 @@ export default class Caffeine extends GObject.Object {
   #enabled = false;
   #icon = disabledIcon;
 
-  @property()
+  @getter(Boolean)
   get enabled() {
     return this.#enabled;
   }
 
+  @setter(Boolean)
   set enabled(enabled) {
     this.#enabled = enabled;
     this.notify("enabled");
   }
 
-  @property()
+  @getter(String)
   get icon() {
     return this.#icon;
   }
 
+  @setter(String)
   set icon(icon) {
     this.#icon = icon;
     this.notify("icon");

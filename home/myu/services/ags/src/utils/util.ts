@@ -1,5 +1,5 @@
-import { bind } from "astal";
-import { Gdk, Gtk } from "astal/gtk4";
+import { createBinding } from "ags";
+import { Gdk, Gtk } from "ags/gtk4";
 import AstalApps from "gi://AstalApps";
 import AstalMpris from "gi://AstalMpris";
 
@@ -9,28 +9,22 @@ export function toTitleCase(str: string): string {
 
 export const getAppIcon = (player: AstalMpris.Player) => {
   const apps = new AstalApps.Apps();
-  return bind(player, "entry").as(
+  return createBinding(player, "entry").as(
     (entry) => apps.exact_query(entry)[0].iconName,
   );
 };
 
 export const hideOnClickAway =
-  (hide: () => void) => (self: Gtk.Window, event: Gdk.ButtonEvent) => {
-    if (
-      event.get_button() === Gdk.BUTTON_PRIMARY ||
-      event.get_button() === Gdk.BUTTON_SECONDARY
-    ) {
-      const [, x, y] = event.get_position();
-      const allocation = (self.get_child()! as Gtk.Box).get_allocation();
+  (hide: () => void) => (self: Gtk.Window, x: number, y: number) => {
+    const allocation = (self.get_child()! as Gtk.Box).get_allocation();
 
-      if (
-        x < allocation.x ||
-        x > allocation.x + allocation.width ||
-        y < allocation.y ||
-        y > allocation.y + allocation.height
-      ) {
-        hide();
-      }
+    if (
+      x < allocation.x ||
+      x > allocation.x + allocation.width ||
+      y < allocation.y ||
+      y > allocation.y + allocation.height
+    ) {
+      hide();
     }
   };
 

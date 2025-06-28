@@ -1,4 +1,4 @@
-import { GObject, property, register } from "astal";
+import GObject, { getter, register, setter } from "ags/gobject";
 import AstalNotifd from "gi://AstalNotifd";
 
 @register({ GTypeName: "NotificationService" })
@@ -15,21 +15,23 @@ export default class NotificationService extends GObject.Object {
   #notifications: AstalNotifd.Notification[] = [];
   #hidden_notifications = this.#notifd.notifications;
 
-  @property()
+  @getter(Object as any)
   get notifications() {
     return this.#notifications;
   }
 
+  @setter(Object as any)
   set notifications(n) {
     this.#notifications = n;
     this.notify("notifications");
   }
 
-  @property()
+  @getter(Object as any)
   get hidden_notifications() {
     return this.#hidden_notifications;
   }
 
+  @setter(Object as any)
   set hidden_notifications(n) {
     this.#hidden_notifications = n;
     this.notify("hidden_notifications");

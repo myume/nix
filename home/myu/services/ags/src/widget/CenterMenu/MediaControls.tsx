@@ -1,14 +1,14 @@
-import { bind, Variable } from "astal";
-import { Gtk } from "astal/gtk4";
+import { Gtk } from "ags/gtk4";
 import AstalMpris from "gi://AstalMpris";
 import Pango from "gi://Pango";
 import { formatDuration, getAppIcon, toTitleCase } from "../../utils/util";
+import { createBinding, createState, For, With } from "ags";
 
 const PlayerItem = ({ player }: { player: AstalMpris.Player }) => (
   <box cssClasses={["player-item"]} spacing={4}>
     <image iconName={getAppIcon(player)} />
     <label
-      label={bind(player, "entry")
+      label={createBinding(player, "entry")
         .as((entry) => entry ?? "unknown")
         .as(toTitleCase)}
     />
@@ -23,43 +23,42 @@ const PlayerSelect = ({
   setCurrentPlayer: (p: AstalMpris.Player) => void;
 }) => {
   const mpris = AstalMpris.get_default();
+  const players = createBinding(mpris, "players");
   return (
     <menubutton
       cssClasses={["player-select"]}
-      child={
-        <box
-          cssClasses={["current-player"]}
-          halign={Gtk.Align.CENTER}
-          valign={Gtk.Align.CENTER}
-          child={<PlayerItem player={currentPlayer} />}
-        ></box>
-      }
       popover={
         (
-          <popover
-            hasArrow={false}
-            child={
-              <box
-                cssClasses={["players"]}
-                orientation={Gtk.Orientation.VERTICAL}
-                spacing={4}
-              >
-                {bind(mpris, "players").as((players) =>
-                  players.map((player) => (
-                    <button
-                      onClicked={() => {
-                        setCurrentPlayer(player);
-                      }}
-                      child={<PlayerItem player={player} />}
-                    />
-                  )),
+          <popover hasArrow={false}>
+            <box
+              cssClasses={["players"]}
+              orientation={Gtk.Orientation.VERTICAL}
+              spacing={4}
+            >
+              <For each={players}>
+                {(player) => (
+                  <button
+                    onClicked={() => {
+                      setCurrentPlayer(player);
+                    }}
+                  >
+                    <PlayerItem player={player} />
+                  </button>
                 )}
-              </box>
-            }
-          />
+              </For>
+            </box>
+          </popover>
         ) as Gtk.Popover
       }
-    />
+    >
+      <box
+        cssClasses={["current-player"]}
+        halign={Gtk.Align.CENTER}
+        valign={Gtk.Align.CENTER}
+      >
+        <PlayerItem player={currentPlayer} />
+      </box>
+    </menubutton>
   );
 };
 
@@ -70,23 +69,25 @@ export const MediaControlMenu = ({
   currentPlayer: AstalMpris.Player | null;
   setCurrentPlayer: (p: AstalMpris.Player) => void;
 }) => {
-  if (!currentPlayer) return <box></box>;
+  if (!currentPlayer) return <box visible={false} />;
 
   // Mpris seemed to be bugged.
   // Even when the player is paused/not playing the position is ticking up
   // This is my attempt at manually fixing it
-  const playbackPosition = Variable(currentPlayer.position);
-  const playerPosition = bind(currentPlayer, "position");
-  playerPosition.subscribe((position) => {
+  const [playbackPosition, setPlaybackPosition] = createState(
+    currentPlayer.position,
+  );
+  const playerPosition = createBinding(currentPlayer, "position");
+  playerPosition.subscribe(() => {
     const playbackStatus = currentPlayer.playback_status;
 
     if (playbackStatus === AstalMpris.PlaybackStatus.PLAYING) {
-      playbackPosition.set(position);
+      setPlaybackPosition(playerPosition.get());
     }
   });
 
   const appIcon = getAppIcon(currentPlayer);
-  const hasCoverArt = bind(currentPlayer, "coverArt").as(
+  const hasCoverArt = createBinding(currentPlayer, "coverArt").as(
     (coverArt) =>
       coverArt !== null && coverArt !== undefined && coverArt !== "",
   );
@@ -112,28 +113,29 @@ export const MediaControlMenu = ({
           valign={Gtk.Align.CENTER}
           vexpand
         >
-          <box
-            halign={Gtk.Align.CENTER}
-            child={hasCoverArt.as((hasCoverArt) =>
-              // there is a bug where the coverArt doesn't update correctly
-              // art -> icon -> go back go to art -> expect art -> actual icon
-              hasCoverArt ? (
-                <image
-                  cssClasses={["art"]}
-                  pixelSize={128}
-                  file={bind(currentPlayer, "coverArt")}
-                  overflow={Gtk.Overflow.HIDDEN}
-                />
-              ) : (
-                <image
-                  cssClasses={["art"]}
-                  pixelSize={128}
-                  iconName={appIcon}
-                  overflow={Gtk.Overflow.HIDDEN}
-                />
-              ),
-            )}
-          />
+          <box halign={Gtk.Align.CENTER}>
+            <With value={hasCoverArt}>
+              {(hasCoverArt) =>
+                // there is a bug where the coverArt doesn't update correctly
+                // art -> icon -> go back go to art -> expect art -> actual icon
+                hasCoverArt ? (
+                  <image
+                    cssClasses={["art"]}
+                    pixelSize={128}
+                    file={createBinding(currentPlayer, "coverArt")}
+                    overflow={Gtk.Overflow.HIDDEN}
+                  />
+                ) : (
+                  <image
+                    cssClasses={["art"]}
+                    pixelSize={128}
+                    iconName={appIcon}
+                    overflow={Gtk.Overflow.HIDDEN}
+                  />
+                )
+              }
+            </With>
+          </box>
           <box
             cssClasses={["info"]}
             orientation={Gtk.Orientation.VERTICAL}
@@ -141,7 +143,7 @@ export const MediaControlMenu = ({
           >
             <label
               cssClasses={["title"]}
-              label={bind(currentPlayer, "title").as(
+              label={createBinding(currentPlayer, "title").as(
                 (title) => title ?? "unknown",
               )}
               wrap
@@ -150,11 +152,11 @@ export const MediaControlMenu = ({
             />
             <label
               cssClasses={["artist"]}
-              visible={bind(currentPlayer, "artist").as(
+              visible={createBinding(currentPlayer, "artist").as(
                 (artist) =>
                   artist !== "" && artist !== null && artist !== undefined,
               )}
-              label={bind(currentPlayer, "artist").as(
+              label={createBinding(currentPlayer, "artist").as(
                 (artist) => artist ?? "unknown",
               )}
               // wrap
@@ -164,82 +166,73 @@ export const MediaControlMenu = ({
             />
           </box>
         </box>
-        <box
-          orientation={Gtk.Orientation.VERTICAL}
-          child={
-            <box
-              cssClasses={["progress"]}
-              visible={bind(currentPlayer, "canSeek")}
-              halign={Gtk.Align.CENTER}
-              orientation={Gtk.Orientation.VERTICAL}
-            >
-              <slider
-                min={0}
-                widthRequest={200}
-                max={bind(currentPlayer, "length").as(Math.floor)}
-                value={playbackPosition(Math.floor)}
-                onChangeValue={({ value }) => currentPlayer.set_position(value)}
-                overflow={Gtk.Overflow.HIDDEN}
+        <box orientation={Gtk.Orientation.VERTICAL}>
+          <box
+            cssClasses={["progress"]}
+            visible={createBinding(currentPlayer, "canSeek")}
+            halign={Gtk.Align.CENTER}
+            orientation={Gtk.Orientation.VERTICAL}
+          >
+            <slider
+              min={0}
+              widthRequest={200}
+              max={createBinding(currentPlayer, "length").as(Math.floor)}
+              value={playbackPosition(Math.floor)}
+              onChangeValue={({ value }) => currentPlayer.set_position(value)}
+              overflow={Gtk.Overflow.HIDDEN}
+              hexpand
+            />
+            <centerbox cssClasses={["center-progress"]}>
+              <label $type="start" label={playbackPosition(formatDuration)} />
+              <box
+                $type="center"
+                cssClasses={["controls"]}
+                halign={Gtk.Align.CENTER}
+                spacing={4}
                 hexpand
+                valign={Gtk.Align.CENTER}
+                marginTop={8}
+              >
+                <button
+                  iconName={"media-skip-backward-symbolic"}
+                  onClicked={() => {
+                    if (currentPlayer.canGoPrevious) currentPlayer.previous();
+                  }}
+                />
+                <button
+                  iconName={createBinding(currentPlayer, "playbackStatus").as(
+                    (status) =>
+                      status === AstalMpris.PlaybackStatus.PLAYING
+                        ? "media-playback-pause-symbolic"
+                        : "media-playback-start-symbolic",
+                  )}
+                  onClicked={() => {
+                    const playbackStatus = currentPlayer.playback_status;
+                    if (
+                      (playbackStatus === AstalMpris.PlaybackStatus.PLAYING &&
+                        currentPlayer.canPause) ||
+                      (playbackStatus === AstalMpris.PlaybackStatus.PAUSED &&
+                        currentPlayer.canPlay)
+                    )
+                      currentPlayer.play_pause();
+                  }}
+                />
+                <button
+                  iconName={"media-skip-forward-symbolic"}
+                  onClicked={() => {
+                    if (currentPlayer.canGoNext) currentPlayer.next();
+                  }}
+                />
+              </box>
+              <label
+                $type="end"
+                label={createBinding(currentPlayer, "length").as((length) =>
+                  formatDuration(Math.max(length, 0)),
+                )}
               />
-              <centerbox
-                cssClasses={["center-progress"]}
-                startWidget={<label label={playbackPosition(formatDuration)} />}
-                centerWidget={
-                  <box
-                    cssClasses={["controls"]}
-                    halign={Gtk.Align.CENTER}
-                    spacing={4}
-                    hexpand
-                    valign={Gtk.Align.CENTER}
-                    marginTop={8}
-                  >
-                    <button
-                      iconName={"media-skip-backward-symbolic"}
-                      onClicked={() => {
-                        if (currentPlayer.canGoPrevious)
-                          currentPlayer.previous();
-                      }}
-                    />
-                    <button
-                      iconName={bind(currentPlayer, "playbackStatus").as(
-                        (status) =>
-                          status === AstalMpris.PlaybackStatus.PLAYING
-                            ? "media-playback-pause-symbolic"
-                            : "media-playback-start-symbolic",
-                      )}
-                      onClicked={() => {
-                        const playbackStatus = currentPlayer.playback_status;
-                        if (
-                          (playbackStatus ===
-                            AstalMpris.PlaybackStatus.PLAYING &&
-                            currentPlayer.canPause) ||
-                          (playbackStatus ===
-                            AstalMpris.PlaybackStatus.PAUSED &&
-                            currentPlayer.canPlay)
-                        )
-                          currentPlayer.play_pause();
-                      }}
-                    />
-                    <button
-                      iconName={"media-skip-forward-symbolic"}
-                      onClicked={() => {
-                        if (currentPlayer.canGoNext) currentPlayer.next();
-                      }}
-                    />
-                  </box>
-                }
-                endWidget={
-                  <label
-                    label={bind(currentPlayer, "length").as((length) =>
-                      formatDuration(Math.max(length, 0)),
-                    )}
-                  />
-                }
-              />
-            </box>
-          }
-        ></box>
+            </centerbox>
+          </box>
+        </box>
       </box>
     </box>
   );

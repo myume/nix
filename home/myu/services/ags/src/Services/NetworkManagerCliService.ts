@@ -1,4 +1,5 @@
-import { execAsync, GObject, property, register } from "astal";
+import GObject, { getter, setter, register } from "ags/gobject";
+import { execAsync } from "ags/process";
 import AstalNetwork from "gi://AstalNetwork";
 
 export const columns = [
@@ -31,55 +32,61 @@ export default class NetworkManagerCliService extends GObject.Object {
 
   #scanning = false;
   #connecting = false;
+
   #networks: NetworkEntry[] = [];
   #saved_connections: Set<string> = new Set();
   #current_connection: string = NetworkManagerCliService.astalNetwork.wifi.ssid;
 
-  @property()
+  @getter(Object as any)
   get networks() {
     return this.#networks;
   }
 
+  @setter(Object as any)
   set networks(nets) {
     this.#networks = nets;
     this.notify("networks");
   }
 
-  @property()
+  @getter(Boolean)
   get scanning() {
     return this.#scanning;
   }
 
+  @setter(Boolean)
   set scanning(scanning) {
     this.#scanning = scanning;
     this.notify("scanning");
   }
 
-  @property()
+  @getter(Boolean)
   get connecting() {
     return this.#connecting;
   }
 
+  @setter(Boolean)
   set connecting(connecting) {
     this.#connecting = connecting;
     this.notify("connecting");
   }
 
-  @property()
+  @getter(Object as any)
   get saved_connections() {
     return this.#saved_connections;
   }
 
+  @setter(Object as any)
   set saved_connections(connections) {
     this.#saved_connections = connections;
     this.notify("saved_connections");
   }
 
-  @property()
+  @getter(String)
   get current_connection() {
     return this.#current_connection;
   }
 
+  @setter(String)
   set current_connection(ssid) {
     this.#current_connection = ssid;
     this.notify("current_connection");

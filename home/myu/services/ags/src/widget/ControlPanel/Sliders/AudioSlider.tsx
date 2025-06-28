@@ -1,6 +1,6 @@
 import AstalWp from "gi://AstalWp";
-import { bind } from "astal";
 import { Slider } from "./Slider";
+import { createBinding } from "ags";
 
 export const VolumeSlider = () => {
   const { defaultSpeaker: speaker } = AstalWp.get_default()!;
@@ -9,8 +9,8 @@ export const VolumeSlider = () => {
     <Slider
       min={0}
       max={1}
-      value={bind(speaker, "volume")}
-      icon={bind(speaker, "volumeIcon")}
+      value={createBinding(speaker, "volume")}
+      icon={createBinding(speaker, "volumeIcon")}
       onChange={(self) => {
         speaker.set_volume(self.value);
       }}
@@ -25,8 +25,8 @@ export const MicSlider = () => {
     <Slider
       min={0}
       max={1}
-      value={bind(mic, "volume")}
-      icon={bind(mic, "volumeIcon")}
+      value={createBinding(mic, "volume")}
+      icon={createBinding(mic, "volumeIcon")}
       onChange={(self) => {
         mic.set_volume(self.value);
       }}

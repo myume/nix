@@ -1,12 +1,12 @@
-import { bind } from "astal";
+import { createBinding } from "ags";
 import CaffeineService from "../../../Services/Caffeine";
 
 export default function Caffeine() {
   const caffeine = CaffeineService.get_default();
   return (
     <image
-      visible={bind(caffeine, "enabled")}
-      iconName={bind(caffeine, "icon")}
+      visible={createBinding(caffeine, "enabled")}
+      iconName={createBinding(caffeine, "icon")}
     />
   );
 }

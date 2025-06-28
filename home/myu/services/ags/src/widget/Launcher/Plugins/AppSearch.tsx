@@ -1,11 +1,11 @@
-import { Binding, Gio, Variable } from "astal";
-import { Astal, Gdk, Gtk } from "astal/gtk4";
+import { Astal, Gdk, Gtk } from "ags/gtk4";
 import AstalApps from "gi://AstalApps";
 import Hyprland from "gi://AstalHyprland";
 import { hideLauncher } from "..";
-import { ScrolledWindow } from "../../Gtk";
 import { LauncherPlugin } from "./Plugin";
 import { wrapIndex } from "../../../utils/util";
+import Gio from "gi://Gio";
+import { Accessor, createState, Setter, State, With } from "ags";
 
 const appItemHeight = 56;
 
@@ -50,11 +50,11 @@ const scrollToSelectedItem = (
 };
 
 const AppItem = ({
-  selected,
+  selected: [selected, setSelected],
   app,
   index,
 }: {
-  selected: Variable<number>;
+  selected: State<number>;
   app: AstalApps.Application;
   index: number;
 }) => {
@@ -69,7 +69,6 @@ const AppItem = ({
       onClicked={() => {
         launchApp(app);
       }}
-      onHoverEnter={() => selected.set(index)}
       cssClasses={selected((selected) => {
         const classes = ["app-item"];
         if (selected === index) {
@@ -78,44 +77,44 @@ const AppItem = ({
         return classes;
       })}
       hexpand
-      child={
-        <box spacing={8}>
-          <image pixelSize={36} iconName={app.iconName} />
-          <box orientation={Gtk.Orientation.VERTICAL} heightRequest={40}>
-            <label
-              cssClasses={["app-title"]}
-              label={app.name}
-              xalign={0}
-              heightRequest={!hasDescription ? 40 : -1}
-            />
-            <label
-              cssClasses={["app-desc"]}
-              visible={hasDescription}
-              label={app.description}
-              xalign={0}
-            />
-          </box>
+    >
+      <box spacing={8}>
+        <Gtk.EventControllerMotion onEnter={() => setSelected(index)} />
+        <image pixelSize={36} iconName={app.iconName} />
+        <box orientation={Gtk.Orientation.VERTICAL} heightRequest={40}>
+          <label
+            cssClasses={["app-title"]}
+            label={app.name}
+            xalign={0}
+            heightRequest={!hasDescription ? 40 : -1}
+          />
+          <label
+            cssClasses={["app-desc"]}
+            visible={hasDescription}
+            label={app.description}
+            xalign={0}
+          />
         </box>
-      }
-    />
+      </box>
+    </button>
   );
 };
 
 const AppSearchResults = ({
   searchResults,
-  selected,
+  selected: [selected, setSelected],
 }: {
-  searchResults: Binding<AstalApps.Application[]>;
-  selected: Variable<number>;
+  searchResults: Accessor<AstalApps.Application[]>;
+  selected: State<number>;
 }) => {
   let scrollRef: Gtk.ScrolledWindow;
-  selected.subscribe((index) => {
-    scrollToSelectedItem(scrollRef, index, appItemHeight);
+  selected.subscribe(() => {
+    scrollToSelectedItem(scrollRef, selected.get(), appItemHeight);
   });
 
   return (
-    <ScrolledWindow
-      setup={(self) => {
+    <Gtk.ScrolledWindow
+      $={(self) => {
         scrollRef = self;
       }}
       cssClasses={["app-results"]}
@@ -126,23 +125,30 @@ const AppSearchResults = ({
       kineticScrolling
       overlayScrolling
       propagateNaturalHeight
-      child={searchResults.as((results) =>
-        results.length > 0 ? (
-          <box orientation={Gtk.Orientation.VERTICAL} marginEnd={12}>
-            {results.map((app, i) => (
-              <AppItem selected={selected} app={app} index={i} />
-            ))}
-          </box>
-        ) : (
-          <label hexpand vexpand label={"No Applications Found"} />
-        ),
-      )}
-    />
+    >
+      <With value={searchResults}>
+        {(results) =>
+          results.length > 0 ? (
+            <box orientation={Gtk.Orientation.VERTICAL} marginEnd={12}>
+              {results.map((app, i) => (
+                <AppItem
+                  selected={[selected, setSelected]}
+                  app={app}
+                  index={i}
+                />
+              ))}
+            </box>
+          ) : (
+            <label hexpand vexpand label={"No Applications Found"} />
+          )
+        }
+      </With>
+    </Gtk.ScrolledWindow>
   );
 };
 
 export class AppSearch extends LauncherPlugin {
-  static get_default(input: Variable<string>): LauncherPlugin {
+  static get_default(input: Accessor<string>): LauncherPlugin {
     if (!AppSearch.instance) AppSearch.instance = new AppSearch(input);
     return AppSearch.instance;
   }
@@ -150,7 +156,8 @@ export class AppSearch extends LauncherPlugin {
   static apps = new AstalApps.Apps();
 
   // doesn't work if not static for some reason
-  selected = Variable(0);
+  selected: Accessor<number>;
+  setSelected: Setter<number>;
 
   appSearchResults = this.input((str) => AppSearch.apps.fuzzy_query(str));
 
@@ -158,19 +165,20 @@ export class AppSearch extends LauncherPlugin {
 
   placeholderText = "Search";
 
-  constructor(input: Variable<string>) {
+  constructor(input: Accessor<string>) {
     super(input);
-    this.appSearchResults.subscribe(() => this.selected.set(0));
+    [this.selected, this.setSelected] = createState(0);
+    this.appSearchResults.subscribe(() => this.setSelected(0));
   }
 
   activate(): void {
     launchApp(this.appSearchResults.get()[this.selected.get()]);
   }
 
-  getWidget(): Gtk.Widget {
+  getWidget() {
     return (
       <AppSearchResults
-        selected={this.selected}
+        selected={[this.selected, this.setSelected]}
         searchResults={this.appSearchResults}
       />
     );
@@ -184,7 +192,7 @@ export class AppSearch extends LauncherPlugin {
   ): void {
     if (state === Gdk.ModifierType.CONTROL_MASK) {
       if (keyval === Gdk.KEY_p) {
-        this.selected.set(
+        this.setSelected(
           wrapIndex(
             this.selected.get() - 1,
             this.appSearchResults.get().length,
@@ -192,7 +200,7 @@ export class AppSearch extends LauncherPlugin {
         );
       }
       if (keyval === Gdk.KEY_n) {
-        this.selected.set(
+        this.setSelected(
           wrapIndex(
             this.selected.get() + 1,
             this.appSearchResults.get().length,
@@ -201,18 +209,18 @@ export class AppSearch extends LauncherPlugin {
       }
     }
     if (keyval === Gdk.KEY_Up) {
-      return this.selected.set(
+      return this.setSelected(
         wrapIndex(this.selected.get() - 1, this.appSearchResults.get().length),
       );
     }
 
     if (keyval === Gdk.KEY_Down)
-      return this.selected.set(
+      return this.setSelected(
         wrapIndex(this.selected.get() + 1, this.appSearchResults.get().length),
       );
   }
 
   cleanup(): void {
-    this.selected.set(0);
+    this.setSelected(0);
   }
 }
