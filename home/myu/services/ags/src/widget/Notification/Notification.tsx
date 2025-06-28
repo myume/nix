@@ -97,13 +97,12 @@ export default function Notification({
           <button
             cssClasses={["close-button"]}
             onClicked={() => notification.dismiss()}
-            child={
-              <image
-                cssClasses={["close-icon"]}
-                iconName={"window-close-symbolic"}
-              />
-            }
-          />
+          >
+            <image
+              cssClasses={["close-icon"]}
+              iconName={"window-close-symbolic"}
+            />
+          </button>
         </box>
       </box>
       <box cssClasses={["separator"]} />

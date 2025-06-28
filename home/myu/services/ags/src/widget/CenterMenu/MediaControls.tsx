@@ -166,84 +166,76 @@ export const MediaControlMenu = ({
             />
           </box>
         </box>
-        <box
-          orientation={Gtk.Orientation.VERTICAL}
-          child={
-            <box
-              cssClasses={["progress"]}
-              visible={createBinding(currentPlayer, "canSeek")}
-              halign={Gtk.Align.CENTER}
-              orientation={Gtk.Orientation.VERTICAL}
-            >
-              <slider
-                min={0}
-                widthRequest={200}
-                max={createBinding(currentPlayer, "length").as(Math.floor)}
-                value={playbackPosition(Math.floor)}
-                onChangeValue={({ value }) => currentPlayer.set_position(value)}
-                overflow={Gtk.Overflow.HIDDEN}
-                hexpand
-              />
-              <centerbox
-                cssClasses={["center-progress"]}
-                startWidget={<label label={playbackPosition(formatDuration)} />}
-                centerWidget={
-                  <box
-                    cssClasses={["controls"]}
-                    halign={Gtk.Align.CENTER}
-                    spacing={4}
-                    hexpand
-                    valign={Gtk.Align.CENTER}
-                    marginTop={8}
-                  >
-                    <button
-                      iconName={"media-skip-backward-symbolic"}
-                      onClicked={() => {
-                        if (currentPlayer.canGoPrevious)
-                          currentPlayer.previous();
-                      }}
-                    />
-                    <button
-                      iconName={createBinding(
-                        currentPlayer,
-                        "playbackStatus",
-                      ).as((status) =>
+        <box orientation={Gtk.Orientation.VERTICAL}>
+          <box
+            cssClasses={["progress"]}
+            visible={createBinding(currentPlayer, "canSeek")}
+            halign={Gtk.Align.CENTER}
+            orientation={Gtk.Orientation.VERTICAL}
+          >
+            <slider
+              min={0}
+              widthRequest={200}
+              max={createBinding(currentPlayer, "length").as(Math.floor)}
+              value={playbackPosition(Math.floor)}
+              onChangeValue={({ value }) => currentPlayer.set_position(value)}
+              overflow={Gtk.Overflow.HIDDEN}
+              hexpand
+            />
+            <centerbox
+              cssClasses={["center-progress"]}
+              startWidget={<label label={playbackPosition(formatDuration)} />}
+              centerWidget={
+                <box
+                  cssClasses={["controls"]}
+                  halign={Gtk.Align.CENTER}
+                  spacing={4}
+                  hexpand
+                  valign={Gtk.Align.CENTER}
+                  marginTop={8}
+                >
+                  <button
+                    iconName={"media-skip-backward-symbolic"}
+                    onClicked={() => {
+                      if (currentPlayer.canGoPrevious) currentPlayer.previous();
+                    }}
+                  />
+                  <button
+                    iconName={createBinding(currentPlayer, "playbackStatus").as(
+                      (status) =>
                         status === AstalMpris.PlaybackStatus.PLAYING
                           ? "media-playback-pause-symbolic"
                           : "media-playback-start-symbolic",
-                      )}
-                      onClicked={() => {
-                        const playbackStatus = currentPlayer.playback_status;
-                        if (
-                          (playbackStatus ===
-                            AstalMpris.PlaybackStatus.PLAYING &&
-                            currentPlayer.canPause) ||
-                          (playbackStatus ===
-                            AstalMpris.PlaybackStatus.PAUSED &&
-                            currentPlayer.canPlay)
-                        )
-                          currentPlayer.play_pause();
-                      }}
-                    />
-                    <button
-                      iconName={"media-skip-forward-symbolic"}
-                      onClicked={() => {
-                        if (currentPlayer.canGoNext) currentPlayer.next();
-                      }}
-                    />
-                  </box>
-                }
-                endWidget={
-                  <label
-                    label={createBinding(currentPlayer, "length").as((length) =>
-                      formatDuration(Math.max(length, 0)),
                     )}
+                    onClicked={() => {
+                      const playbackStatus = currentPlayer.playback_status;
+                      if (
+                        (playbackStatus === AstalMpris.PlaybackStatus.PLAYING &&
+                          currentPlayer.canPause) ||
+                        (playbackStatus === AstalMpris.PlaybackStatus.PAUSED &&
+                          currentPlayer.canPlay)
+                      )
+                        currentPlayer.play_pause();
+                    }}
                   />
-                }
-              />
-            </box>
-          }
-        ></box>
+                  <button
+                    iconName={"media-skip-forward-symbolic"}
+                    onClicked={() => {
+                      if (currentPlayer.canGoNext) currentPlayer.next();
+                    }}
+                  />
+                </box>
+              }
+              endWidget={
+                <label
+                  label={createBinding(currentPlayer, "length").as((length) =>
+                    formatDuration(Math.max(length, 0)),
+                  )}
+                />
+              }
+            />
+          </box>
+        </box>
       </box>
     </box>
   );

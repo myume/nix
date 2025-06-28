@@ -28,9 +28,11 @@ export const ControlPanelMenu = ({
   };
 
   const returnToNotifications = () => pageName.set(notificationCenterName);
+  let window: Astal.Window;
 
   return (
     <window
+      $={(self) => (window = self)}
       visible={showWindow}
       name={windowName}
       namespace={windowName}
@@ -38,14 +40,20 @@ export const ControlPanelMenu = ({
       exclusivity={Astal.Exclusivity.NORMAL}
       anchor={TOP | BOTTOM | LEFT | RIGHT}
       application={App}
-      onButtonPressed={hideOnClickAway(closeMenu)}
       focusable
-      onFocusLeave={closeMenu}
-      keymode={Astal.Keymode.ON_DEMAND}
-      onKeyPressed={(_self, keyval) => {
-        if (keyval === Gdk.KEY_Escape) closeMenu();
+      onNotifyHasFocus={({ hasFocus }) => {
+        if (!hasFocus) closeMenu();
       }}
+      keymode={Astal.Keymode.ON_DEMAND}
     >
+      <Gtk.GestureClick
+        onPressed={(_self, _, x, y) => hideOnClickAway(closeMenu)(window, x, y)}
+      />
+      <Gtk.EventControllerKey
+        onKeyPressed={(_self, keyval) => {
+          if (keyval === Gdk.KEY_Escape) closeMenu();
+        }}
+      />
       <revealer
         valign={Gtk.Align.START}
         halign={Gtk.Align.END}

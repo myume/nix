@@ -53,43 +53,46 @@ export const OSD = ({ mode: [mode], timer: [timer, setTimer] }: OSDState) => {
       exclusivity={Astal.Exclusivity.IGNORE}
       anchor={Astal.WindowAnchor.RIGHT}
       application={App}
-      onHoverEnter={() => {
-        timer.get()?.cancel();
-        setTimer(null);
-      }}
-      onHoverLeave={(self) => {
-        if (!timer.get()) setTimer(timeout(3000, () => self?.hide()));
-      }}
     >
       <box valign={Gtk.Align.CENTER}>
+        <Gtk.EventControllerMotion
+          onEnter={() => {
+            timer.get()?.cancel();
+            setTimer(null);
+          }}
+          onLeave={(self) => {
+            if (!timer.get()) setTimer(timeout(3000, () => self?.hide()));
+          }}
+        />
         <With value={source}>
           {({ icon, value, onChange }) => (
             <Gtk.Overlay
-              setup={(self) =>
+              $={(self) =>
                 self.add_overlay(
-                  <image
-                    cssClasses={["icon"]}
-                    pixelSize={16}
-                    iconName={icon}
-                    canTarget={false}
-                    valign={Gtk.Align.END}
-                    marginBottom={16}
-                  />,
+                  (
+                    <image
+                      cssClasses={["icon"]}
+                      pixelSize={16}
+                      iconName={icon}
+                      canTarget={false}
+                      valign={Gtk.Align.END}
+                      marginBottom={16}
+                    />
+                  ) as Gtk.Widget,
                 )
               }
-              child={
-                <slider
-                  cssClasses={["slider"]}
-                  min={0}
-                  max={1}
-                  value={value}
-                  onChangeValue={onChange}
-                  orientation={Gtk.Orientation.VERTICAL}
-                  heightRequest={180}
-                  inverted
-                />
-              }
-            />
+            >
+              <slider
+                cssClasses={["slider"]}
+                min={0}
+                max={1}
+                value={value}
+                onChangeValue={onChange}
+                orientation={Gtk.Orientation.VERTICAL}
+                heightRequest={180}
+                inverted
+              />
+            </Gtk.Overlay>
           )}
         </With>
       </box>
