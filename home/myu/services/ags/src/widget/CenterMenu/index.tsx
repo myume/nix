@@ -38,11 +38,8 @@ export function CenterMenu({
       }
       application={App}
       keymode={Astal.Keymode.ON_DEMAND}
-      focusable
-      onNotifyHasFocus={({ hasFocus }) => {
-        if (!hasFocus) hideMenu();
-      }}
     >
+      <Gtk.EventControllerFocus onLeave={hideMenu} />
       <Gtk.GestureClick
         onPressed={(_self, _, x, y) => hideOnClickAway(hideMenu)(window, x, y)}
       />

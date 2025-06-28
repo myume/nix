@@ -1,7 +1,6 @@
 import App from "ags/gtk4/app";
 import { Astal, Gdk, Gtk } from "ags/gtk4";
 import { hideOnClickAway, wrapIndex } from "../../utils/util";
-import { LauncherPlugin } from "./Plugins/Plugin";
 import { AppSearch } from "./Plugins/AppSearch";
 import { Calculator } from "./Plugins/Calculator";
 import { createState, With } from "ags";
@@ -56,12 +55,6 @@ export function Launcher() {
         Astal.WindowAnchor.LEFT |
         Astal.WindowAnchor.RIGHT
       }
-      focusable
-      onNotifyHasFocus={(self) => {
-        if (!self.hasFocus) {
-          self.hide();
-        }
-      }}
       exclusivity={Astal.Exclusivity.IGNORE}
       keymode={Astal.Keymode.ON_DEMAND}
       onShow={() => {
@@ -72,6 +65,7 @@ export function Launcher() {
         entryRef?.grab_focus();
       }}
     >
+      <Gtk.EventControllerFocus onLeave={() => window.hide()} />
       <Gtk.GestureClick
         onPressed={(_self, _, x, y) =>
           hideOnClickAway(() => window.hide())(window, x, y)

@@ -36,12 +36,9 @@ export const PowerMenu = () => {
     }}
     exclusivity={Astal.Exclusivity.IGNORE}
     keymode={Astal.Keymode.ON_DEMAND}
-    focusable
-    onNotifyHasFocus={({ hasFocus }) => {
-      if (!hasFocus) hideWindow(window);
-    }}
   >
     <box>
+      <Gtk.EventControllerFocus onLeave={() => hideWindow(window)} />
       <Gtk.GestureClick
         onPressed={(_self, _npress, x, y) =>
           hideOnClickAway(() => hideWindow(window))(window, x, y)

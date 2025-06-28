@@ -40,12 +40,9 @@ export const ControlPanelMenu = ({
       exclusivity={Astal.Exclusivity.NORMAL}
       anchor={TOP | BOTTOM | LEFT | RIGHT}
       application={App}
-      focusable
-      onNotifyHasFocus={({ hasFocus }) => {
-        if (!hasFocus) closeMenu();
-      }}
       keymode={Astal.Keymode.ON_DEMAND}
     >
+      <Gtk.EventControllerFocus onLeave={closeMenu} />
       <Gtk.GestureClick
         onPressed={(_self, _, x, y) => hideOnClickAway(closeMenu)(window, x, y)}
       />
