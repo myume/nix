@@ -1,9 +1,9 @@
 // I was too lasy to do it myself, shoutout Aylur
 // https://github.com/Aylur/astal/blob/07583deff8a486fad472718572c3248f0fbea1f3/examples/gtk3/js/osd/osd/brightness.ts
 
-import GObject, { register, property } from "astal/gobject";
-import { monitorFile, readFileAsync } from "astal/file";
-import { exec, execAsync } from "astal/process";
+import GObject, { register, getter, setter } from "ags/gobject";
+import { monitorFile, readFileAsync } from "ags/file";
+import { exec, execAsync } from "ags/process";
 
 const get = (args: string) => Number(exec(`brightnessctl ${args}`));
 const screen = exec(`bash -c "ls -w1 /sys/class/backlight | head -1"`);
@@ -21,11 +21,12 @@ export default class BrightnessService extends GObject.Object {
   #screen = get("get") / (get("max") || 1);
   #icon_name = "brightness-symbolic";
 
-  @property(String)
+  @getter(String)
   get icon_name() {
     return this.#icon_name;
   }
 
+  @setter(String)
   set icon_name(value) {
     if (this.#icon_name !== value) {
       this.#icon_name = value;
@@ -33,11 +34,12 @@ export default class BrightnessService extends GObject.Object {
     }
   }
 
-  @property(Number)
+  @getter(Number)
   get screen() {
     return this.#screen;
   }
 
+  @setter(Number)
   set screen(percent) {
     if (percent < 0) percent = 0;
 
