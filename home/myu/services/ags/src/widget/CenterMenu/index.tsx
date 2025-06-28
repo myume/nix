@@ -43,22 +43,20 @@ export function CenterMenu({
         if (!hasFocus) hideMenu();
       }}
     >
+      <Gtk.GestureClick
+        onPressed={(_self, _, x, y) => hideOnClickAway(hideMenu)(window, x, y)}
+      />
+      <Gtk.EventControllerKey
+        onKeyPressed={(_self, keyval, _keycode, _state) => {
+          if (keyval === Gdk.KEY_Escape) hideMenu();
+        }}
+      />
       <box
         cssClasses={["center-menu"]}
         halign={Gtk.Align.CENTER}
         valign={Gtk.Align.START}
         heightRequest={350}
       >
-        <Gtk.GestureClick
-          onPressed={(_self, _, x, y) =>
-            hideOnClickAway(hideMenu)(window, x, y)
-          }
-        />
-        <Gtk.EventControllerKey
-          onKeyPressed={(_self, keyval, _keycode, _state) => {
-            if (keyval === Gdk.KEY_Escape) hideMenu();
-          }}
-        />
         <revealer
           revealChild={showCalender}
           transitionType={Gtk.RevealerTransitionType.SLIDE_LEFT}

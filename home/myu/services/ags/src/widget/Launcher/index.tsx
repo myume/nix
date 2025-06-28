@@ -72,6 +72,31 @@ export function Launcher() {
         entryRef?.grab_focus();
       }}
     >
+      <Gtk.GestureClick
+        onPressed={(_self, _, x, y) =>
+          hideOnClickAway(() => window.hide())(window, x, y)
+        }
+      />
+      <Gtk.EventControllerKey
+        onKeyPressed={(_self, keyval, keycode, state) => {
+          if (keyval === Gdk.KEY_Tab) {
+            setModeIndex(wrapIndex(modeIndex.get() + 1, modes.length));
+            return true;
+          }
+          // how the hell was i supposed to figure out that shift tab is this magical number
+          if (keyval === Gdk.KEY_ISO_Left_Tab) {
+            setModeIndex(wrapIndex(modeIndex.get() - 1, modes.length));
+            return true;
+          }
+
+          plugin.get().handleKeyPress(window, keyval, keycode, state);
+
+          if (keyval === Gdk.KEY_Escape) {
+            window.hide();
+            return true;
+          }
+        }}
+      />
       <box
         cssClasses={["launcher"]}
         valign={Gtk.Align.CENTER}
@@ -80,31 +105,6 @@ export function Launcher() {
         widthRequest={700}
         spacing={12}
       >
-        <Gtk.GestureClick
-          onPressed={(_self, _, x, y) =>
-            hideOnClickAway(() => window.hide())(window, x, y)
-          }
-        />
-        <Gtk.EventControllerKey
-          onKeyPressed={(_self, keyval, keycode, state) => {
-            if (keyval === Gdk.KEY_Tab) {
-              setModeIndex(wrapIndex(modeIndex.get() + 1, modes.length));
-              return true;
-            }
-            // how the hell was i supposed to figure out that shift tab is this magical number
-            if (keyval === Gdk.KEY_ISO_Left_Tab) {
-              setModeIndex(wrapIndex(modeIndex.get() - 1, modes.length));
-              return true;
-            }
-
-            plugin.get().handleKeyPress(window, keyval, keycode, state);
-
-            if (keyval === Gdk.KEY_Escape) {
-              window.hide();
-              return true;
-            }
-          }}
-        />
         <entry
           cssClasses={["input"]}
           primaryIconName={plugin.as(({ iconName }) => iconName)}
