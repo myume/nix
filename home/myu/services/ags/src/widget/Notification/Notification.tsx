@@ -52,28 +52,30 @@ export default function Notification({
 
   return (
     <box
+      $={() => {
+        if (hideNotification) {
+          timer = hideNotification();
+        }
+      }}
       cssClasses={["notification", urgencyToString(notification.urgency)]}
       orientation={Gtk.Orientation.VERTICAL}
       widthRequest={256}
       spacing={8}
-      onHoverEnter={() => {
-        notifd.set_ignore_timeout(true);
-        timer?.cancel();
-        timer = null;
-      }}
-      onHoverLeave={() => {
-        notifd.set_ignore_timeout(false);
-        if (hideNotification) {
-          timer = hideNotification();
-        }
-      }}
-      setup={() => {
-        if (hideNotification) {
-          timer = hideNotification();
-        }
-      }}
       hexpand
     >
+      <Gtk.EventControllerMotion
+        onEnter={() => {
+          notifd.set_ignore_timeout(true);
+          timer?.cancel();
+          timer = null;
+        }}
+        onLeave={() => {
+          notifd.set_ignore_timeout(false);
+          if (hideNotification) {
+            timer = hideNotification();
+          }
+        }}
+      />
       <box cssClasses={["notification-header"]} hexpand>
         <box halign={Gtk.Align.START} hexpand spacing={4}>
           <image visible={appIcon !== ""} iconName={appIcon} />
