@@ -1,35 +1,43 @@
-import { Gtk, Astal, Gdk } from "astal/gtk4";
+import { Gtk, Astal, Gdk } from "ags/gtk4";
 import { LauncherPlugin } from "./Plugin";
-import { derive, execAsync, Variable } from "astal";
+import { Accessor, createComputed, createState, Setter } from "ags";
+import { execAsync } from "ags/process";
 
 const clipboard = Gdk.Display.get_default()?.get_clipboard();
 
 export class Calculator extends LauncherPlugin {
   // plz no inject i beg
   result = this.input((searchString) => execAsync(["rink", searchString]));
-  label = Variable("");
-  showCopied = Variable(false);
+  label: Accessor<string>;
+  setLabel: Setter<string>;
+
+  showCopied: Accessor<boolean>;
+  setShowCopied: Setter<boolean>;
+
   iconName = "accessories-calculator-symbolic";
   placeholderText = "Calculate";
 
-  static get_default(input: Variable<string>) {
+  static get_default(input: Accessor<string>) {
     if (!Calculator.instance) Calculator.instance = new Calculator(input);
     return Calculator.instance;
   }
 
-  constructor(input: Variable<string>) {
+  constructor(input: Accessor<string>) {
     super(input);
-    this.result.subscribe(async (val) => {
-      this.label.set(await val);
+    [this.label, this.setLabel] = createState("");
+    [this.showCopied, this.setShowCopied] = createState(false);
+
+    this.result.subscribe(async () => {
+      this.setLabel(await this.result.get());
     });
-    this.label.subscribe(() => this.showCopied.set(false));
+    this.label.subscribe(() => this.setShowCopied(false));
   }
 
   activate(): void {
     const value = this.label.get().split("\n")[1];
     clipboard?.set_content(Gdk.ContentProvider.new_for_value(value));
 
-    this.showCopied.set(true);
+    this.setShowCopied(true);
   }
 
   getWidget(): Gtk.Widget {
@@ -38,11 +46,11 @@ export class Calculator extends LauncherPlugin {
         <label
           // selectable // breaks focus
           halign={Gtk.Align.START}
-          label={derive([this.label, this.input], (label, input) =>
+          label={createComputed([this.label, this.input], (label, input) =>
             input === "" ? "Start typing to get started..." : label,
-          )()}
+          )}
         />
-        <box cssClasses={["copy"]} visible={this.showCopied()} spacing={4}>
+        <box cssClasses={["copy"]} visible={this.showCopied} spacing={4}>
           <image iconName={"edit-copy-symbolic"} pixelSize={12} />
           <label label={"Copied to clipboard!"} />
         </box>

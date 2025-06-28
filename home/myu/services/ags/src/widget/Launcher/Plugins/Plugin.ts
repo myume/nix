@@ -1,14 +1,14 @@
-import { Variable } from "astal";
-import { Astal, Gdk, Gtk } from "astal/gtk4";
+import { Accessor } from "ags";
+import { Astal, Gdk, Gtk } from "ags/gtk4";
 
 export abstract class LauncherPlugin {
   static instance: LauncherPlugin;
 
-  input: Variable<string>;
+  input: Accessor<string>;
   iconName = "system-search";
   placeholderText = "";
 
-  constructor(input: Variable<string>) {
+  constructor(input: Accessor<string>) {
     this.input = input;
   }
 
