@@ -128,7 +128,7 @@ const NetworksList = ({
   networks,
   selected,
 }: {
-  selected: Accessor<string>;
+  selected: State<string>;
   networks: Accessor<NetworkEntry[]>;
 }) => {
   return (
@@ -173,7 +173,10 @@ export const NetworkPage = ({
         scanning ? (
           <label hexpand vexpand label={"Scanning for networks..."} />
         ) : (
-          <NetworksList networks={networks} selected={selectedSsid} />
+          <NetworksList
+            networks={networks}
+            selected={[selectedSsid, setSelectedSsid]}
+          />
         ),
       )}
       returnHome={returnHome}

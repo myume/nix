@@ -18,6 +18,7 @@ import {
   windowName as OSDWindowName,
 } from "./widget/OSD";
 import { createState, State } from "ags";
+import AstalIO from "gi://AstalIO?version=0.1";
 
 // state shared between windows
 export type SharedState = {
@@ -36,8 +37,8 @@ function main() {
     currentPlayer: createState<AstalMpris.Player | null>(null),
     showControlPanel: createState(false),
     osdState: {
-      timer: createState(null),
-      mode: createState(null),
+      timer: createState<AstalIO.Time | null>(null),
+      mode: createState<OSDMode | null>(null),
     },
   };
 
@@ -65,15 +66,18 @@ function main() {
     if (App.get_window(windowName)?.is_visible()) return;
 
     const {
-      osdState: { mode, timer },
+      osdState: {
+        mode: [, setMode],
+        timer: [timer, setTimer],
+      },
     } = sharedState;
-    mode.set(inputMode);
+    setMode(inputMode);
     timer.get()?.cancel();
-    timer.set(null);
+    setTimer(null);
     const osd = App.get_window(OSDWindowName);
     osd?.show();
 
-    if (!timer.get()) timer.set(timeout(3000, () => osd?.hide()));
+    if (!timer.get()) setTimer(timeout(3000, () => osd?.hide()));
   };
 
   const { defaultSpeaker: speaker } = AstalWp.get_default()!;

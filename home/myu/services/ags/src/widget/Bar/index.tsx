@@ -51,9 +51,9 @@ export const Bar = (state: SharedState) => (gdkmonitor: Gdk.Monitor) => {
       application={App}
     >
       <centerbox>
-        <Start />
-        <Center state={state} />
-        <End state={state} />
+        <Start $type="start" />
+        <Center $type="center" state={state} />
+        <End $type="end" state={state} />
       </centerbox>
     </window>
   );

@@ -182,58 +182,55 @@ export const MediaControlMenu = ({
               overflow={Gtk.Overflow.HIDDEN}
               hexpand
             />
-            <centerbox
-              cssClasses={["center-progress"]}
-              startWidget={<label label={playbackPosition(formatDuration)} />}
-              centerWidget={
-                <box
-                  cssClasses={["controls"]}
-                  halign={Gtk.Align.CENTER}
-                  spacing={4}
-                  hexpand
-                  valign={Gtk.Align.CENTER}
-                  marginTop={8}
-                >
-                  <button
-                    iconName={"media-skip-backward-symbolic"}
-                    onClicked={() => {
-                      if (currentPlayer.canGoPrevious) currentPlayer.previous();
-                    }}
-                  />
-                  <button
-                    iconName={createBinding(currentPlayer, "playbackStatus").as(
-                      (status) =>
-                        status === AstalMpris.PlaybackStatus.PLAYING
-                          ? "media-playback-pause-symbolic"
-                          : "media-playback-start-symbolic",
-                    )}
-                    onClicked={() => {
-                      const playbackStatus = currentPlayer.playback_status;
-                      if (
-                        (playbackStatus === AstalMpris.PlaybackStatus.PLAYING &&
-                          currentPlayer.canPause) ||
-                        (playbackStatus === AstalMpris.PlaybackStatus.PAUSED &&
-                          currentPlayer.canPlay)
-                      )
-                        currentPlayer.play_pause();
-                    }}
-                  />
-                  <button
-                    iconName={"media-skip-forward-symbolic"}
-                    onClicked={() => {
-                      if (currentPlayer.canGoNext) currentPlayer.next();
-                    }}
-                  />
-                </box>
-              }
-              endWidget={
-                <label
-                  label={createBinding(currentPlayer, "length").as((length) =>
-                    formatDuration(Math.max(length, 0)),
-                  )}
+            <centerbox cssClasses={["center-progress"]}>
+              <label $type="start" label={playbackPosition(formatDuration)} />
+              <box
+                $type="center"
+                cssClasses={["controls"]}
+                halign={Gtk.Align.CENTER}
+                spacing={4}
+                hexpand
+                valign={Gtk.Align.CENTER}
+                marginTop={8}
+              >
+                <button
+                  iconName={"media-skip-backward-symbolic"}
+                  onClicked={() => {
+                    if (currentPlayer.canGoPrevious) currentPlayer.previous();
+                  }}
                 />
-              }
-            />
+                <button
+                  iconName={createBinding(currentPlayer, "playbackStatus").as(
+                    (status) =>
+                      status === AstalMpris.PlaybackStatus.PLAYING
+                        ? "media-playback-pause-symbolic"
+                        : "media-playback-start-symbolic",
+                  )}
+                  onClicked={() => {
+                    const playbackStatus = currentPlayer.playback_status;
+                    if (
+                      (playbackStatus === AstalMpris.PlaybackStatus.PLAYING &&
+                        currentPlayer.canPause) ||
+                      (playbackStatus === AstalMpris.PlaybackStatus.PAUSED &&
+                        currentPlayer.canPlay)
+                    )
+                      currentPlayer.play_pause();
+                  }}
+                />
+                <button
+                  iconName={"media-skip-forward-symbolic"}
+                  onClicked={() => {
+                    if (currentPlayer.canGoNext) currentPlayer.next();
+                  }}
+                />
+              </box>
+              <label
+                $type="end"
+                label={createBinding(currentPlayer, "length").as((length) =>
+                  formatDuration(Math.max(length, 0)),
+                )}
+              />
+            </centerbox>
           </box>
         </box>
       </box>
