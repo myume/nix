@@ -1,5 +1,5 @@
-import { bind } from "astal";
-import { Gdk, Gtk } from "astal/gtk4";
+import { createBinding } from "ags";
+import { Gdk, Gtk } from "ags/gtk4";
 import AstalApps from "gi://AstalApps";
 import AstalMpris from "gi://AstalMpris";
 
@@ -9,7 +9,7 @@ export function toTitleCase(str: string): string {
 
 export const getAppIcon = (player: AstalMpris.Player) => {
   const apps = new AstalApps.Apps();
-  return bind(player, "entry").as(
+  return createBinding(player, "entry").as(
     (entry) => apps.exact_query(entry)[0].iconName,
   );
 };
