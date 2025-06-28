@@ -1,5 +1,6 @@
 import { State } from "ags";
 import { createPoll } from "ags/time";
+import GLib from "gi://GLib";
 
 export default function Time({
   showCalender: [showCalender, setShowCalender],
@@ -8,7 +9,11 @@ export default function Time({
   showCalender: State<boolean>;
   format?: string;
 }) {
-  const time = createPoll("", 1000, ["date", format]);
+  const time = createPoll(
+    "",
+    1000,
+    () => GLib.DateTime.new_now_local().format(format)!,
+  );
 
   return (
     <box cssClasses={["time"]}>

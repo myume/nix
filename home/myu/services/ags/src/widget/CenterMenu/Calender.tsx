@@ -1,16 +1,15 @@
-import { GLib, Variable } from "astal";
-import { astalify, Gtk } from "astal/gtk4";
-
-const Calendar = astalify<Gtk.Calendar, Gtk.Calendar.ConstructorProps>(
-  Gtk.Calendar,
-);
+import { createPoll } from "ags/time";
+import { Gtk } from "ags/gtk4";
+import GLib from "gi://GLib";
 
 export const CalendarView = () => {
-  const time = Variable<string>("").poll(
+  const time = createPoll(
+    "",
     1000,
     () => GLib.DateTime.new_now_local().format("%H:%M")!,
   );
-  const date = Variable<string>("").poll(
+  const date = createPoll(
+    "",
     1000,
     () => GLib.DateTime.new_now_local().format("%A, %B %d, %G")!,
   );
@@ -32,15 +31,14 @@ export const CalendarView = () => {
           calendar.set_month(today.getMonth());
           calendar.set_year(today.getFullYear());
         }}
-        child={
-          <box orientation={Gtk.Orientation.VERTICAL}>
-            <label cssClasses={["time"]} label={time()} />
-            <label cssClasses={["date"]} label={date()} />
-          </box>
-        }
-      />
-      <Calendar
-        setup={(self) => {
+      >
+        <box orientation={Gtk.Orientation.VERTICAL}>
+          <label cssClasses={["time"]} label={time} />
+          <label cssClasses={["date"]} label={date} />
+        </box>
+      </button>
+      <Gtk.Calendar
+        $={(self) => {
           calendar = self;
         }}
         cssClasses={["calender"]}
