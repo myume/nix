@@ -27,7 +27,7 @@ const NetworkItem = ({
   const isCurrentConnection = createBinding(
     networkManager,
     "current_connection",
-  ).as((current) => current === ssid);
+  )((current) => current === ssid);
 
   const connecting = createBinding(networkManager, "connecting");
   const isConnecting = createComputed(

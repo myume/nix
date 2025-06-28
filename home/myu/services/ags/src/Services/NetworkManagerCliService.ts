@@ -32,14 +32,17 @@ export default class NetworkManagerCliService extends GObject.Object {
 
   #scanning = false;
   #connecting = false;
+
   #networks: NetworkEntry[] = [];
   #saved_connections: Set<string> = new Set();
   #current_connection: string = NetworkManagerCliService.astalNetwork.wifi.ssid;
 
+  @getter(Object as any)
   get networks() {
     return this.#networks;
   }
 
+  @setter(Object as any)
   set networks(nets) {
     this.#networks = nets;
     this.notify("networks");
@@ -67,10 +70,12 @@ export default class NetworkManagerCliService extends GObject.Object {
     this.notify("connecting");
   }
 
+  @getter(Object as any)
   get saved_connections() {
     return this.#saved_connections;
   }
 
+  @setter(Object as any)
   set saved_connections(connections) {
     this.#saved_connections = connections;
     this.notify("saved_connections");
