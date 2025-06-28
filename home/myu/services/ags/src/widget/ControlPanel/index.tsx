@@ -41,6 +41,7 @@ export const ControlPanelMenu = ({
       anchor={TOP | BOTTOM | LEFT | RIGHT}
       application={App}
       keymode={Astal.Keymode.ON_DEMAND}
+      focusable
     >
       <Gtk.EventControllerFocus onLeave={closeMenu} />
       <Gtk.GestureClick

@@ -64,6 +64,7 @@ export function Launcher() {
         entryRef?.set({ text: "" });
         entryRef?.grab_focus();
       }}
+      focusable
     >
       <Gtk.EventControllerFocus onLeave={() => window.hide()} />
       <Gtk.GestureClick

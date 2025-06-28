@@ -38,6 +38,7 @@ export function CenterMenu({
       }
       application={App}
       keymode={Astal.Keymode.ON_DEMAND}
+      focusable
     >
       <Gtk.EventControllerFocus onLeave={hideMenu} />
       <Gtk.GestureClick

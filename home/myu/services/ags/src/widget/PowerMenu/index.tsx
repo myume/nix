@@ -36,6 +36,7 @@ export const PowerMenu = () => {
     }}
     exclusivity={Astal.Exclusivity.IGNORE}
     keymode={Astal.Keymode.ON_DEMAND}
+    focusable
   >
     <box>
       <Gtk.EventControllerFocus onLeave={() => hideWindow(window)} />
