@@ -5,7 +5,7 @@ import { hideLauncher } from "..";
 import { LauncherPlugin } from "./Plugin";
 import { wrapIndex } from "../../../utils/util";
 import Gio from "gi://Gio";
-import { Accessor, createState, For, Setter, State, With } from "ags";
+import { Accessor, createState, Setter, State, With } from "ags";
 
 const appItemHeight = 56;
 
@@ -175,13 +175,13 @@ export class AppSearch extends LauncherPlugin {
     launchApp(this.appSearchResults.get()[this.selected.get()]);
   }
 
-  getWidget(): Gtk.Widget {
+  getWidget() {
     return (
       <AppSearchResults
         selected={[this.selected, this.setSelected]}
         searchResults={this.appSearchResults}
       />
-    ) as Gtk.Widget;
+    );
   }
 
   handleKeyPress(

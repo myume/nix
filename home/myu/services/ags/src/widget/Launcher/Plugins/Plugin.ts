@@ -1,5 +1,6 @@
 import { Accessor } from "ags";
-import { Astal, Gdk, Gtk } from "ags/gtk4";
+import { Object } from "ags/gobject";
+import { Astal, Gdk } from "ags/gtk4";
 
 export abstract class LauncherPlugin {
   static instance: LauncherPlugin;
@@ -14,7 +15,7 @@ export abstract class LauncherPlugin {
 
   abstract activate(): void;
 
-  abstract getWidget(): Gtk.Widget;
+  abstract getWidget(): Object;
 
   abstract handleKeyPress(
     self: Astal.Window,

@@ -40,7 +40,7 @@ export class Calculator extends LauncherPlugin {
     this.setShowCopied(true);
   }
 
-  getWidget(): Gtk.Widget {
+  getWidget() {
     return (
       <box cssClasses={["calculator"]} orientation={Gtk.Orientation.VERTICAL}>
         <label

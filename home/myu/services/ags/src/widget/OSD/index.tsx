@@ -44,8 +44,13 @@ export const OSD = ({ mode: [mode], timer: [timer, setTimer] }: OSDState) => {
     }
   });
 
+  let window: Astal.Window;
+
   return (
     <window
+      $={(self) => {
+        window = self;
+      }}
       name={windowName}
       namespace={windowName}
       cssClasses={[windowName]}
@@ -60,8 +65,8 @@ export const OSD = ({ mode: [mode], timer: [timer, setTimer] }: OSDState) => {
             timer.get()?.cancel();
             setTimer(null);
           }}
-          onLeave={(self) => {
-            if (!timer.get()) setTimer(timeout(3000, () => self?.hide()));
+          onLeave={() => {
+            if (!timer.get()) setTimer(timeout(3000, () => window.hide()));
           }}
         />
         <With value={source}>
