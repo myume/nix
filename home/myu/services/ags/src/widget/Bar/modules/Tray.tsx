@@ -1,9 +1,9 @@
-import { bind } from "astal";
+import { createBinding, For } from "ags";
 import AstalTray from "gi://AstalTray";
 
 export default function Tray() {
   const tray = AstalTray.get_default();
-  const items = bind(tray, "items");
+  const items = createBinding(tray, "items");
   const hasItems = items.as((items) => items.length > 0);
 
   return (
@@ -13,19 +13,20 @@ export default function Tray() {
       marginEnd={hasItems.as((hasItems) => (hasItems ? 2 : 0))}
       spacing={4}
     >
-      {items.as((items) =>
-        items.map((item) => (
+      <For each={items}>
+        {(item) => (
           <menubutton
-            setup={(self) =>
+            $={(self) =>
               // makes the menu actually work
               self.insert_action_group("dbusmenu", item.actionGroup)
             }
-            tooltipMarkup={bind(item, "tooltipMarkup")}
-            menuModel={bind(item, "menuModel")}
-            child={<image gicon={bind(item, "gicon")} />}
-          />
-        )),
-      )}
+            tooltipMarkup={createBinding(item, "tooltipMarkup")}
+            menuModel={createBinding(item, "menuModel")}
+          >
+            <image gicon={createBinding(item, "gicon")} />
+          </menubutton>
+        )}
+      </For>
     </box>
   );
 }

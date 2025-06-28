@@ -1,16 +1,16 @@
-import { bind } from "astal";
+import { createBinding } from "ags";
 import BrightnessService from "../../../Services/Brightness";
 
 export default function Brightness() {
   const brightness = BrightnessService.get_default();
-  const percentage = bind(brightness, "screen").as((percentage) =>
+  const percentage = createBinding(brightness, "screen").as((percentage) =>
     Math.floor(percentage * 100),
   );
 
   return (
     <button>
       <image
-        iconName={bind(brightness, "icon_name")}
+        iconName={createBinding(brightness, "icon_name")}
         tooltipText={percentage.as(
           (percentage) => `Brightness at ${percentage}%`,
         )}

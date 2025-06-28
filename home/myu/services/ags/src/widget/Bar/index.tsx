@@ -1,4 +1,5 @@
-import { App, Astal, Gdk } from "astal/gtk4";
+import App from "ags/gtk4/app";
+import { Astal, Gdk } from "ags/gtk4";
 import Time from "./modules/Time";
 import Tray from "./modules/Tray";
 import Workspaces from "./modules/Workspaces";
@@ -7,7 +8,9 @@ import Status from "./Status";
 import { SharedState } from "../../app";
 
 const Start = () => (
-  <box cssClasses={["start", "section"]} child={<Workspaces />}></box>
+  <box cssClasses={["start", "section"]}>
+    <Workspaces />
+  </box>
 );
 
 const Center = ({
@@ -18,7 +21,7 @@ const Center = ({
   <box cssClasses={["center", "section"]}>
     <Time showCalender={showCalender} />
     <Player
-      showMediaControls={showMediaControls}
+      mediaControlState={showMediaControls}
       currentPlayer={currentPlayer}
     />
   </box>
@@ -46,13 +49,12 @@ export const Bar = (state: SharedState) => (gdkmonitor: Gdk.Monitor) => {
       gdkmonitor={gdkmonitor}
       anchor={TOP | RIGHT | LEFT}
       application={App}
-      child={
-        <centerbox>
-          <Start />
-          <Center state={state} />
-          <End state={state} />
-        </centerbox>
-      }
-    />
+    >
+      <centerbox>
+        <Start />
+        <Center state={state} />
+        <End state={state} />
+      </centerbox>
+    </window>
   );
 };

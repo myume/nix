@@ -1,10 +1,10 @@
-import { bind, derive } from "astal";
+import { createBinding, createComputed } from "ags";
 import AstalNotifd from "gi://AstalNotifd";
 
 export default function Notifications() {
   const notifd = AstalNotifd.get_default();
-  const notifications = bind(notifd, "notifications");
-  const dnd = bind(notifd, "dontDisturb");
+  const notifications = createBinding(notifd, "notifications");
+  const dnd = createBinding(notifd, "dontDisturb");
 
   return (
     <image
@@ -12,13 +12,13 @@ export default function Notifications() {
         (notifications) => `${notifications.length} unread notifications`,
       )}
       pixelSize={14}
-      iconName={derive([notifications, dnd], (notifications, dnd) =>
+      iconName={createComputed([notifications, dnd], (notifications, dnd) =>
         dnd
           ? "notification-disabled"
           : notifications.length > 0
             ? "notification-active"
             : "notification-inactive",
-      )()}
+      )}
     />
   );
 }

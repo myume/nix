@@ -1,20 +1,19 @@
+import { Accessor, createBinding, With } from "ags";
 import AstalNetwork from "gi://AstalNetwork";
-import { bind, Binding } from "astal";
 
 type NetworkProps<T> = {
-  connection: Binding<T>;
-  visible: boolean | Binding<boolean>;
+  connection: Accessor<T>;
+  visible: boolean | Accessor<boolean>;
 };
 
 function Wired({ connection, visible }: NetworkProps<AstalNetwork.Wired>) {
   return (
-    <box
-      visible={visible}
-      child={connection.as(
-        (wired) =>
+    <box visible={visible}>
+      <With value={connection}>
+        {(wired) =>
           wired && (
             <image
-              tooltipText={bind(wired, "internet").as((internet) =>
+              tooltipText={createBinding(wired, "internet").as((internet) =>
                 internet === AstalNetwork.Internet.CONNECTED
                   ? "Connected"
                   : internet === AstalNetwork.Internet.CONNECTING
@@ -22,37 +21,38 @@ function Wired({ connection, visible }: NetworkProps<AstalNetwork.Wired>) {
                     : "Disconnected",
               )}
               cssClasses={["wired"]}
-              iconName={bind(wired, "iconName")}
+              iconName={createBinding(wired, "iconName")}
             />
-          ),
-      )}
-    />
+          )
+        }
+      </With>
+    </box>
   );
 }
 
 function Wifi({ connection, visible }: NetworkProps<AstalNetwork.Wifi>) {
   return (
-    <box
-      visible={visible}
-      child={connection.as(
-        (wifi) =>
+    <box visible={visible}>
+      <With value={connection}>
+        {(wifi) =>
           wifi && (
             <image
-              tooltipText={bind(wifi, "ssid").as(String)}
+              tooltipText={createBinding(wifi, "ssid").as(String)}
               cssClasses={["Wifi"]}
-              iconName={bind(wifi, "iconName")}
+              iconName={createBinding(wifi, "iconName")}
             />
-          ),
-      )}
-    />
+          )
+        }
+      </With>
+    </box>
   );
 }
 
 export default function Network() {
   const network = AstalNetwork.get_default();
-  const wired = bind(network, "wired");
-  const wifi = bind(network, "wifi");
-  const useWired = bind(network, "primary").as(
+  const wired = createBinding(network, "wired");
+  const wifi = createBinding(network, "wifi");
+  const useWired = createBinding(network, "primary").as(
     (primary) => primary === AstalNetwork.Primary.WIRED,
   );
 

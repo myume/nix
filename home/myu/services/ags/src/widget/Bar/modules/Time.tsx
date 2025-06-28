@@ -1,28 +1,23 @@
-import { GLib } from "astal";
-import Variable from "astal/variable";
+import { State } from "ags";
+import { createPoll } from "ags/time";
 
 export default function Time({
-  showCalender,
+  showCalender: [showCalender, setShowCalender],
   format = "%a %b %d  %H:%M",
 }: {
-  showCalender: Variable<boolean>;
+  showCalender: State<boolean>;
   format?: string;
 }) {
-  const time = Variable<string>("").poll(
-    1000,
-    () => GLib.DateTime.new_now_local().format(format)!,
-  );
+  const time = createPoll("", 1000, ["date", format]);
 
   return (
-    <box
-      cssClasses={["time"]}
-      child={
-        <button
-          cssClasses={showCalender((show) => (show ? ["toggled"] : []))}
-          child={<label onDestroy={() => time.drop()} label={time()} />}
-          onClicked={() => showCalender.set(!showCalender.get())}
-        />
-      }
-    />
+    <box cssClasses={["time"]}>
+      <button
+        cssClasses={showCalender((show) => (show ? ["toggled"] : []))}
+        onClicked={() => setShowCalender(!showCalender.get())}
+      >
+        <label label={time} />
+      </button>
+    </box>
   );
 }
