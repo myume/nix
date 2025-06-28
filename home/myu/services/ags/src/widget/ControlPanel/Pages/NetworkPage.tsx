@@ -10,6 +10,7 @@ import {
   createState,
   For,
   State,
+  With,
 } from "ags";
 import GLib from "gi://GLib";
 
@@ -169,16 +170,20 @@ export const NetworkPage = ({
   return (
     <Page
       name={networkPageName}
-      child={scanning.as((scanning) =>
-        scanning ? (
-          <label hexpand vexpand label={"Scanning for networks..."} />
-        ) : (
-          <NetworksList
-            networks={networks}
-            selected={[selectedSsid, setSelectedSsid]}
-          />
-        ),
-      )}
+      child={
+        <With value={scanning}>
+          {(scanning) =>
+            scanning ? (
+              <label hexpand vexpand label={"Scanning for networks..."} />
+            ) : (
+              <NetworksList
+                networks={networks}
+                selected={[selectedSsid, setSelectedSsid]}
+              />
+            )
+          }
+        </With>
+      }
       returnHome={returnHome}
       endWidget={
         <button
