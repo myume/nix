@@ -6,7 +6,7 @@ import {
   NotificationCenter,
   notificationCenterName,
 } from "./NotificationCenter";
-import { NetworkPage, networkPageName } from "./Pages/NetworkPage";
+import { NetworkPage } from "./Pages/NetworkPage";
 import { PowerProfilePage } from "./Pages/PowerProfile";
 import { ControlPanel } from "./ControlPanel";
 import { createComputed, createState } from "ags";
@@ -71,7 +71,7 @@ export const ControlPanelMenu = ({
           <stack
             visibleChildName={getPageName}
             transitionType={getPageName((name) =>
-              name === networkPageName
+              name === notificationCenterName
                 ? Gtk.StackTransitionType.SLIDE_RIGHT
                 : Gtk.StackTransitionType.SLIDE_LEFT,
             )}
