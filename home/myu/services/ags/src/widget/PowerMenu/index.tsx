@@ -45,7 +45,7 @@ export const PowerMenu = () => {
         }
       />
       <Gtk.EventControllerKey
-        onKeyPressed={(_self, keyval, keycode, state) => {
+        onKeyPressed={(_self, keyval, _keycode, _state) => {
           if (keyval === Gdk.KEY_Escape) {
             hideWindow(window);
           }
