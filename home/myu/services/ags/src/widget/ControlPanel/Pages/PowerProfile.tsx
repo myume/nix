@@ -40,7 +40,7 @@ export const PowerProfilePage = ({
                   iconName={`power-profile-${profile}-symbolic`}
                   pixelSize={64}
                 />
-                <label>{profile}</label>
+                <label label={profile} />
               </box>
             </button>
           ))}

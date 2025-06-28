@@ -148,7 +148,7 @@ const NetworksList = ({
 
 export const NetworkPage = ({
   returnHome,
-  currentPageName: [currentPageName, setCurrentPageName],
+  currentPageName: [currentPageName],
 }: {
   returnHome: () => void;
   currentPageName: State<string>;

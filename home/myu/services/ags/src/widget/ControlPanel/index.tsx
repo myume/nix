@@ -27,7 +27,7 @@ export const ControlPanelMenu = ({
     setPageName(notificationCenterName);
   };
 
-  const returnToNotifications = () => pageName.set(notificationCenterName);
+  const returnToNotifications = () => setPageName(notificationCenterName);
   let window: Astal.Window;
 
   return (
@@ -68,7 +68,7 @@ export const ControlPanelMenu = ({
         >
           <ControlPanel
             closeControlPanel={closeMenu}
-            setPageName={(name) => pageName.set(name)}
+            setPageName={(name) => setPageName(name)}
           />
           <stack
             visibleChildName={getPageName}

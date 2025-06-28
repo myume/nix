@@ -17,6 +17,7 @@ export const NotificationCenter = () => {
 
   return (
     <box
+      $type="named"
       name={notificationCenterName}
       cssClasses={["notifications", "page"]}
       orientation={Gtk.Orientation.VERTICAL}
