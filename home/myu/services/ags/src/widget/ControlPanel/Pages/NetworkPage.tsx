@@ -1,5 +1,4 @@
 import { Page } from "./Page";
-import { PasswordEntry, ScrolledWindow } from "../../Gtk";
 import { Gtk } from "ags/gtk4";
 import NetworkManagerCliService, {
   NetworkEntry,
@@ -105,7 +104,7 @@ const NetworkItem = ({
         />
         <image visible={security !== ""} iconName={"object-locked-symbolic"} />
       </box>
-      <PasswordEntry
+      <Gtk.PasswordEntry
         $={(self) => {
           entry = self;
         }}
@@ -133,21 +132,17 @@ const NetworksList = ({
   networks: Accessor<NetworkEntry[]>;
 }) => {
   return (
-    <ScrolledWindow
-      vexpand
-      hexpand
-      child={
-        <box
-          cssClasses={["network-list"]}
-          orientation={Gtk.Orientation.VERTICAL}
-          spacing={8}
-        >
-          <For each={networks}>
-            {(network) => <NetworkItem network={network} selected={selected} />}
-          </For>
-        </box>
-      }
-    />
+    <Gtk.ScrolledWindow vexpand hexpand>
+      <box
+        cssClasses={["network-list"]}
+        orientation={Gtk.Orientation.VERTICAL}
+        spacing={8}
+      >
+        <For each={networks}>
+          {(network) => <NetworkItem network={network} selected={selected} />}
+        </For>
+      </box>
+    </Gtk.ScrolledWindow>
   );
 };
 
