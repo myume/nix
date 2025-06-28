@@ -69,7 +69,6 @@ const AppItem = ({
       onClicked={() => {
         launchApp(app);
       }}
-      onHoverEnter={() => setSelected(index)}
       cssClasses={selected((selected) => {
         const classes = ["app-item"];
         if (selected === index) {
@@ -80,6 +79,7 @@ const AppItem = ({
       hexpand
     >
       <box spacing={8}>
+        <Gtk.EventControllerMotion onEnter={() => setSelected(index)} />
         <image pixelSize={36} iconName={app.iconName} />
         <box orientation={Gtk.Orientation.VERTICAL} heightRequest={40}>
           <label

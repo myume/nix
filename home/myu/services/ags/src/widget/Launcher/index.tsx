@@ -38,8 +38,13 @@ export function Launcher() {
     entryRef?.grab_focus();
   });
 
+  let window: Astal.Window;
+
   return (
     <window
+      $={(self) => {
+        window = self;
+      }}
       name={"launcher"}
       namespace={"launcher"}
       cssClasses={["launcher-container"]}
@@ -52,10 +57,11 @@ export function Launcher() {
         Astal.WindowAnchor.RIGHT
       }
       focusable
-      onFocusLeave={(self) => self.hide()}
-      onButtonPressed={(self, state) =>
-        hideOnClickAway(() => self.hide())(self, state)
-      }
+      onNotifyHasFocus={(self) => {
+        if (!self.hasFocus) {
+          self.hide();
+        }
+      }}
       exclusivity={Astal.Exclusivity.IGNORE}
       keymode={Astal.Keymode.ON_DEMAND}
       onShow={() => {
@@ -64,24 +70,6 @@ export function Launcher() {
         setSearchString("");
         entryRef?.set({ text: "" });
         entryRef?.grab_focus();
-      }}
-      onKeyPressed={(self, keyval, keycode, state) => {
-        if (keyval === Gdk.KEY_Tab) {
-          setModeIndex(wrapIndex(modeIndex.get() + 1, modes.length));
-          return true;
-        }
-        // how the hell was i supposed to figure out that shift tab is this magical number
-        if (keyval === Gdk.KEY_ISO_Left_Tab) {
-          setModeIndex(wrapIndex(modeIndex.get() - 1, modes.length));
-          return true;
-        }
-
-        plugin.get().handleKeyPress(self, keyval, keycode, state);
-
-        if (keyval === Gdk.KEY_Escape) {
-          self.hide();
-          return true;
-        }
       }}
     >
       <box
@@ -92,6 +80,31 @@ export function Launcher() {
         widthRequest={700}
         spacing={12}
       >
+        <Gtk.GestureClick
+          onPressed={(_self, _, x, y) =>
+            hideOnClickAway(() => window.hide())(window, x, y)
+          }
+        />
+        <Gtk.EventControllerKey
+          onKeyPressed={(_self, keyval, keycode, state) => {
+            if (keyval === Gdk.KEY_Tab) {
+              setModeIndex(wrapIndex(modeIndex.get() + 1, modes.length));
+              return true;
+            }
+            // how the hell was i supposed to figure out that shift tab is this magical number
+            if (keyval === Gdk.KEY_ISO_Left_Tab) {
+              setModeIndex(wrapIndex(modeIndex.get() - 1, modes.length));
+              return true;
+            }
+
+            plugin.get().handleKeyPress(window, keyval, keycode, state);
+
+            if (keyval === Gdk.KEY_Escape) {
+              window.hide();
+              return true;
+            }
+          }}
+        />
         <entry
           cssClasses={["input"]}
           primaryIconName={plugin.as(({ iconName }) => iconName)}
@@ -99,9 +112,9 @@ export function Launcher() {
             entryRef = self;
           }}
           placeholderText={plugin.as(({ placeholderText }) => placeholderText)}
-          onChanged={(self) => {
-            if (self.text !== searchString.get()) {
-              setSearchString(self.text);
+          onNotifyText={({ text }) => {
+            if (text !== searchString.get()) {
+              setSearchString(text);
             }
           }}
           onActivate={() => {

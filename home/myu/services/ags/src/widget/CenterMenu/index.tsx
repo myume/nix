@@ -16,8 +16,13 @@ export function CenterMenu({
     setShowMediaControls(false);
   };
 
+  let window: Astal.Window;
+
   return (
     <window
+      $={(self) => {
+        window = self;
+      }}
       visible={createComputed([showCalender, showMediaControls])(
         ([showCalender, showMediaControls]) =>
           showCalender || showMediaControls,
@@ -32,12 +37,10 @@ export function CenterMenu({
         Astal.WindowAnchor.BOTTOM
       }
       application={App}
-      onButtonPressed={hideOnClickAway(hideMenu)}
       keymode={Astal.Keymode.ON_DEMAND}
       focusable
-      onFocusLeave={hideMenu}
-      onKeyPressed={(_self, keyval) => {
-        if (keyval === Gdk.KEY_Escape) hideMenu();
+      onNotifyHasFocus={({ hasFocus }) => {
+        if (!hasFocus) hideMenu();
       }}
     >
       <box
@@ -46,6 +49,16 @@ export function CenterMenu({
         valign={Gtk.Align.START}
         heightRequest={350}
       >
+        <Gtk.GestureClick
+          onPressed={(_self, _, x, y) =>
+            hideOnClickAway(hideMenu)(window, x, y)
+          }
+        />
+        <Gtk.EventControllerKey
+          onKeyPressed={(_self, keyval, _keycode, _state) => {
+            if (keyval === Gdk.KEY_Escape) hideMenu();
+          }}
+        />
         <revealer
           revealChild={showCalender}
           transitionType={Gtk.RevealerTransitionType.SLIDE_LEFT}
