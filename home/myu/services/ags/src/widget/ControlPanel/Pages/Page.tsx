@@ -27,13 +27,13 @@ export const Page = ({ name, child, returnHome, endWidget }: PageProps) => {
           halign={Gtk.Align.END}
           label={toTitleCase(name)}
         />
-        {endWidget instanceof Accessor ? (
-          <With $type="end" value={endWidget}>
-            {(widget) => widget}
-          </With>
-        ) : (
-          <box $type="end" visible={false} />
-        )}
+        <box $type="end">
+          {endWidget instanceof Accessor ? (
+            <With value={endWidget}>{(widget) => widget}</With>
+          ) : (
+            (endWidget ?? <box visible={false} />)
+          )}
+        </box>
       </centerbox>
       <box>
         {child instanceof Accessor ? (
