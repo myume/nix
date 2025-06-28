@@ -30,7 +30,7 @@ export const ControlPanel = ({
         {Sliders.map((row) => (
           <box spacing={panelSpacing}>
             {row.map((slider) => (
-              <box child={slider()} homogeneous />
+              <box homogeneous>{slider()}</box>
             ))}
           </box>
         ))}

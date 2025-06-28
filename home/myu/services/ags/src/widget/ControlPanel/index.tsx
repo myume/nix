@@ -69,7 +69,8 @@ export const ControlPanelMenu = ({
                 ? Gtk.StackTransitionType.SLIDE_RIGHT
                 : Gtk.StackTransitionType.SLIDE_LEFT,
             )}
-            homogeneous
+            hhomogeneous
+            vhomogeneous
           >
             <NotificationCenter />
             <NetworkPage

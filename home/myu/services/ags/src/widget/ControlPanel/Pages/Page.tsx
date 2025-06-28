@@ -4,7 +4,7 @@ import { Accessor, With } from "ags";
 
 type PageProps = {
   name: string;
-  child: Accessor<Gtk.Widget>;
+  child: Gtk.Widget | Accessor<Gtk.Widget>;
   returnHome: () => void;
   endWidget?: Gtk.Widget | Accessor<Gtk.Widget>;
 };
@@ -31,7 +31,11 @@ export const Page = ({ name, child, returnHome, endWidget }: PageProps) => {
         endWidget={endWidget ?? <box visible={false} />}
       />
       <box>
-        <With value={child}>{(child) => child}</With>
+        {child instanceof Accessor ? (
+          <With value={child}>{(child) => child}</With>
+        ) : (
+          child
+        )}
       </box>
     </box>
   );
