@@ -60,7 +60,7 @@ export const NotificationCenter = () => {
       >
         <box spacing={2}>
           <image iconName={"edit-clear-list"} />
-          <label>Clear</label>
+          <label label={"Clear"} />
         </box>
       </button>
     </box>
