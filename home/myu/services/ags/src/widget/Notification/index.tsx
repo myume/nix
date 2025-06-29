@@ -26,7 +26,12 @@ export function Notifications(gdkmonitor: Gdk.Monitor) {
       anchor={TOP | RIGHT}
       application={App}
     >
-      <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
+      <box
+        orientation={Gtk.Orientation.VERTICAL}
+        spacing={8}
+        marginTop={6}
+        marginEnd={6}
+      >
         <For each={notifications}>
           {(notification) => (
             <Notification
