@@ -36,9 +36,10 @@ export function Notifications(gdkmonitor: Gdk.Monitor) {
           {(notification) => (
             <Notification
               notification={notification}
-              hideNotification={() =>
+              hideNotification={(cleanup) =>
                 timeout(notifTimeout, () => {
                   notificationService.hideNotification(notification);
+                  cleanup();
                 })
               }
             />

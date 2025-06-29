@@ -4,7 +4,7 @@ import AstalApps from "gi://AstalApps";
 import Pango from "gi://Pango";
 import { toTitleCase } from "../../utils/util";
 import AstalIO from "gi://AstalIO";
-import { createBinding, For, onCleanup } from "ags";
+import { createBinding, For } from "ags";
 import GLib from "gi://GLib";
 
 const urgencyToString = (urgency: AstalNotifd.Urgency) => {
@@ -20,7 +20,7 @@ const urgencyToString = (urgency: AstalNotifd.Urgency) => {
 
 type Props = {
   notification: AstalNotifd.Notification;
-  hideNotification?: () => AstalIO.Time;
+  hideNotification?: (cleanup: () => void) => AstalIO.Time;
 };
 
 const timers: Map<number, AstalIO.Time> = new Map();
@@ -61,12 +61,11 @@ export default function Notification({
 
   if (hideNotification) {
     cleanupExistingTimer(notification.id);
-    timers.set(notification.id, hideNotification());
+    timers.set(
+      notification.id,
+      hideNotification(() => cleanupExistingTimer(notification.id)),
+    );
   }
-
-  onCleanup(() => {
-    cleanupExistingTimer(notification.id);
-  });
 
   return (
     <box
@@ -86,7 +85,10 @@ export default function Notification({
             notifd.set_ignore_timeout(false);
             if (hideNotification) {
               cleanupExistingTimer(notification.id);
-              timers.set(notification.id, hideNotification());
+              timers.set(
+                notification.id,
+                hideNotification(() => cleanupExistingTimer(notification.id)),
+              );
             }
           }}
         />
