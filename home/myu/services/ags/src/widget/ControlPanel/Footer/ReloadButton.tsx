@@ -14,7 +14,7 @@ export const ReloadButton = () => {
 
         Hyprland.get_default().dispatch(
           "exec",
-          "pkill gjs && ags run --log-file /tmp/ags.log",
+          "ags quit && ags run --log-file /tmp/ags.log",
         );
       }}
     />

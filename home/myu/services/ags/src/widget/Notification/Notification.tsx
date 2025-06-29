@@ -66,12 +66,15 @@ export default function Notification({
       <Gtk.EventControllerMotion
         onEnter={() => {
           notifd.set_ignore_timeout(true);
-          timer?.cancel();
-          timer = null;
+          if (timer) {
+            timer?.cancel();
+            timer = null;
+          }
         }}
         onLeave={() => {
           notifd.set_ignore_timeout(false);
           if (hideNotification) {
+            timer?.cancel();
             timer = hideNotification();
           }
         }}
