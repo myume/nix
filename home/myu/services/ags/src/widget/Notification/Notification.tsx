@@ -4,7 +4,7 @@ import AstalApps from "gi://AstalApps";
 import Pango from "gi://Pango";
 import { toTitleCase } from "../../utils/util";
 import AstalIO from "gi://AstalIO";
-import { createBinding, For } from "ags";
+import { createBinding, For, onCleanup } from "ags";
 import GLib from "gi://GLib";
 
 const urgencyToString = (urgency: AstalNotifd.Urgency) => {
@@ -21,6 +21,16 @@ const urgencyToString = (urgency: AstalNotifd.Urgency) => {
 type Props = {
   notification: AstalNotifd.Notification;
   hideNotification?: () => AstalIO.Time;
+};
+
+const timers: { [key: number]: AstalIO.Time } = {};
+
+const cleanupExistingTimer = (id: number) => {
+  const existingTimer = timers[id];
+  if (existingTimer) {
+    existingTimer.cancel();
+    delete timers[id];
+  }
 };
 
 export default function Notification({
@@ -48,37 +58,41 @@ export default function Notification({
   );
 
   const notifd = AstalNotifd.get_default();
-  let timer: AstalIO.Time | null = null;
+
+  if (hideNotification) {
+    cleanupExistingTimer(notification.id);
+    timers[notification.id] = hideNotification();
+  }
+
+  onCleanup(() => {
+    cleanupExistingTimer(notification.id);
+  });
 
   return (
     <box
-      $={() => {
-        if (hideNotification) {
-          timer = hideNotification();
-        }
-      }}
       cssClasses={["notification", urgencyToString(notification.urgency)]}
       orientation={Gtk.Orientation.VERTICAL}
       widthRequest={256}
       spacing={8}
       hexpand
     >
-      <Gtk.EventControllerMotion
-        onEnter={() => {
-          notifd.set_ignore_timeout(true);
-          if (timer) {
-            timer?.cancel();
-            timer = null;
-          }
-        }}
-        onLeave={() => {
-          notifd.set_ignore_timeout(false);
-          if (hideNotification) {
-            timer?.cancel();
-            timer = hideNotification();
-          }
-        }}
-      />
+      {hideNotification ? (
+        <Gtk.EventControllerMotion
+          onEnter={() => {
+            notifd.set_ignore_timeout(true);
+            cleanupExistingTimer(notification.id);
+          }}
+          onLeave={() => {
+            notifd.set_ignore_timeout(false);
+            if (hideNotification) {
+              cleanupExistingTimer(notification.id);
+              timers[notification.id] = hideNotification();
+            }
+          }}
+        />
+      ) : (
+        <></>
+      )}
       <box cssClasses={["notification-header"]} hexpand>
         <box halign={Gtk.Align.START} hexpand spacing={4}>
           <image visible={appIcon !== ""} iconName={appIcon} />
