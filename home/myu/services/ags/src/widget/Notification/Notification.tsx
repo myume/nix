@@ -23,13 +23,13 @@ type Props = {
   hideNotification?: () => AstalIO.Time;
 };
 
-const timers: { [key: number]: AstalIO.Time } = {};
+const timers: Map<number, AstalIO.Time> = new Map();
 
 const cleanupExistingTimer = (id: number) => {
-  const existingTimer = timers[id];
+  const existingTimer = timers.get(id);
   if (existingTimer) {
     existingTimer.cancel();
-    delete timers[id];
+    timers.delete(id);
   }
 };
 
@@ -61,7 +61,7 @@ export default function Notification({
 
   if (hideNotification) {
     cleanupExistingTimer(notification.id);
-    timers[notification.id] = hideNotification();
+    timers.set(notification.id, hideNotification());
   }
 
   onCleanup(() => {
@@ -86,7 +86,7 @@ export default function Notification({
             notifd.set_ignore_timeout(false);
             if (hideNotification) {
               cleanupExistingTimer(notification.id);
-              timers[notification.id] = hideNotification();
+              timers.set(notification.id, hideNotification());
             }
           }}
         />
