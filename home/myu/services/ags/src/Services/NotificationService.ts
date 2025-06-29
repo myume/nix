@@ -40,13 +40,13 @@ export default class NotificationService extends GObject.Object {
   hideNotification(notif: AstalNotifd.Notification) {
     const hiddenNotif = this.#notifications.find(({ id }) => id === notif.id);
     if (hiddenNotif) {
-      this.#hidden_notifications = [hiddenNotif, ...this.#hidden_notifications];
-      this.notify("hidden_notifications");
-
       this.#notifications = this.#notifications.filter(
         ({ id }) => id !== notif.id,
       );
       this.notify("notifications");
+
+      this.#hidden_notifications = [hiddenNotif, ...this.#hidden_notifications];
+      this.notify("hidden_notifications");
     }
   }
 
