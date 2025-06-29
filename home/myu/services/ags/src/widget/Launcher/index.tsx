@@ -3,7 +3,7 @@ import { Astal, Gdk, Gtk } from "ags/gtk4";
 import { hideOnClickAway, wrapIndex } from "../../utils/util";
 import { AppSearch } from "./Plugins/AppSearch";
 import { Calculator } from "./Plugins/Calculator";
-import { createState, With } from "ags";
+import { createState, onCleanup, With } from "ags";
 
 enum Mode {
   App,
@@ -32,9 +32,13 @@ export function Launcher() {
     }
   });
 
-  plugin.subscribe(() => {
+  const dispose = plugin.subscribe(() => {
     entryRef?.set({ text: "" });
     entryRef?.grab_focus();
+  });
+
+  onCleanup(() => {
+    dispose();
   });
 
   let window: Astal.Window;

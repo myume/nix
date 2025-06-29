@@ -9,6 +9,7 @@ import {
   createComputed,
   createState,
   For,
+  onCleanup,
   State,
   With,
 } from "ags";
@@ -160,11 +161,15 @@ export const NetworkPage = ({
   const networks = createBinding(networkManager, "networks");
   const scanning = createBinding(networkManager, "scanning");
 
-  currentPageName.subscribe(() => {
+  const dispose = currentPageName.subscribe(() => {
     if (currentPageName.get() === networkPageName) {
       networkManager.scan();
       setSelectedSsid("");
     }
+  });
+
+  onCleanup(() => {
+    dispose();
   });
 
   return (

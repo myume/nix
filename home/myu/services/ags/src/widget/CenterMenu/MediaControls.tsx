@@ -2,7 +2,7 @@ import { Gtk } from "ags/gtk4";
 import AstalMpris from "gi://AstalMpris";
 import Pango from "gi://Pango";
 import { formatDuration, getAppIcon, toTitleCase } from "../../utils/util";
-import { createBinding, createState, For, With } from "ags";
+import { createBinding, createState, For, onCleanup, With } from "ags";
 
 const PlayerItem = ({ player }: { player: AstalMpris.Player }) => (
   <box cssClasses={["player-item"]} spacing={4}>
@@ -78,7 +78,7 @@ export const MediaControlMenu = ({
     currentPlayer.position,
   );
   const playerPosition = createBinding(currentPlayer, "position");
-  playerPosition.subscribe(() => {
+  const dispose = playerPosition.subscribe(() => {
     const playbackStatus = currentPlayer.playback_status;
 
     if (playbackStatus === AstalMpris.PlaybackStatus.PLAYING) {
@@ -91,6 +91,10 @@ export const MediaControlMenu = ({
     (coverArt) =>
       coverArt !== null && coverArt !== undefined && coverArt !== "",
   );
+
+  onCleanup(() => {
+    dispose();
+  });
 
   return (
     <box
