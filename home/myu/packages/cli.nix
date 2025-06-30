@@ -29,7 +29,7 @@
     bluez
     powertop
 
-    # silicon # pretty screenshots of code
-    # hyperfine # cli benchmarking
+    silicon # pretty screenshots of code
+    hyperfine # cli benchmarking
   ];
 }
