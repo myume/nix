@@ -38,63 +38,61 @@ export const PowerMenu = () => {
     keymode={Astal.Keymode.ON_DEMAND}
     focusable
   >
-    <box>
-      <Gtk.EventControllerFocus onLeave={() => hideWindow(window)} />
-      <Gtk.GestureClick
-        onPressed={(_self, _npress, x, y) =>
-          hideOnClickAway(() => hideWindow(window))(window, x, y)
+    <Gtk.EventControllerFocus onLeave={() => hideWindow(window)} />
+    <Gtk.GestureClick
+      onPressed={(_self, _npress, x, y) =>
+        hideOnClickAway(() => hideWindow(window))(window, x, y)
+      }
+    />
+    <Gtk.EventControllerKey
+      onKeyPressed={(_self, keyval, _keycode, _state) => {
+        if (keyval === Gdk.KEY_Escape) {
+          hideWindow(window);
         }
-      />
-      <Gtk.EventControllerKey
-        onKeyPressed={(_self, keyval, _keycode, _state) => {
-          if (keyval === Gdk.KEY_Escape) {
-            hideWindow(window);
-          }
-        }}
-      />
-      <revealer
-        halign={Gtk.Align.CENTER}
-        valign={Gtk.Align.CENTER}
-        revealChild={reveal}
-      >
-        <box cssClasses={["selection"]} spacing={4}>
-          <button
-            onClicked={() => execAsync("systemctl poweroff")}
-            tooltipText={"Shutdown"}
-            cssClasses={["shutdown"]}
-          >
-            <image pixelSize={36} iconName={"system-shutdown-symbolic"} />
-          </button>
-          <button
-            cssClasses={["reboot"]}
-            tooltipText={"Reboot"}
-            onClicked={() => execAsync("systemctl reboot")}
-          >
-            <image pixelSize={36} iconName={"system-reboot-symbolic"} />
-          </button>
-          <button
-            cssClasses={["suspend"]}
-            tooltipText={"Suspend"}
-            onClicked={() => execAsync("systemctl suspend")}
-          >
-            <image pixelSize={36} iconName={"system-suspend-symbolic"} />
-          </button>
-          <button
-            cssClasses={["log-out"]}
-            tooltipText={"Logout"}
-            onClicked={() => execAsync("hyprctl dispatch exit")}
-          >
-            <image pixelSize={36} iconName={"system-log-out-symbolic"} />
-          </button>
-          <button
-            cssClasses={["lock"]}
-            tooltipText={"Lock"}
-            onClicked={() => execAsync("hyprlock")}
-          >
-            <image pixelSize={36} iconName={"system-lock-screen-symbolic"} />
-          </button>
-        </box>
-      </revealer>
-    </box>
+      }}
+    />
+    <revealer
+      halign={Gtk.Align.CENTER}
+      valign={Gtk.Align.CENTER}
+      revealChild={reveal}
+    >
+      <box cssClasses={["selection"]} spacing={4}>
+        <button
+          onClicked={() => execAsync("systemctl poweroff")}
+          tooltipText={"Shutdown"}
+          cssClasses={["shutdown"]}
+        >
+          <image pixelSize={36} iconName={"system-shutdown-symbolic"} />
+        </button>
+        <button
+          cssClasses={["reboot"]}
+          tooltipText={"Reboot"}
+          onClicked={() => execAsync("systemctl reboot")}
+        >
+          <image pixelSize={36} iconName={"system-reboot-symbolic"} />
+        </button>
+        <button
+          cssClasses={["suspend"]}
+          tooltipText={"Suspend"}
+          onClicked={() => execAsync("systemctl suspend")}
+        >
+          <image pixelSize={36} iconName={"system-suspend-symbolic"} />
+        </button>
+        <button
+          cssClasses={["log-out"]}
+          tooltipText={"Logout"}
+          onClicked={() => execAsync("hyprctl dispatch exit")}
+        >
+          <image pixelSize={36} iconName={"system-log-out-symbolic"} />
+        </button>
+        <button
+          cssClasses={["lock"]}
+          tooltipText={"Lock"}
+          onClicked={() => execAsync("hyprlock")}
+        >
+          <image pixelSize={36} iconName={"system-lock-screen-symbolic"} />
+        </button>
+      </box>
+    </revealer>
   </window>;
 };
