@@ -127,4 +127,30 @@
   .toggled {
     background: rgba(colors.$bg-accent, 0.3);
   }
+
+  .battery {
+    .high {
+      color: colors.$fg-color;
+    }
+
+    .med {
+      color: colors.$yellow;
+    }
+
+    .med-low {
+      color: colors.$peach;
+    }
+
+    .low {
+      color: colors.$maroon;
+    }
+
+    .very-low {
+      color: colors.$red;
+    }
+
+    .charging {
+      color: colors.$green;
+    }
+  }
 }
