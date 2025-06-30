@@ -29,10 +29,25 @@ export default function Battery() {
   );
 
   return (
-    <button tooltipText={description}>
+    <button class={"battery"} tooltipText={description}>
       <box>
         <image
-          iconName={createBinding(battery, "batteryIconName")} // iconName for BW version
+          cssClasses={createComputed(
+            [charging, percentage],
+            (charging, percentage) => [
+              charging ? "charging" : "",
+              percentage >= 40
+                ? "high"
+                : percentage >= 30
+                  ? "med"
+                  : percentage >= 20
+                    ? "med-low"
+                    : percentage >= 10
+                      ? "low"
+                      : "very-low",
+            ],
+          )}
+          iconName={createBinding(battery, "batteryIconName")}
         />
         <label
           cssClasses={["battery-percentage"]}
