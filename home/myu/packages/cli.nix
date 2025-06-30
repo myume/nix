@@ -25,10 +25,11 @@
     iotop
     iftop
 
-    silicon # pretty screenshots of code
-
     brightnessctl
     bluez
     powertop
+
+    # silicon # pretty screenshots of code
+    # hyperfine # cli benchmarking
   ];
 }
