@@ -21,7 +21,6 @@
     gnupg
 
     # monitoring
-    btop
     iotop
     iftop
 
