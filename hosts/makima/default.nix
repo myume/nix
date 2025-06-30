@@ -19,6 +19,7 @@ in {
       "${modPath}/displayManager"
       "${modPath}/services"
       "${modPath}/fonts"
+      "${modPath}/virtualisation"
 
       ./hardware-configuration.nix
     ]
