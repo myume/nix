@@ -3,18 +3,20 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  plugins =
+    lib.filesystem.listFilesRecursive ./plugins;
+in {
   imports =
     [
       inputs.nvf.homeManagerModules.default
 
       ./keymaps.nix
       ./autocmds.nix
-      ./extra.nix
       ./highlight.nix
     ]
     # import all plugins
-    ++ (lib.filesystem.listFilesRecursive ./plugins);
+    ++ plugins;
 
   # add lazygit for nvim
   home.packages = [
