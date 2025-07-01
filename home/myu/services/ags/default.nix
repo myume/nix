@@ -34,7 +34,6 @@ in {
       apps
       battery
       bluetooth
-      cava
       hyprland
       mpris
       network
