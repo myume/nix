@@ -8,10 +8,10 @@
         require("guess-indent").setup()
       '';
     };
-    nvim-spectre = {
-      package = pkgs.vimPlugins.nvim-spectre;
+    grug-far = {
+      package = pkgs.vimPlugins.grug-far-nvim;
       setup = ''
-        require("spectre").setup()
+        require("grug-far").setup()
       '';
     };
   };
