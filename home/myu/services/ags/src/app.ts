@@ -83,7 +83,7 @@ function main() {
   const { defaultSpeaker: speaker } = AstalWp.get_default()!;
 
   // timeout to avoid catching signals firing from startup
-  timeout(100, () => {
+  timeout(500, () => {
     speaker.connect("notify::volume", () => triggerOSD(OSDMode.Volume));
     speaker.connect("notify::mute", () => triggerOSD(OSDMode.Volume));
   });
