@@ -36,13 +36,13 @@ export default function Battery() {
             [charging, percentage],
             (charging, percentage) => [
               charging ? "charging" : "",
-              percentage >= 40
+              percentage > 40
                 ? "high"
-                : percentage >= 30
+                : percentage > 30
                   ? "med"
-                  : percentage >= 20
+                  : percentage > 20
                     ? "med-low"
-                    : percentage >= 10
+                    : percentage > 10
                       ? "low"
                       : "very-low",
             ],
