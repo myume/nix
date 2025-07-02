@@ -1,7 +1,6 @@
 {lib, ...}: {
   virtualisation.docker = {
     enable = true;
+    enableOnBoot = false;
   };
-
-  systemd.services.docker.wantedBy = lib.mkForce [];
 }
