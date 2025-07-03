@@ -30,5 +30,7 @@
 
     silicon # pretty screenshots of code
     hyperfine # cli benchmarking
+
+    gemini-cli
   ];
 }
