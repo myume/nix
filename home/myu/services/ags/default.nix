@@ -20,11 +20,6 @@ in {
     ]
     ++ dependencies;
 
-  # attempt to fix "Gdk-Message: Error 71 (Protocol error) dispatching to Wayland display."
-  home.sessionVariables = {
-    GSK_RENDERER = "ngl";
-  };
-
   programs.ags = {
     enable = true;
 

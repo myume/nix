@@ -95,6 +95,10 @@ in {
       EDITOR = "vim";
       VISUAL = "vim";
     };
+
+    sessionVariables = {
+      GSK_RENDERER = "ngl";
+    };
   };
 
   hardware = {
