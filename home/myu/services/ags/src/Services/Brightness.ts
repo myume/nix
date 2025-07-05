@@ -45,10 +45,14 @@ export default class BrightnessService extends GObject.Object {
 
     if (percent > 1) percent = 1;
 
-    execAsync(`brightnessctl set ${Math.floor(percent * 100)}% -q`).then(() => {
-      this.#screen = percent;
-      this.notify("screen");
-    });
+    if (percent != this.#screen) {
+      execAsync(`brightnessctl set ${Math.floor(percent * 100)}% -q`).then(
+        () => {
+          this.#screen = percent;
+          this.notify("screen");
+        },
+      );
+    }
   }
 
   constructor() {
