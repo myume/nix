@@ -29,12 +29,13 @@ export const NetworkPanel = (setPageName: (name: string) => void) => {
                   ? "Connected"
                   : "Disconnected"
                 : "Disconnected"
-              : createBinding(wifi, "ssid").as((ssid) => ssid ?? "Disconnected")
+              : wifi &&
+                createBinding(wifi, "ssid").as((ssid) => ssid ?? "Disconnected")
           }
           icon={
             useWired
-              ? createBinding(wired, "iconName")
-              : createBinding(wifi, "iconName")
+              ? wired && createBinding(wired, "iconName")
+              : wifi && createBinding(wifi, "iconName")
           }
           enabled={enabled}
           onEnable={() => {
