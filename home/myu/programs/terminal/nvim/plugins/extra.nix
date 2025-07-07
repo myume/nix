@@ -14,5 +14,12 @@
         require("grug-far").setup()
       '';
     };
+
+    dropbar = {
+      package = pkgs.vimPlugins.dropbar-nvim;
+      setup = ''
+        require("dropbar").setup()
+      '';
+    };
   };
 }

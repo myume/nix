@@ -171,5 +171,11 @@
       action = ":lua Snacks.words.jump(-1)<CR>";
       desc = "Jump to previous reference";
     }
+    {
+      key = "<leader>;";
+      mode = ["n"];
+      action = ":lua require('dropbar.api').pick()<CR>";
+      desc = "Pick symbols in winbar";
+    }
   ];
 }
