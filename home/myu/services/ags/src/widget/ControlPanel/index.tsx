@@ -10,6 +10,7 @@ import { NetworkPage } from "./Pages/NetworkPage";
 import { PowerProfilePage } from "./Pages/PowerProfile";
 import { ControlPanel } from "./ControlPanel";
 import { createComputed, createState } from "ags";
+import { AudioPage } from "./Pages/AudioPage";
 
 export const windowName = "control-panel";
 
@@ -81,9 +82,13 @@ export const ControlPanelMenu = ({
             <NotificationCenter />
             <NetworkPage
               returnHome={returnToNotifications}
-              currentPageName={pageName}
+              currentPageName={getPageName}
             />
             <PowerProfilePage returnHome={returnToNotifications} />
+            <AudioPage
+              returnHome={returnToNotifications}
+              currentPageName={getPageName}
+            />
           </stack>
         </box>
       </revealer>

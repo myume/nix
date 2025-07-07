@@ -45,7 +45,7 @@
 
       .players {
         padding: 0.5rem;
-        background: colors.$bg-color;
+        background: rgba(colors.$bg-color, 0.4);
         border-radius: 1rem;
       }
     }

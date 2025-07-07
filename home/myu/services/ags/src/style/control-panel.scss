@@ -44,6 +44,10 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
       }
     }
+
+    .show-page {
+      margin: 5px;
+    }
   }
 
   .control-panel {
@@ -180,6 +184,63 @@
 
         &:hover {
           background: rgba(colors.$bg-color, 0.5);
+        }
+      }
+    }
+  }
+
+  .audio {
+    .mixer {
+      padding: 16px;
+      min-height: 200px;
+
+      scale.mixer-slider {
+        padding: 0 8px;
+
+        trough {
+          border-radius: 2rem;
+          background-color: rgba(colors.$bg-transparent, 0.4);
+          min-width: 6px;
+        }
+
+        highlight {
+          background-color: rgba(colors.$blue, 0.3);
+          border-radius: 2rem;
+        }
+
+        slider {
+          min-height: 4px;
+          min-width: 20px;
+          background-color: colors.$text;
+          border-radius: 2rem;
+          margin: 0 -10px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+      }
+    }
+
+    menubutton {
+      margin-top: 12px;
+      padding: 8px;
+      border-radius: 1rem;
+      background: rgba(colors.$bg-color, 0.4);
+
+      &:hover {
+        background: rgba(colors.$bg-color, 0.7);
+      }
+    }
+
+    .sinks {
+      padding: 8px;
+      background: colors.$bg-secondary;
+      border-radius: 1rem;
+
+      button {
+        padding: 8px;
+        border-radius: 0.8rem;
+
+        &:hover {
+          background: rgba(colors.$bg-accent, 0.25);
         }
       }
     }

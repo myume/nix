@@ -8,6 +8,7 @@ export const Slider = ({
   onChange,
   icon,
   label,
+  onExpand,
 }: {
   min: number | Accessor<number>;
   max: number | Accessor<number>;
@@ -15,6 +16,7 @@ export const Slider = ({
   onChange: (s: Astal.Slider) => void;
   icon: string | Accessor<string>;
   label?: string | Accessor<string>;
+  onExpand?: () => void;
 }) => (
   <Gtk.Overlay
     cssClasses={["slider"]}
@@ -42,14 +44,24 @@ export const Slider = ({
       );
     }}
   >
-    <slider
-      min={min}
-      widthRequest={200}
-      max={max}
-      value={value}
-      onChangeValue={onChange}
-      overflow={Gtk.Overflow.HIDDEN}
-      hexpand
-    />
+    <box>
+      <slider
+        min={min}
+        widthRequest={200}
+        max={max}
+        value={value}
+        onChangeValue={onChange}
+        overflow={Gtk.Overflow.HIDDEN}
+        hexpand
+      />
+      <button
+        cssClasses={["show-page"]}
+        visible={onExpand !== undefined}
+        label={""}
+        onClicked={() => {
+          if (onExpand) onExpand();
+        }}
+      />
+    </box>
   </Gtk.Overlay>
 );

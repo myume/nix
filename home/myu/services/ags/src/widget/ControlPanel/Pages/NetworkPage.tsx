@@ -150,10 +150,10 @@ const NetworksList = ({
 
 export const NetworkPage = ({
   returnHome,
-  currentPageName: [currentPageName],
+  currentPageName,
 }: {
   returnHome: () => void;
-  currentPageName: State<string>;
+  currentPageName: Accessor<string>;
 }) => {
   const [selectedSsid, setSelectedSsid] = createState("");
   const networkManager = NetworkManagerCliService.get_default();

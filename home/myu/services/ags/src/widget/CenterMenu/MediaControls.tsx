@@ -25,32 +25,7 @@ const PlayerSelect = ({
   const mpris = AstalMpris.get_default();
   const players = createBinding(mpris, "players");
   return (
-    <menubutton
-      cssClasses={["player-select"]}
-      popover={
-        (
-          <popover hasArrow={false}>
-            <box
-              cssClasses={["players"]}
-              orientation={Gtk.Orientation.VERTICAL}
-              spacing={4}
-            >
-              <For each={players}>
-                {(player) => (
-                  <button
-                    onClicked={() => {
-                      setCurrentPlayer(player);
-                    }}
-                  >
-                    <PlayerItem player={player} />
-                  </button>
-                )}
-              </For>
-            </box>
-          </popover>
-        ) as Gtk.Popover
-      }
-    >
+    <menubutton cssClasses={["player-select"]}>
       <box
         cssClasses={["current-player"]}
         halign={Gtk.Align.CENTER}
@@ -58,6 +33,25 @@ const PlayerSelect = ({
       >
         <PlayerItem player={currentPlayer} />
       </box>
+      <popover hasArrow={false}>
+        <box
+          cssClasses={["players"]}
+          orientation={Gtk.Orientation.VERTICAL}
+          spacing={4}
+        >
+          <For each={players}>
+            {(player) => (
+              <button
+                onClicked={() => {
+                  setCurrentPlayer(player);
+                }}
+              >
+                <PlayerItem player={player} />
+              </button>
+            )}
+          </For>
+        </box>
+      </popover>
     </menubutton>
   );
 };

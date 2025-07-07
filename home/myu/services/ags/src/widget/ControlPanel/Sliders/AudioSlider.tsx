@@ -1,8 +1,9 @@
 import AstalWp from "gi://AstalWp";
 import { Slider } from "./Slider";
 import { createBinding } from "ags";
+import { audioPageName } from "../Pages/AudioPage";
 
-export const VolumeSlider = () => {
+export const VolumeSlider = (setPageName: (name: string) => void) => {
   const { defaultSpeaker: speaker } = AstalWp.get_default()!;
 
   return (
@@ -14,6 +15,7 @@ export const VolumeSlider = () => {
       onChange={(self) => {
         speaker.set_volume(self.value);
       }}
+      onExpand={() => setPageName(audioPageName)}
     />
   );
 };
