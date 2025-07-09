@@ -5,5 +5,6 @@
     discord
     obs-studio
     mpv
+    readest
   ];
 }
