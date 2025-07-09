@@ -1,18 +1,20 @@
-import { createBinding } from "ags";
-import { Gdk, Gtk } from "ags/gtk4";
-import AstalApps from "gi://AstalApps";
+import { createBinding, createComputed } from "ags";
+import { Gtk } from "ags/gtk4";
 import AstalMpris from "gi://AstalMpris";
 
 export function toTitleCase(str: string): string {
   return str.replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
-export const getAppIcon = (player: AstalMpris.Player) => {
-  const apps = new AstalApps.Apps();
-  return createBinding(player, "entry").as(
-    (entry) => apps.exact_query(entry)[0].iconName,
+const extractAppFromDbusName = (busName: string) =>
+  busName.match(/org\.mpris\.MediaPlayer2\.([^.]+)/)?.[1];
+
+export const getAppName = (player: AstalMpris.Player) =>
+  createComputed(
+    [createBinding(player, "busName"), createBinding(player, "entry")],
+    (busName, entry) =>
+      entry ?? extractAppFromDbusName(busName) ?? "audio-volume-high",
   );
-};
 
 export const hideOnClickAway =
   (hide: () => void) => (self: Gtk.Window, x: number, y: number) => {

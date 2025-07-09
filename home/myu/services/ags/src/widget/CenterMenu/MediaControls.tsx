@@ -1,17 +1,13 @@
 import { Gtk } from "ags/gtk4";
 import AstalMpris from "gi://AstalMpris";
 import Pango from "gi://Pango";
-import { formatDuration, getAppIcon, toTitleCase } from "../../utils/util";
+import { formatDuration, getAppName, toTitleCase } from "../../utils/util";
 import { createBinding, createState, For, onCleanup, With } from "ags";
 
 const PlayerItem = ({ player }: { player: AstalMpris.Player }) => (
   <box cssClasses={["player-item"]} spacing={4}>
-    <image iconName={getAppIcon(player)} />
-    <label
-      label={createBinding(player, "entry")
-        .as((entry) => entry ?? "unknown")
-        .as(toTitleCase)}
-    />
+    <image iconName={getAppName(player)} />
+    <label label={getAppName(player).as(toTitleCase)} />
   </box>
 );
 
@@ -80,7 +76,7 @@ export const MediaControlMenu = ({
     }
   });
 
-  const appIcon = getAppIcon(currentPlayer);
+  const appIcon = getAppName(currentPlayer);
   const hasCoverArt = createBinding(currentPlayer, "coverArt").as(
     (coverArt) =>
       coverArt !== null && coverArt !== undefined && coverArt !== "",

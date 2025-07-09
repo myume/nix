@@ -1,7 +1,7 @@
 import AstalMpris from "gi://AstalMpris";
 import { Gtk } from "ags/gtk4";
 import Pango from "gi://Pango";
-import { getAppIcon } from "../../../utils/util";
+import { getAppName } from "../../../utils/util";
 import { createBinding, State, With } from "ags";
 import Gio from "gi://Gio";
 
@@ -25,7 +25,7 @@ const PlayerWidget =
           ])}
           spacing={6}
         >
-          <image cssClasses={["icon"]} iconName={getAppIcon(player)} />
+          <image cssClasses={["icon"]} iconName={getAppName(player)} />
           <label
             label={createBinding(player, "title").as(
               (title) => title ?? "unknown",
