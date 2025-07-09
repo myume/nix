@@ -15,7 +15,7 @@ const AppMixer = () => {
 
   return (
     <Gtk.ScrolledWindow>
-      <box class="mixer" spacing={12}>
+      <box class="mixer" spacing={12} vexpand>
         <For each={clients}>
           {({ id, name, application, volume }) => (
             <box hexpand spacing={8} orientation={Gtk.Orientation.VERTICAL}>
