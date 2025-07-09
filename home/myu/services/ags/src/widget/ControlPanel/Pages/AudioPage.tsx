@@ -32,7 +32,10 @@ const AppMixer = () => {
                 inverted
               />
               <image
-                iconName={apps.fuzzy_query(application)[0].iconName}
+                iconName={
+                  apps.fuzzy_query(application)[0]?.iconName ??
+                  "audio-volume-high"
+                }
                 pixelSize={22}
                 tooltipText={toTitleCase(name)}
               />
