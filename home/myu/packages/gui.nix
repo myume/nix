@@ -6,5 +6,6 @@
     obs-studio
     mpv
     readest
+    youtube-music
   ];
 }
