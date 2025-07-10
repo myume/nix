@@ -7,5 +7,7 @@
     mpv
     readest
     youtube-music
+    tor-browser
+    qbittorrent
   ];
 }
