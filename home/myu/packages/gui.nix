@@ -4,7 +4,7 @@
     gimp3
     discord
     obs-studio
-    mpv
+    obsidian
     readest
     youtube-music
     tor-browser

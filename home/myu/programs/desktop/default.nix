@@ -1,3 +1,5 @@
 {
-  imports = [./obsidian];
+  imports = [
+    ./mpv
+  ];
 }
