@@ -45,16 +45,18 @@ export default function Notification({
 
   const widthChars = 20;
   const actions = createBinding(notification, "actions").as((actions) =>
-    actions.map((action) => (
-      <button
-        cssClasses={["action", action.label]}
-        label={action.label}
-        onClicked={() => {
-          notification.invoke(action.id);
-          notification.dismiss();
-        }}
-      />
-    )),
+    actions
+      .filter(({ label }) => label !== "")
+      .map((action) => (
+        <button
+          cssClasses={["action", action.label]}
+          label={action.label}
+          onClicked={() => {
+            notification.invoke(action.id);
+            notification.dismiss();
+          }}
+        />
+      )),
   );
 
   const notifd = AstalNotifd.get_default();
