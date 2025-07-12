@@ -32,6 +32,8 @@
     "x-scheme-handler/mailto" = browser;
 
     "x-terminal-emulator" = ["kitty.desktop"];
+
+    "application/x-bittorrent" = ["org.qbittorrent.qBittorrent.desktop"];
   };
 in {
   xdg = {
