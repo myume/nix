@@ -1,5 +1,5 @@
 import App from "ags/gtk4/app";
-import { Gdk, Gtk } from "ags/gtk4";
+import { Gtk } from "ags/gtk4";
 import style from "./style.scss";
 import { Bar } from "./widget/Bar";
 import { Notifications } from "./widget/Notification";
@@ -17,7 +17,7 @@ import {
   OSDState,
   windowName as OSDWindowName,
 } from "./widget/OSD";
-import { createState, State } from "ags";
+import { createBinding, createState, State, For } from "ags";
 import AstalIO from "gi://AstalIO?version=0.1";
 
 // state shared between windows
@@ -50,18 +50,6 @@ function main() {
   ControlPanelMenu(sharedState);
   OSD(sharedState.osdState);
 
-  const initializedWidgets: Gtk.Window[] = [];
-  const initializeBar = () => {
-    const allMonitorWindows = [Bar(sharedState), Notifications];
-    App.get_monitors().map((monitor) =>
-      allMonitorWindows.map((window) =>
-        initializedWidgets.push(window(monitor) as Gtk.Window),
-      ),
-    );
-  };
-
-  initializeBar();
-
   const triggerOSD = (inputMode: OSDMode) => {
     if (App.get_window(windowName)?.is_visible()) return;
 
@@ -91,18 +79,14 @@ function main() {
   const brightness = BrightnessService.get_default();
   brightness.connect("notify::screen", () => triggerOSD(OSDMode.Brightness));
 
-  // handle monitor (dis)connect
-  const display = Gdk.Display.get_default()?.get_monitors();
-  display?.connect("items-changed", () => {
-    // clear all widgets
-    let widget;
-    while ((widget = initializedWidgets.pop())) {
-      widget.destroy();
-    }
+  const monitors = createBinding(App, "monitors");
 
-    // reinitialize them on the updated monitors
-    initializeBar();
-  });
+  const allMonitorWindows = [Bar(sharedState), Notifications];
+  return allMonitorWindows.map((window) => (
+    <For each={monitors} cleanup={(win) => (win as Gtk.Window).destroy()}>
+      {(monitor) => window(monitor)}
+    </For>
+  ));
 }
 
 App.start({
