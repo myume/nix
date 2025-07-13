@@ -14,7 +14,7 @@ export const ReloadButton = () => {
 
         Hyprland.get_default().dispatch(
           "exec",
-          "ags quit && ags run --log-file /tmp/ags.log",
+          "ags quit && GSK_RENDERER=cairo ags run --log-file /tmp/ags.log",
         );
       }}
     />

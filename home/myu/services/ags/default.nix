@@ -41,7 +41,7 @@ in {
 
   wayland.windowManager.hyprland.settings = {
     exec-once = [
-      "ags run --log-file /tmp/ags.log"
+      "GSK_RENDERER=cairo ags run --log-file /tmp/ags.log"
     ];
   };
 }
