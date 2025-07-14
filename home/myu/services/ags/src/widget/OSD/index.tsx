@@ -28,8 +28,10 @@ export const OSD = ({ mode: [mode], timer: [timer, setTimer] }: OSDState) => {
         return {
           value: createBinding(speaker, "volume"),
           icon: createBinding(speaker, "volumeIcon"),
-          onChange: (slider: Astal.Slider) => {
-            speaker.set_volume(slider.value);
+          onChange: ({ value }: Astal.Slider) => {
+            if (value.toFixed(2) !== speaker.volume.toFixed(2)) {
+              speaker.set_volume(+value.toFixed(2));
+            }
           },
         };
       case OSDMode.Brightness:
@@ -37,8 +39,8 @@ export const OSD = ({ mode: [mode], timer: [timer, setTimer] }: OSDState) => {
         return {
           value: createBinding(brightness, "screen"),
           icon: createBinding(brightness, "icon_name"),
-          onChange: (slider: Astal.Slider) => {
-            brightness.screen = slider.value;
+          onChange: ({ value }: Astal.Slider) => {
+            brightness.screen = value;
           },
         };
     }

@@ -12,8 +12,10 @@ export const VolumeSlider = (setPageName: (name: string) => void) => {
       max={1}
       value={createBinding(speaker, "volume")}
       icon={createBinding(speaker, "volumeIcon")}
-      onChange={(self) => {
-        speaker.set_volume(self.value);
+      onChange={({ value }) => {
+        if (value.toFixed(2) !== speaker.volume.toFixed(2)) {
+          speaker.set_volume(+value.toFixed(2));
+        }
       }}
       onExpand={() => setPageName(audioPageName)}
     />
@@ -29,8 +31,8 @@ export const MicSlider = () => {
       max={1}
       value={createBinding(mic, "volume")}
       icon={createBinding(mic, "volumeIcon")}
-      onChange={(self) => {
-        mic.set_volume(self.value);
+      onChange={({ value }) => {
+        mic.set_volume(value);
       }}
     />
   );
