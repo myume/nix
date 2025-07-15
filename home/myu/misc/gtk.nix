@@ -17,10 +17,8 @@
     };
 
     iconTheme = {
-      name = "Colloid-Catppuccin-Dark";
-      package = pkgs.colloid-icon-theme.override {
-        schemeVariants = ["catppuccin"];
-      };
+      name = "WhiteSur-dark";
+      package = pkgs.whitesur-icon-theme;
     };
 
     gtk3.extraConfig = {
