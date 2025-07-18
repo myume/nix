@@ -17,7 +17,10 @@
       };
       nix.enable = true;
       python.enable = true;
-      rust.enable = true;
+      rust = {
+        enable = true;
+        format.enable = true;
+      };
       ts.enable = true;
 
       # lua.enable = true;
