@@ -9,6 +9,8 @@
     papirus-icon-theme # use paprius icons
     rink
     gammastep
+
+    libnotify
   ];
 in {
   # add the home manager module
