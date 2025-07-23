@@ -43,7 +43,7 @@ export default function Notification({
     appIcon = apps.exact_query(notification.appName)[0]?.iconName ?? appIcon;
   }
 
-  const widthChars = 20;
+  const widthChars = 25;
   const actions = createBinding(notification, "actions").as((actions) =>
     actions
       .filter(({ label }) => label !== "")

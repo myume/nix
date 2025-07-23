@@ -63,3 +63,8 @@
     }
   }
 }
+
+.critical {
+  border: solid 2px colors.$red;
+  background: rgba(colors.$red, 0.1);
+}
