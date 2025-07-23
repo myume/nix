@@ -5,5 +5,6 @@
 
     cat = "bat";
     grep = "rg";
+    tree = "eza -T";
   };
 }
