@@ -11,7 +11,7 @@ export default function Tray() {
       visible={hasItems}
       cssClasses={["Tray"]}
       marginEnd={hasItems.as((hasItems) => (hasItems ? 2 : 0))}
-      spacing={6}
+      spacing={7}
     >
       <For each={items}>
         {(item) => (
