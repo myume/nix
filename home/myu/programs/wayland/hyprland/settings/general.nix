@@ -19,5 +19,9 @@
       force_zero_scaling = true;
       use_nearest_neighbor = true;
     };
+
+    env = [
+      "GDK_SCALE,2"
+    ];
   };
 }
