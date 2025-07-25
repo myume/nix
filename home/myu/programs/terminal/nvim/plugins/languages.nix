@@ -22,10 +22,10 @@
         format.enable = true;
       };
       ts.enable = true;
+      tailwind.enable = true;
+      sql.enable = true;
 
       # lua.enable = true;
-      # sql.enable = true;
-      # tailwind.enable = true;
       # zig.enable = true;
     };
   };
