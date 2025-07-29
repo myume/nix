@@ -9,5 +9,6 @@
     youtube-music
     tor-browser
     qbittorrent
+    inkscape
   ];
 }
