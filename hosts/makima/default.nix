@@ -59,7 +59,7 @@ in {
   users.users.myu = {
     isNormalUser = true;
     description = "myu";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["networkmanager" "wheel" "docker"];
     shell = pkgs.zsh;
   };
 
