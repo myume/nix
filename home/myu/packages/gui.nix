@@ -10,5 +10,6 @@
     tor-browser
     qbittorrent
     inkscape
+    dbeaver-bin
   ];
 }
