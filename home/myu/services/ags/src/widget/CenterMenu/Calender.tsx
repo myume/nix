@@ -16,6 +16,13 @@ export const CalendarView = () => {
 
   let calendar: Gtk.Calendar;
 
+  const resetDate = () => {
+    const today = new Date();
+    calendar.day = today.getDate();
+    calendar.month = today.getMonth();
+    calendar.year = today.getFullYear();
+  };
+
   return (
     <box
       cssClasses={["calender-container"]}
@@ -25,12 +32,7 @@ export const CalendarView = () => {
       <button
         cssClasses={["datetime"]}
         valign={Gtk.Align.START}
-        onClicked={() => {
-          const today = new Date();
-          calendar.set_day(today.getDate());
-          calendar.set_month(today.getMonth());
-          calendar.set_year(today.getFullYear());
-        }}
+        onClicked={resetDate}
       >
         <box orientation={Gtk.Orientation.VERTICAL}>
           <label cssClasses={["time"]} label={time} />
@@ -40,6 +42,7 @@ export const CalendarView = () => {
       <Gtk.Calendar
         $={(self) => {
           calendar = self;
+          self.connect("map", resetDate);
         }}
         cssClasses={["calender"]}
         overflow={Gtk.Overflow.HIDDEN}
