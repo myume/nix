@@ -11,5 +11,6 @@
     qbittorrent
     inkscape
     dbeaver-bin
+    protonvpn-gui
   ];
 }
