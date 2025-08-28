@@ -5,30 +5,32 @@
   padding: 1px;
 
   .slider {
-    border: solid 2.5px colors.$bg-color;
-    border-radius: 1.2rem;
-
+    padding: 0 4px;
+    background: transparent;
 
     trough {
       background-color: colors.$bg-secondary;
-      border-radius: 1rem;
+      padding: 3px;
+
+      border-radius: 2rem;
       min-width: 28px;
       min-height: 120px;
 
-      highlight {
-        background-color: rgba(colors.$blue, 0.5);
-        border-radius: 1rem;
-      }
-
-      /* slider { */
-      /*   min-height: 5px; */
-      /*   min-width: 32px; */
-      /*   background-color: colors.$text; */
-      /*   border-radius: 2rem; */
-      /*   margin: 0 -10px; */
-      /*   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); */
-      /* } */
-
     }
+
+    highlight {
+      background-color: rgba(colors.$blue, 0.5);
+      border-radius: 0 0 2rem 2rem;
+    }
+
+    slider {
+      min-height: 5px;
+      min-width: 32px;
+      background-color: colors.$text;
+      border-radius: 2rem;
+      margin: 0 -18px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
   }
 }
