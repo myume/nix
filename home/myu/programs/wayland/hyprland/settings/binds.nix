@@ -21,7 +21,7 @@ in {
         "$mod, return, exec, kitty -1"
         "SUPER_SHIFT, Q, exit,"
         "$mod, V, togglefloating,"
-        "$mod, space, exec, astal -t launcher"
+        "$mod, space, exec, ags toggle launcher"
 
         # Window Navigation
         "$mod, H, movefocus, l"

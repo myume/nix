@@ -4,23 +4,17 @@
   ...
 }: let
   agsPkgs = inputs.ags.packages.${pkgs.system};
+in {
+  # add the home manager module
+  imports = [inputs.ags.homeManagerModules.default];
 
-  dependencies = with pkgs; [
+  home.packages = with pkgs; [
     papirus-icon-theme # use paprius icons
     rink
     gammastep
 
     libnotify
   ];
-in {
-  # add the home manager module
-  imports = [inputs.ags.homeManagerModules.default];
-
-  home.packages =
-    [
-      agsPkgs.io # expose the astal cli
-    ]
-    ++ dependencies;
 
   programs.ags = {
     enable = true;
