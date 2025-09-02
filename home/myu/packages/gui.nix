@@ -12,5 +12,6 @@
     inkscape
     dbeaver-bin
     protonvpn-gui
+    ghidra
   ];
 }
