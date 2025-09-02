@@ -9,14 +9,17 @@ in {
         highlights =
           mkLuaInline
           ''
-            require("catppuccin.groups.integrations.bufferline").get({
-              custom = {
-                all = {
-                  indicator_visible = {fg = "#74c7ec"},
-                  indicator_selected = {fg = "#74c7ec"},
-                }
-              }
+            (function()
+                local integration = require("catppuccin.groups.integrations.bufferline")
+                return (integration.get_theme or integration.get)({
+                  custom = {
+                    all = {
+                      indicator_visible = {fg = "#74c7ec"},
+                      indicator_selected = {fg = "#74c7ec"},
+                    }
+                  }
             })
+            end)()
           '';
         options = {
           numbers = "none";
