@@ -1,43 +1,49 @@
-import { Gtk, Astal, Gdk } from "ags/gtk4";
-import { LauncherPlugin } from "./Plugin";
-import { Accessor, createComputed, createState, Setter } from "ags";
-import { execAsync } from "ags/process";
+import { Gtk, Astal, Gdk } from "ags/gtk4"
+import { LauncherPlugin } from "./Plugin"
+import { Accessor, createComputed, createState, Setter } from "ags"
+import { execAsync } from "ags/process"
+import { timeout, Timer } from "ags/time"
 
-const clipboard = Gdk.Display.get_default()?.get_clipboard();
+const clipboard = Gdk.Display.get_default()?.get_clipboard()
 
 export class Calculator extends LauncherPlugin {
   // plz no inject i beg
-  result = this.input((searchString) => execAsync(["rink", searchString]));
-  label: Accessor<string>;
-  setLabel: Setter<string>;
+  result = this.input((searchString) => execAsync(["rink", searchString]))
+  label: Accessor<string>
+  setLabel: Setter<string>
 
-  showCopied: Accessor<boolean>;
-  setShowCopied: Setter<boolean>;
+  showCopied: Accessor<boolean>
+  setShowCopied: Setter<boolean>
 
-  iconName = "accessories-calculator-symbolic";
-  placeholderText = "Calculate";
+  iconName = "accessories-calculator-symbolic"
+  placeholderText = "Calculate"
 
   static get_default(input: Accessor<string>) {
-    if (!Calculator.instance) Calculator.instance = new Calculator(input);
-    return Calculator.instance;
+    if (!Calculator.instance) Calculator.instance = new Calculator(input)
+    return Calculator.instance
   }
 
   constructor(input: Accessor<string>) {
-    super(input);
-    [this.label, this.setLabel] = createState("");
-    [this.showCopied, this.setShowCopied] = createState(false);
+    super(input)
+    ;[this.label, this.setLabel] = createState("")
+    ;[this.showCopied, this.setShowCopied] = createState(false)
 
+    let timer: Timer | null = null
     this.result.subscribe(async () => {
-      this.setLabel(await this.result.get());
-    });
-    this.label.subscribe(() => this.setShowCopied(false));
+      if (timer) {
+        timer.cancel()
+        this.setLabel("")
+      }
+      timer = timeout(300, async () => this.setLabel(await this.result.get()))
+    })
+    this.label.subscribe(() => this.setShowCopied(false))
   }
 
   activate(): void {
-    const value = this.label.get().split("\n")[1];
-    clipboard?.set_content(Gdk.ContentProvider.new_for_value(value));
+    const value = this.label.get().split("\n")[1]
+    clipboard?.set_content(Gdk.ContentProvider.new_for_value(value))
 
-    this.setShowCopied(true);
+    this.setShowCopied(true)
   }
 
   getWidget() {
@@ -55,7 +61,7 @@ export class Calculator extends LauncherPlugin {
           <label label={"Copied to clipboard!"} />
         </box>
       </box>
-    );
+    )
   }
 
   handleKeyPress(
@@ -64,7 +70,7 @@ export class Calculator extends LauncherPlugin {
     _keycode: number,
     _state: Gdk.ModifierType,
   ): void {
-    return;
+    return
   }
 
   cleanup(): void {}
