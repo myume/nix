@@ -25,6 +25,8 @@
       url = "github:aylur/ags";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    dc.url = "github:myume/dc";
   };
 
   outputs = inputs: {

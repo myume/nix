@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   programs.zsh.plugins = [
     {
       name = "vi-mode";
@@ -14,6 +18,11 @@
       name = "zsh-autopair";
       src = pkgs.zsh-autopair;
       file = "share/zsh/zsh-autopair/autopair.zsh";
+    }
+    {
+      name = "dc";
+      src = inputs.dc.packages.${pkgs.system}.default;
+      file = "share/dc/dc.plugin.zsh";
     }
   ];
 }
