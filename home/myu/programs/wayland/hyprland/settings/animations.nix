@@ -2,7 +2,6 @@
   wayland.windowManager.hyprland.settings = {
     animations = {
       enabled = true; # duh
-      first_launch_animation = true;
 
       bezier = [
         "smoothOut, 0.36, 0, 0.66, -0.56"
