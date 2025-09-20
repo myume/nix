@@ -7,6 +7,8 @@ export default function Workspaces() {
     clients.map((client) => client.workspace.id),
   )
 
+  hypr.connect("client-moved", () => hypr.notify("clients"))
+
   return (
     <box cssClasses={["workspaces"]}>
       {Array.from({ length: 9 }, (_, i) => i + 1).map((wsId) => {
