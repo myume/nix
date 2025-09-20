@@ -1,18 +1,18 @@
-import App from "ags/gtk4/app";
-import { Astal, Gdk, Gtk } from "ags/gtk4";
-import Notification from "./Notification";
-import NotificationService from "../../Services/NotificationService";
-import { createBinding, For } from "ags";
-import { timeout } from "ags/time";
+import App from "ags/gtk4/app"
+import { Astal, Gdk, Gtk } from "ags/gtk4"
+import Notification from "./Notification"
+import NotificationService from "../../Services/NotificationService"
+import { createBinding, For, onCleanup } from "ags"
+import { timeout } from "ags/time"
 
-const notifTimeout = 4000;
-const windowName = "floating-notifications";
+const notifTimeout = 4000
+const windowName = "floating-notifications"
 
 export function Notifications(gdkmonitor: Gdk.Monitor) {
-  const { TOP, RIGHT } = Astal.WindowAnchor;
+  const { TOP, RIGHT } = Astal.WindowAnchor
 
-  const notificationService = NotificationService.get_default();
-  const notifications = createBinding(notificationService, "notifications");
+  const notificationService = NotificationService.get_default()
+  const notifications = createBinding(notificationService, "notifications")
 
   return (
     <window
@@ -25,6 +25,7 @@ export function Notifications(gdkmonitor: Gdk.Monitor) {
       gdkmonitor={gdkmonitor}
       anchor={TOP | RIGHT}
       application={App}
+      $={(self) => onCleanup(() => self.destroy())}
     >
       <box
         orientation={Gtk.Orientation.VERTICAL}
@@ -38,8 +39,8 @@ export function Notifications(gdkmonitor: Gdk.Monitor) {
               notification={notification}
               hideNotification={(cleanup) =>
                 timeout(notifTimeout, () => {
-                  notificationService.hideNotification(notification);
-                  cleanup();
+                  notificationService.hideNotification(notification)
+                  cleanup()
                 })
               }
             />
@@ -47,5 +48,5 @@ export function Notifications(gdkmonitor: Gdk.Monitor) {
         </For>
       </box>
     </window>
-  );
+  )
 }
