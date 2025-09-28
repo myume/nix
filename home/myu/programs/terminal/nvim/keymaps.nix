@@ -177,5 +177,17 @@
       action = ":lua require('dropbar.api').pick()<CR>";
       desc = "Pick symbols in winbar";
     }
+    {
+      key = "<Up>";
+      mode = ["n"];
+      action = "gk";
+      desc = "Navigate up a display line";
+    }
+    {
+      key = "<Down>";
+      mode = ["n"];
+      action = "gj";
+      desc = "Navigate down a display line";
+    }
   ];
 }
