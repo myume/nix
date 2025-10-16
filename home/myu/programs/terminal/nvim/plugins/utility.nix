@@ -45,7 +45,7 @@
           lazygit.enabled = true;
           quickfile.enabled = true;
           statuscolumn.enabled = true;
-          image.enabled = true;
+          # image.enabled = true;
           zen.enabled = true;
           rename.enabled = true;
           notifier.enabled = true;

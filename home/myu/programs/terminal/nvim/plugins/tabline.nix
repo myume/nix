@@ -10,7 +10,7 @@ in {
           mkLuaInline
           ''
             (function()
-                local integration = require("catppuccin.groups.integrations.bufferline")
+                local integration = require("catppuccin.special.bufferline")
                 return (integration.get_theme or integration.get)({
                   custom = {
                     all = {
