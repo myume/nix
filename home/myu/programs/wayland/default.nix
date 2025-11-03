@@ -1,3 +1,6 @@
 {
-  imports = [./hyprland];
+  imports = [
+    ./hyprland
+    ./niri
+  ];
 }

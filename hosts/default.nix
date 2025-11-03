@@ -11,12 +11,11 @@
       system = "x86_64-linux";
       specialArgs = {
         inherit hostname;
+        inherit inputs;
       };
 
       modules = [
         (./. + "/${hostname}")
-
-        nixos-hardware.nixosModules.framework-amd-ai-300-series
 
         home-manager.nixosModules.home-manager
         {

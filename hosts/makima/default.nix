@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  inputs,
+  ...
+}: let
   modPath = ../../modules;
 
   securityImports =
@@ -22,6 +26,9 @@ in {
       "${modPath}/virtualisation"
 
       ./hardware-configuration.nix
+
+      inputs.niri.nixosModules.niri
+      inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
     ]
     ++ securityImports;
 
@@ -114,6 +121,10 @@ in {
       powerOnBoot = true;
     };
   };
+
+  programs.niri.enable = true;
+  nixpkgs.overlays = [inputs.niri.overlays.niri];
+  programs.niri.package = pkgs.niri-stable;
 
   system.stateVersion = "24.11";
 }
