@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  inputs,
+  ...
+}: let
   modPath = ../../modules;
 
   securityImports =
@@ -20,6 +24,9 @@ in {
       "${modPath}/services"
       "${modPath}/fonts"
       "${modPath}/virtualisation"
+
+      inputs.niri.nixosModules.niri
+      inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
 
       ./hardware-configuration.nix
       {nixpkgs.hostPlatform = "x86_64-linux";}
@@ -115,6 +122,11 @@ in {
       powerOnBoot = true;
     };
   };
+
+  niri.enable = true;
+  zsh.enable = true;
+  thunar.enable = true;
+  nix-ld.enable = true;
 
   system.stateVersion = "24.11";
 }

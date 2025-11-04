@@ -27,6 +27,8 @@
     };
 
     dc.url = "github:myume/dc";
+
+    niri.url = "github:sodiboo/niri-flake";
   };
 
   outputs = inputs: {

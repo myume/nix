@@ -1,7 +1,10 @@
-import { createBinding, createComputed } from "ags"
+import { createBinding, createComputed, For } from "ags"
 import Hyprland from "gi://AstalHyprland"
+import { isHyprland } from "../../../utils/util"
+import Niri from "../../../Services/Niri"
+import { exec } from "ags/process"
 
-export default function Workspaces() {
+function HyprWorkspaces() {
   const hypr = Hyprland.get_default()
   const populatedWs = createBinding(hypr, "clients").as((clients) =>
     clients.map((client) => client.workspace.id),
@@ -30,5 +33,48 @@ export default function Workspaces() {
         )
       })}
     </box>
+  )
+}
+
+function NiriWorkspaces({ outputName }: { outputName: string }) {
+  const niri = Niri.get_default()
+  const workspaces = createBinding(niri, "workspaces").as((workspaces) =>
+    workspaces
+      .filter(({ output }) => output === outputName)
+      .toSorted((a, b) => a.idx - b.idx),
+  )
+  return (
+    <box cssClasses={["workspaces"]}>
+      <For each={workspaces}>
+        {(workspace) => (
+          <button
+            cssClasses={[
+              workspace.is_focused
+                ? "focused"
+                : workspace.is_active
+                  ? "populated"
+                  : "empty",
+            ]}
+            onClicked={() =>
+              exec([
+                "niri",
+                "msg",
+                "action",
+                "focus-workspace",
+                workspace.idx.toString(),
+              ])
+            }
+          />
+        )}
+      </For>
+    </box>
+  )
+}
+
+export default function Workspaces({ outputName }: { outputName: string }) {
+  return isHyprland() ? (
+    <HyprWorkspaces />
+  ) : (
+    <NiriWorkspaces outputName={outputName} />
   )
 }

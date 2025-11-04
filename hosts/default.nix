@@ -1,7 +1,6 @@
 {
   nixpkgs,
   home-manager,
-  nixos-hardware,
   ...
 } @ inputs: {
   makima = let
@@ -10,12 +9,11 @@
     nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit hostname;
+        inherit inputs;
       };
 
       modules = [
         (./. + "/${hostname}")
-
-        nixos-hardware.nixosModules.framework-amd-ai-300-series
 
         home-manager.nixosModules.home-manager
         {

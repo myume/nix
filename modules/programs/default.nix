@@ -1,8 +1,9 @@
 {
-  programs = {
-    hyprland.enable = true; # enable Hyprland
-    zsh.enable = true;
-    thunar.enable = true;
-    nix-ld.enable = true;
-  };
+  imports = [
+    ./hyprland.nix
+    ./niri.nix
+    ./zsh.nix
+    ./nix-ld.nix
+    ./thunar.nix
+  ];
 }
