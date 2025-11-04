@@ -12,6 +12,6 @@
   };
 
   config = lib.mkIf config.hyprland.enable {
-    hyprland.enable = true;
+    programs.hyprland.enable = true;
   };
 }

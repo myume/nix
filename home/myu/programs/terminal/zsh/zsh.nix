@@ -19,11 +19,5 @@
     syntaxHighlighting.enable = true;
     historySubstringSearch.enable = true;
     autocd = true;
-
-    profileExtra = ''
-      if [ -z "''${WAYLAND_DISPLAY}" ] && [ "''${XDG_VTNR}" -eq 1 ]; then
-          exec dbus-run-session niri
-      fi
-    '';
   };
 }
