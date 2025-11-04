@@ -13,7 +13,14 @@
     layout = {
       gaps = 16;
       always-center-single-column = true;
-      focus-ring.width = 2;
+
+      focus-ring.enable = false;
+      border = {
+        enable = true;
+        width = 2;
+        active.color = "#89B4FA";
+        inactive.color = "#313244";
+      };
       # center-focused-column = "always";
 
       shadow.enable = true;
@@ -102,6 +109,7 @@
             "Mod+F".action = maximize-column;
             "Mod+Shift+F".action = fullscreen-window;
 
+            "Mod+Escape".action = toggle-overview;
             "Mod+O".action = toggle-overview;
             "Mod+Up".action = toggle-overview;
 
