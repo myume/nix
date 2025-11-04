@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   imports = [
-    ./binds.nix
+    ./settings.nix
   ];
 
   home.packages = [

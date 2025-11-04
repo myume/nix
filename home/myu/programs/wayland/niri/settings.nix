@@ -1,0 +1,91 @@
+{config, ...}: {
+  programs.niri.settings = {
+    prefer-no-csd = true;
+
+    hotkey-overlay = {
+      skip-at-startup = true;
+    };
+
+    layout = {
+      gaps = 16;
+      always-center-single-column = true;
+      focus-ring.width = 2;
+      # center-focused-column = "always";
+    };
+
+    input = {
+      touchpad = {
+        natural-scroll = false;
+      };
+
+      keyboard = {
+        xkb = {
+          options = "caps:ctrl_modifier";
+        };
+      };
+    };
+
+    binds = with config.lib.niri.actions; {
+      "Mod+Return".action.spawn-sh = "kitty -1";
+      "Mod+Space".action.spawn-sh = "ags toggle launcher";
+      "Mod+Shift+Slash".action = show-hotkey-overlay;
+
+      "Mod+H".action = focus-column-or-monitor-left;
+      "Mod+L".action = focus-column-or-monitor-right;
+      "Mod+J".action = focus-window-or-monitor-down;
+      "Mod+K".action = focus-window-or-monitor-up;
+
+      "Mod+Ctrl+H".action = move-column-left-or-to-monitor-left;
+      "Mod+Ctrl+L".action = move-column-right-or-to-monitor-right;
+      "Mod+Ctrl+J".action = move-window-down-or-to-workspace-down;
+      "Mod+Ctrl+K".action = move-window-up-or-to-workspace-up;
+
+      "Ctrl+Shift+L".action = set-column-width "+10%";
+      "Ctrl+Shift+H".action = set-column-width "-10%";
+      "Ctrl+Shift+J".action = set-window-height "+10%";
+      "Ctrl+Shift+K".action = set-window-height "-10%";
+
+      "Mod+Q".action = close-window;
+
+      "Mod+F".action = maximize-column;
+      "Mod+Shift+F".action = fullscreen-window;
+
+      "Mod+Tab".action = toggle-overview;
+      "Mod+O".action = toggle-overview;
+
+      "Mod+C".action = center-column;
+      "Mod+Shift+C".action = center-visible-columns;
+
+      "Mod+V".action = toggle-window-floating;
+      "Mod+Shift+V".action = switch-focus-between-floating-and-tiling;
+
+      "Mod+S".action = consume-window-into-column;
+      "Mod+Shift+S".action = expel-window-from-column;
+
+      "XF86AudioRaiseVolume".action = spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
+      "XF86AudioLowerVolume".action = spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+      "XF86AudioMute".action = spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+      "XF86AudioPlay".action = spawn-sh "playerctl play-pause";
+      "XF86AudioPrev".action = spawn-sh "playerctl previous";
+      "XF86AudioNext".action = spawn-sh "playerctl next";
+
+      "XF86MonBrightnessUp".action = spawn-sh "brightnessctl set 2%+";
+      "XF86MonBrightnessDown".action = spawn-sh "brightnessctl set 2%-";
+    };
+
+    window-rules = [
+      {
+        draw-border-with-background = false;
+        clip-to-geometry = true;
+        geometry-corner-radius = let
+          r = 8.0;
+        in {
+          top-left = r;
+          top-right = r;
+          bottom-left = r;
+          bottom-right = r;
+        };
+      }
+    ];
+  };
+}
