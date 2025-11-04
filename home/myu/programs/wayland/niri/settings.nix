@@ -35,10 +35,10 @@
       "Mod+J".action = focus-window-or-monitor-down;
       "Mod+K".action = focus-window-or-monitor-up;
 
-      "Mod+Ctrl+H".action = move-column-left-or-to-monitor-left;
-      "Mod+Ctrl+L".action = move-column-right-or-to-monitor-right;
-      "Mod+Ctrl+J".action = move-window-down-or-to-workspace-down;
-      "Mod+Ctrl+K".action = move-window-up-or-to-workspace-up;
+      "Mod+Shift+H".action = move-column-left-or-to-monitor-left;
+      "Mod+Shift+L".action = move-column-right-or-to-monitor-right;
+      "Mod+Shift+J".action = move-window-down-or-to-workspace-down;
+      "Mod+Shift+K".action = move-window-up-or-to-workspace-up;
 
       "Ctrl+Shift+L".action = set-column-width "+10%";
       "Ctrl+Shift+H".action = set-column-width "-10%";
