@@ -1,6 +1,6 @@
 import { createBinding, createComputed } from "ags"
-import { exec } from "ags/process"
 import Hyprland from "gi://AstalHyprland"
+import { isHyprland } from "../../../utils/util"
 
 function HyprWorkspaces() {
   const hypr = Hyprland.get_default()
@@ -34,13 +34,10 @@ function HyprWorkspaces() {
   )
 }
 
-export default function Workspaces() {
-  let isHyprland = true
-  try {
-    exec(["hyprctl", "version"])
-  } catch {
-    isHyprland = false
-  }
+function NiriWorkspaces() {
+  return <box></box>
+}
 
-  return isHyprland ? <HyprWorkspaces /> : <box></box>
+export default function Workspaces() {
+  return isHyprland() ? <HyprWorkspaces /> : <NiriWorkspaces />
 }

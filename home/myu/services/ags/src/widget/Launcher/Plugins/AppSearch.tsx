@@ -3,7 +3,7 @@ import AstalApps from "gi://AstalApps"
 import Hyprland from "gi://AstalHyprland"
 import { hideLauncher } from ".."
 import { LauncherPlugin } from "./Plugin"
-import { wrapIndex } from "../../../utils/util"
+import { isHyprland, wrapIndex } from "../../../utils/util"
 import Gio from "gi://Gio"
 import { Accessor, createState, Setter, State, With } from "ags"
 import { exec } from "ags/process"
@@ -193,11 +193,7 @@ export class AppSearch extends LauncherPlugin {
     ;[this.selected, this.setSelected] = createState(0)
     this.appSearchResults.subscribe(() => this.setSelected(0))
 
-    try {
-      exec(["hyprctl", "version"])
-    } catch {
-      this.isHyprland = false
-    }
+    this.isHyprland = isHyprland()
   }
 
   activate(): void {
