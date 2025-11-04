@@ -23,6 +23,8 @@
       backdrop-color = "#313244";
     };
 
+    screenshot-path = "~/Pictures/Screenshots/%Y-%m-%dT%H:%M:%S.png";
+
     input = {
       touchpad = {
         natural-scroll = false;
@@ -67,15 +69,16 @@
             "Mod+J".action = focus-window-or-workspace-down;
             "Mod+K".action = focus-window-or-workspace-up;
 
-            "Mod+Shift+H".action = move-column-left-or-to-monitor-left;
-            "Mod+Shift+L".action = move-column-right-or-to-monitor-right;
-            "Mod+Shift+J".action = move-window-down-or-to-workspace-down;
-            "Mod+Shift+K".action = move-window-up-or-to-workspace-up;
+            "Alt+Shift+H".action = move-column-left-or-to-monitor-left;
+            "Alt+Shift+L".action = move-column-right-or-to-monitor-right;
+            "Alt+Shift+J".action = move-window-down-or-to-workspace-down;
+            "Alt+Shift+K".action = move-window-up-or-to-workspace-up;
 
             "Ctrl+Shift+L".action = set-column-width "+10%";
             "Ctrl+Shift+H".action = set-column-width "-10%";
             "Ctrl+Shift+J".action = set-window-height "+10%";
             "Ctrl+Shift+K".action = set-window-height "-10%";
+            "Mod+R".action = switch-preset-column-width;
 
             "Mod+Ctrl+H".action = move-workspace-to-monitor-left;
             "Mod+Ctrl+L".action = move-workspace-to-monitor-right;
@@ -98,6 +101,13 @@
 
             "Mod+S".action = consume-window-into-column;
             "Mod+Shift+S".action = expel-window-from-column;
+
+            "Mod+Shift+L".action.spawn = "hyprlock";
+            "Mod+Ctrl+S".action.spawn-sh = "systemctl suspend";
+
+            "Mod+P".action.screenshot = [];
+            "Mod+Shift+P".action.screenshot-screen = [];
+            "Mod+Ctrl+P".action.screenshot-window = [];
 
             "XF86AudioRaiseVolume".action = spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
             "XF86AudioLowerVolume".action = spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
