@@ -1,7 +1,8 @@
 import { createBinding, createComputed } from "ags"
+import { exec } from "ags/process"
 import Hyprland from "gi://AstalHyprland"
 
-export default function Workspaces() {
+function HyprWorkspaces() {
   const hypr = Hyprland.get_default()
   const populatedWs = createBinding(hypr, "clients").as((clients) =>
     clients.map((client) => client.workspace.id),
@@ -31,4 +32,15 @@ export default function Workspaces() {
       })}
     </box>
   )
+}
+
+export default function Workspaces() {
+  let isHyprland = true
+  try {
+    exec(["hyprctl", "version"])
+  } catch {
+    isHyprland = false
+  }
+
+  return isHyprland ? <HyprWorkspaces /> : <box></box>
 }

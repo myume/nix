@@ -53,6 +53,7 @@ export const Bar = (state: SharedState) => (gdkmonitor: Gdk.Monitor) => {
       $={(self) => onCleanup(() => self.destroy())}
     >
       <centerbox>
+        <Start $type="start" />
         <Center $type="center" state={state} />
         <End $type="end" state={state} />
       </centerbox>

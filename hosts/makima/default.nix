@@ -125,7 +125,7 @@ in {
 
   programs.niri.enable = true;
   nixpkgs.overlays = [inputs.niri.overlays.niri];
-  programs.niri.package = pkgs.niri-stable;
+  programs.niri.package = pkgs.niri-unstable;
 
   system.stateVersion = "24.11";
 }
