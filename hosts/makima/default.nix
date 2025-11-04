@@ -22,6 +22,7 @@ in {
       "${modPath}/virtualisation"
 
       ./hardware-configuration.nix
+      {nixpkgs.hostPlatform = "x86_64-linux";}
     ]
     ++ securityImports;
 
