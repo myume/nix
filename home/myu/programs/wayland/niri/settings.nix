@@ -64,6 +64,11 @@
             "Ctrl+Shift+J".action = set-window-height "+10%";
             "Ctrl+Shift+K".action = set-window-height "-10%";
 
+            "Mod+Ctrl+H".action = move-workspace-to-monitor-left;
+            "Mod+Ctrl+L".action = move-workspace-to-monitor-right;
+            "Mod+Ctrl+J".action = move-workspace-to-monitor-down;
+            "Mod+Ctrl+K".action = move-workspace-to-monitor-up;
+
             "Mod+Q".action = close-window;
 
             "Mod+F".action = maximize-column;
