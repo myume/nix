@@ -19,6 +19,10 @@
       shadow.enable = true;
     };
 
+    overview = {
+      backdrop-color = "#313244";
+    };
+
     input = {
       touchpad = {
         natural-scroll = false;
