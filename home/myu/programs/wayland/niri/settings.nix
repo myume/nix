@@ -25,6 +25,10 @@
       };
     };
 
+    gestures = {
+      hot-corners.enable = false;
+    };
+
     binds = with config.lib.niri.actions; {
       "Mod+Return".action.spawn-sh = "kitty -1";
       "Mod+Space".action.spawn-sh = "ags toggle launcher";
