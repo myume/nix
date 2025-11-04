@@ -1,7 +1,6 @@
 {
   nixpkgs,
   home-manager,
-  nixos-hardware,
   ...
 } @ inputs: {
   makima = let
