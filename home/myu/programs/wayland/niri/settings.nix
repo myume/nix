@@ -33,6 +33,13 @@
       hot-corners.enable = false;
     };
 
+    cursor = {
+      theme = "Bibata-Original-Ice";
+      size = 16;
+
+      hide-after-inactive-ms = 1000;
+    };
+
     binds = let
       workspaces = lib.attrsets.mergeAttrsList (lib.flatten (map (n: [
         {
