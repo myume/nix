@@ -17,6 +17,16 @@
       # center-focused-column = "always";
 
       shadow.enable = true;
+
+      preset-column-widths = [
+        {proportion = 1.0 / 6.0;}
+        {proportion = 1.0 / 4.0;}
+        {proportion = 1.0 / 3.0;}
+        {proportion = 1.0 / 2.0;}
+        {proportion = 2.0 / 3.0;}
+        {proportion = 3.0 / 4.0;}
+        {proportion = 5.0 / 6.0;}
+      ];
     };
 
     overview = {
@@ -80,7 +90,7 @@
             "Ctrl+Shift+H".action = set-column-width "-10%";
             "Ctrl+Shift+J".action = set-window-height "+10%";
             "Ctrl+Shift+K".action = set-window-height "-10%";
-            "Mod+R".action = switch-preset-column-width;
+            "Mod+Tab".action = switch-preset-column-width;
 
             "Mod+Ctrl+H".action = move-workspace-to-monitor-left;
             "Mod+Ctrl+L".action = move-workspace-to-monitor-right;
@@ -92,8 +102,8 @@
             "Mod+F".action = maximize-column;
             "Mod+Shift+F".action = fullscreen-window;
 
-            "Mod+Tab".action = toggle-overview;
-            # "Mod+O".action = toggle-overview;
+            "Mod+O".action = toggle-overview;
+            "Mod+Up".action = toggle-overview;
 
             "Mod+C".action = center-column;
             "Mod+Shift+C".action = center-visible-columns;
@@ -106,6 +116,8 @@
 
             "Mod+Shift+L".action.spawn = "hyprlock";
             "Mod+Ctrl+S".action.spawn-sh = "systemctl suspend";
+
+            "Mod+Equal".action = expand-column-to-available-width;
 
             "Mod+P".action.screenshot = [];
             "Mod+Shift+P".action.screenshot-screen = [];
