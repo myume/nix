@@ -25,10 +25,11 @@ in {
       "${modPath}/fonts"
       "${modPath}/virtualisation"
 
-      ./hardware-configuration.nix
-
       inputs.niri.nixosModules.niri
       inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
+
+      ./hardware-configuration.nix
+      {nixpkgs.hostPlatform = "x86_64-linux";}
     ]
     ++ securityImports;
 

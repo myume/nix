@@ -8,7 +8,6 @@
     hostname = "makima";
   in
     nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
       specialArgs = {
         inherit hostname;
         inherit inputs;
