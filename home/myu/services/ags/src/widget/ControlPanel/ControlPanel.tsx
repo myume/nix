@@ -1,19 +1,19 @@
-import { Gtk } from "ags/gtk4";
-import { Sliders } from "./Sliders";
-import { Panels } from "./Panels";
-import { BatteryInfo } from "./Footer/BatteryInfo";
-import { PowerButton } from "./Footer/PowerButton";
-import { ScreenshotButton } from "./Footer/ScreenshotButton";
-import { ReloadButton } from "./Footer/ReloadButton";
+import { Gtk } from "ags/gtk4"
+import { Sliders } from "./Sliders"
+import { Panels } from "./Panels"
+import { BatteryInfo } from "./Footer/BatteryInfo"
+import { PowerButton } from "./Footer/PowerButton"
+import { ScreenshotButton } from "./Footer/ScreenshotButton"
+import { ReloadButton } from "./Footer/ReloadButton"
 
 export const ControlPanel = ({
   closeControlPanel,
   setPageName,
 }: {
-  closeControlPanel: () => void;
-  setPageName: (name: string) => void;
+  closeControlPanel: () => void
+  setPageName: (name: string) => void
 }) => {
-  const panelSpacing = 8;
+  const panelSpacing = 8
   return (
     <box
       cssClasses={["control-panel"]}
@@ -52,10 +52,9 @@ export const ControlPanel = ({
       </box>
       <box cssClasses={["footer"]} spacing={4}>
         <BatteryInfo />
-        <ScreenshotButton />
         <ReloadButton />
         <PowerButton closeControlPanel={closeControlPanel} />
       </box>
     </box>
-  );
-};
+  )
+}
