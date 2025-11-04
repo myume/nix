@@ -13,14 +13,14 @@
   config = lib.mkIf config.zsh.enable {
     programs.zsh = {
       enable = true;
-      loginShellInit = let
-        name =
+      interactiveShellInit = let
+        startup =
           if config.hyprland.enable
-          then "Hyprland"
-          else "niri";
+          then "dbus-run-session Hyprland"
+          else "niri-session";
       in ''
         if [ -z "''${WAYLAND_DISPLAY}" ] && [ "''${XDG_VTNR}" -eq 1 ]; then
-            exec dbus-run-session ${name}
+            exec ${startup}
         fi
       '';
     };
