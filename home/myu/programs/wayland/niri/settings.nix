@@ -15,6 +15,8 @@
       always-center-single-column = true;
       focus-ring.width = 2;
       # center-focused-column = "always";
+
+      shadow.enable = true;
     };
 
     input = {
