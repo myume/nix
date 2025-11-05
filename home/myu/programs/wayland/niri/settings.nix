@@ -54,6 +54,8 @@
       };
     };
 
+    clipboard.disable-primary = true;
+
     gestures = {
       hot-corners.enable = false;
     };
