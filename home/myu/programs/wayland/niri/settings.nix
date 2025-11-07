@@ -11,7 +11,10 @@
     };
 
     layout = {
-      gaps = 16;
+      gaps = 10;
+      struts = {
+        top = -4;
+      };
       always-center-single-column = true;
 
       focus-ring.enable = false;
