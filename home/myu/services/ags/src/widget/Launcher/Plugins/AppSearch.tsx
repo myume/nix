@@ -98,7 +98,13 @@ const AppItem = ({
     >
       <box spacing={8}>
         <Gtk.EventControllerMotion onEnter={() => setSelected(index)} />
-        <image pixelSize={36} iconName={app.iconName} />
+        <image
+          pixelSize={36}
+          iconName={app.iconName}
+          file={
+            /\.(png|jpg|svg)$/.test(app.iconName) ? app.iconName : undefined
+          }
+        />
         <box orientation={Gtk.Orientation.VERTICAL} heightRequest={40}>
           <label
             cssClasses={["app-title"]}
