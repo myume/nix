@@ -1,10 +1,10 @@
-import App from "ags/gtk4/app";
-import { Astal, Gdk, Gtk } from "ags/gtk4";
-import { SharedState } from "../../app";
-import { CalendarView } from "./Calender";
-import { MediaControlMenu } from "./MediaControls";
-import { hideOnClickAway } from "../../utils/util";
-import { createComputed, With } from "ags";
+import App from "ags/gtk4/app"
+import { Astal, Gdk, Gtk } from "ags/gtk4"
+import { SharedState } from "../../app"
+import { CalendarView } from "./Calender"
+import { MediaControlMenu } from "./MediaControls"
+import { hideOnClickAway } from "../../utils/util"
+import { createComputed, With } from "ags"
 
 export function CenterMenu({
   showCalender: [showCalender, setShowCalender],
@@ -12,16 +12,16 @@ export function CenterMenu({
   currentPlayer: [currentPlayer, setCurrentPlayer],
 }: SharedState) {
   const hideMenu = () => {
-    setShowCalender(false);
-    setShowMediaControls(false);
-  };
+    setShowCalender(false)
+    setShowMediaControls(false)
+  }
 
-  let window: Astal.Window;
+  let window: Astal.Window
 
   return (
     <window
       $={(self) => {
-        window = self;
+        window = self
       }}
       visible={createComputed([showCalender, showMediaControls])(
         ([showCalender, showMediaControls]) =>
@@ -40,13 +40,12 @@ export function CenterMenu({
       keymode={Astal.Keymode.ON_DEMAND}
       focusable
     >
-      <Gtk.EventControllerFocus onLeave={hideMenu} />
       <Gtk.GestureClick
         onPressed={(_self, _, x, y) => hideOnClickAway(hideMenu)(window, x, y)}
       />
       <Gtk.EventControllerKey
         onKeyPressed={(_self, keyval, _keycode, _state) => {
-          if (keyval === Gdk.KEY_Escape) hideMenu();
+          if (keyval === Gdk.KEY_Escape) hideMenu()
         }}
       />
       <box
@@ -84,5 +83,5 @@ export function CenterMenu({
         </revealer>
       </box>
     </window>
-  );
+  )
 }

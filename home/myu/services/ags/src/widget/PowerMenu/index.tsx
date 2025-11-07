@@ -1,24 +1,24 @@
-import App from "ags/gtk4/app";
-import { Astal, Gdk, Gtk } from "ags/gtk4";
-import { hideOnClickAway } from "../../utils/util";
-import { execAsync } from "ags/process";
-import { createState } from "ags";
+import App from "ags/gtk4/app"
+import { Astal, Gdk, Gtk } from "ags/gtk4"
+import { hideOnClickAway } from "../../utils/util"
+import { execAsync } from "ags/process"
+import { createState } from "ags"
 
-export const windowName = "power-menu";
+export const windowName = "power-menu"
 
 export const PowerMenu = () => {
-  const [reveal, setReveal] = createState(false);
+  const [reveal, setReveal] = createState(false)
 
-  let window: Astal.Window;
+  let window: Astal.Window
 
   const hideWindow = (window: Gtk.Window) => {
-    setReveal(false);
-    window.close();
-  };
+    setReveal(false)
+    window.close()
+  }
 
-  <window
+  ;<window
     $={(self) => {
-      window = self;
+      window = self
     }}
     name={windowName}
     namespace={windowName}
@@ -32,13 +32,12 @@ export const PowerMenu = () => {
       Astal.WindowAnchor.RIGHT
     }
     onShow={(_self) => {
-      setReveal(true);
+      setReveal(true)
     }}
     exclusivity={Astal.Exclusivity.IGNORE}
     keymode={Astal.Keymode.ON_DEMAND}
     focusable
   >
-    <Gtk.EventControllerFocus onLeave={() => hideWindow(window)} />
     <Gtk.GestureClick
       onPressed={(_self, _npress, x, y) =>
         hideOnClickAway(() => hideWindow(window))(window, x, y)
@@ -47,7 +46,7 @@ export const PowerMenu = () => {
     <Gtk.EventControllerKey
       onKeyPressed={(_self, keyval, _keycode, _state) => {
         if (keyval === Gdk.KEY_Escape) {
-          hideWindow(window);
+          hideWindow(window)
         }
       }}
     />
@@ -94,5 +93,5 @@ export const PowerMenu = () => {
         </button>
       </box>
     </revealer>
-  </window>;
-};
+  </window>
+}

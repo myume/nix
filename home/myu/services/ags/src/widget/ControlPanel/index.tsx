@@ -1,35 +1,35 @@
-import App from "ags/gtk4/app";
-import { Astal, Gdk, Gtk } from "ags/gtk4";
-import { SharedState } from "../../app";
-import { hideOnClickAway } from "../../utils/util";
+import App from "ags/gtk4/app"
+import { Astal, Gdk, Gtk } from "ags/gtk4"
+import { SharedState } from "../../app"
+import { hideOnClickAway } from "../../utils/util"
 import {
   NotificationCenter,
   notificationCenterName,
-} from "./NotificationCenter";
-import { NetworkPage } from "./Pages/NetworkPage";
-import { PowerProfilePage } from "./Pages/PowerProfile";
-import { ControlPanel } from "./ControlPanel";
-import { createComputed, createState } from "ags";
-import { AudioPage } from "./Pages/AudioPage";
+} from "./NotificationCenter"
+import { NetworkPage } from "./Pages/NetworkPage"
+import { PowerProfilePage } from "./Pages/PowerProfile"
+import { ControlPanel } from "./ControlPanel"
+import { createComputed, createState } from "ags"
+import { AudioPage } from "./Pages/AudioPage"
 
-export const windowName = "control-panel";
+export const windowName = "control-panel"
 
 export const ControlPanelMenu = ({
   showControlPanel: [showControlPanel, setShowControlPanel],
 }: SharedState) => {
-  const { TOP, BOTTOM, LEFT, RIGHT } = Astal.WindowAnchor;
+  const { TOP, BOTTOM, LEFT, RIGHT } = Astal.WindowAnchor
 
-  const showWindow = createComputed([showControlPanel], (show) => show);
+  const showWindow = createComputed([showControlPanel], (show) => show)
 
-  const pageName = createState(notificationCenterName);
-  const [getPageName, setPageName] = pageName;
+  const pageName = createState(notificationCenterName)
+  const [getPageName, setPageName] = pageName
   const closeMenu = () => {
-    setShowControlPanel(false);
-    setPageName(notificationCenterName);
-  };
+    setShowControlPanel(false)
+    setPageName(notificationCenterName)
+  }
 
-  const returnToNotifications = () => setPageName(notificationCenterName);
-  let window: Astal.Window;
+  const returnToNotifications = () => setPageName(notificationCenterName)
+  let window: Astal.Window
 
   return (
     <window
@@ -44,13 +44,12 @@ export const ControlPanelMenu = ({
       keymode={Astal.Keymode.ON_DEMAND}
       focusable
     >
-      <Gtk.EventControllerFocus onLeave={closeMenu} />
       <Gtk.GestureClick
         onPressed={(_self, _, x, y) => hideOnClickAway(closeMenu)(window, x, y)}
       />
       <Gtk.EventControllerKey
         onKeyPressed={(_self, keyval) => {
-          if (keyval === Gdk.KEY_Escape) closeMenu();
+          if (keyval === Gdk.KEY_Escape) closeMenu()
         }}
       />
       <revealer
@@ -93,5 +92,5 @@ export const ControlPanelMenu = ({
         </box>
       </revealer>
     </window>
-  );
-};
+  )
+}
