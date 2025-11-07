@@ -153,7 +153,7 @@
         draw-border-with-background = false;
         clip-to-geometry = true;
         geometry-corner-radius = let
-          r = 8.0;
+          r = 16.0;
         in {
           top-left = r;
           top-right = r;
