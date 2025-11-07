@@ -112,7 +112,7 @@
             "Mod+Shift+F".action = fullscreen-window;
 
             "Mod+Escape".action = toggle-overview;
-            "Mod+O".action = toggle-overview;
+            # "Mod+O".action = toggle-overview;
             "Mod+Up".action = toggle-overview;
 
             "Mod+C".action = center-column;
