@@ -7,14 +7,16 @@ export function toTitleCase(str: string): string {
   return str.replace(/\b\w/g, (char) => char.toUpperCase())
 }
 
-const extractAppFromDbusName = (busName: string) =>
+export const extractAppFromDbusName = (busName: string) =>
   busName.match(/org\.mpris\.MediaPlayer2\.([^.]+)/)?.[1]
 
 export const getAppName = (player: AstalMpris.Player) =>
   createComputed(
     [createBinding(player, "busName"), createBinding(player, "entry")],
     (busName, entry) =>
-      entry ?? extractAppFromDbusName(busName) ?? "audio-volume-high",
+      entry !== ""
+        ? entry
+        : (extractAppFromDbusName(busName) ?? "audio-volume-high"),
   )
 
 export const hideOnClickAway =
