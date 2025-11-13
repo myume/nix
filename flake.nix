@@ -27,6 +27,7 @@
     };
 
     dc.url = "github:myume/dc";
+    waysted.url = "github:myume/waysted";
 
     niri.url = "github:sodiboo/niri-flake";
   };
