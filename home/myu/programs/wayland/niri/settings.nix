@@ -48,6 +48,7 @@
     input = {
       touchpad = {
         natural-scroll = false;
+        dwt = true;
       };
 
       keyboard = {
