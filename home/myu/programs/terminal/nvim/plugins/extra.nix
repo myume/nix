@@ -33,5 +33,12 @@
         })
       '';
     };
+
+    hardtime-nvim = {
+      package = pkgs.vimPlugins.hardtime-nvim;
+      setup = ''
+        require("hardtime").setup()
+      '';
+    };
   };
 }

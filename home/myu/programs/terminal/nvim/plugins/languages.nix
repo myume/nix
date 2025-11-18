@@ -24,8 +24,8 @@
       ts.enable = true;
       tailwind.enable = true;
       sql.enable = true;
-      astro.enable = true;
 
+      # astro.enable = true;
       # lua.enable = true;
       # zig.enable = true;
     };
