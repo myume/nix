@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   programs.nvf.settings.vim.extraPlugins = {
     # fixes indentation
     # https://github.com/NotAShelf/nvf/discussions/750#discussioncomment-12671186
@@ -31,13 +32,6 @@
             enabled = true,
           },
         })
-      '';
-    };
-
-    hardtime-nvim = {
-      package = pkgs.vimPlugins.hardtime-nvim;
-      setup = ''
-        require("hardtime").setup()
       '';
     };
   };
