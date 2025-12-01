@@ -9,7 +9,6 @@
       css.enable = true;
       clang.enable = true;
       go.enable = true;
-      haskell.enable = true;
       html.enable = true;
       markdown = {
         enable = true;
@@ -28,6 +27,7 @@
       # astro.enable = true;
       # lua.enable = true;
       # zig.enable = true;
+      # haskell.enable = true;
     };
   };
 }
