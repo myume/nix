@@ -7,7 +7,7 @@
       };
       user = {
         name = "yum";
-        email = "contact@memyu.com";
+        email = "contact@meyume.com";
       };
       init.defaultBranch = "main";
     };
