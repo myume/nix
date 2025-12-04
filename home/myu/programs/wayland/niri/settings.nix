@@ -104,6 +104,7 @@
             "Ctrl+Shift+J".action = set-window-height "+10%";
             "Ctrl+Shift+K".action = set-window-height "-10%";
             "Mod+Tab".action = switch-preset-column-width;
+            "Mod+Backslash".action = set-column-width "50%";
 
             "Mod+Ctrl+H".action = move-workspace-to-monitor-left;
             "Mod+Ctrl+L".action = move-workspace-to-monitor-right;
