@@ -23,7 +23,13 @@
 
     "audio/*" = ["mpv.desktop"];
     "video/*" = ["mpv.desktop"];
+
+    # gimp set a bunch of stupid rules and now i have to override them manually
     "image/*" = browser;
+    "image/gif" = browser;
+    "image/jpeg" = browser;
+    "image/png" = browser;
+    "image/webp" = browser;
     "application/json" = browser;
     "application/pdf" = browser;
 
