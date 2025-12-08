@@ -6,6 +6,7 @@
     cat = "bat";
     grep = "rg";
     tree = "eza -T";
+    fz = "cd $(fd --type=d --hidden --exclude=.git | fzf)";
 
     "..." = "cd ../..";
     "...." = "cd ../../..";

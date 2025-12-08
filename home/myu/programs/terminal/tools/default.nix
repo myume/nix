@@ -5,5 +5,6 @@
     ./ssh.nix
     ./bat.nix
     ./yazi.nix
+    ./fzf.nix
   ];
 }

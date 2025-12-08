@@ -10,7 +10,6 @@
     ripgrep
     jq
     yq-go
-    fzf
     fd
     ghostscript
     tldr
