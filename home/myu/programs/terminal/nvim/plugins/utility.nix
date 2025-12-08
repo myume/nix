@@ -28,6 +28,7 @@
 
           picker = {
             enabled = true;
+            hidden = true;
             sources = {
               smart = {
                 title = "Files";
