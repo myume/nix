@@ -1,5 +1,6 @@
 {
   programs.nvf.settings.vim = {
+    mini.icons.enable = true;
     ui = {
       colorizer.enable = true;
       noice = {
