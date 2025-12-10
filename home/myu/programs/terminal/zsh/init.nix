@@ -23,5 +23,9 @@
         echo
       }
     }
+
+    zstyle ':completion:*:git-checkout:*' sort false
+    zstyle ':fzf-tab:*' use-fzf-default-opts yes
+    zstyle ':fzf-tab:complete:*' fzf-preview 'if [[ -d $realpath ]]; then eza -T --icons=always --color=always $realpath ; else bat --color=always $realpath ; fi'
   '';
 }
