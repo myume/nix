@@ -19,6 +19,9 @@
       rust = {
         enable = true;
         format.enable = true;
+        extensions = {
+          crates-nvim.enable = true;
+        };
       };
       ts.enable = true;
       tailwind.enable = true;
