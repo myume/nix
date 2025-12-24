@@ -43,6 +43,7 @@
 in {
   xdg = {
     enable = true;
+    portal.config.common.default = "*";
     userDirs = {
       enable = true;
       createDirectories = true;

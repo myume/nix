@@ -27,6 +27,7 @@
       tailwind.enable = true;
       sql.enable = true;
       gleam.enable = true;
+      json.enable = true;
 
       # astro.enable = true;
       # lua.enable = true;
