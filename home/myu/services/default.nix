@@ -4,5 +4,6 @@
     ./hyprpaper
     ./ags
     ./waysted.nix
+    ./swww.nix
   ];
 }

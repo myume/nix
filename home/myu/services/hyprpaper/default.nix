@@ -3,7 +3,7 @@ let
   wallPaperFile = "purple.jpg";
 in {
   services.hyprpaper = {
-    enable = true;
+    enable = false;
 
     settings = {
       ipc = "off";
