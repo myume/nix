@@ -5,5 +5,6 @@
     ./ags
     ./waysted.nix
     ./swww.nix
+    ./wally.nix
   ];
 }
