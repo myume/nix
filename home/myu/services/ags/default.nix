@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  agsPkgs = inputs.ags.packages.${pkgs.system};
+  agsPkgs = inputs.ags.packages.${pkgs.stdenv.hostPlatform.system};
 in {
   # add the home manager module
   imports = [inputs.ags.homeManagerModules.default];

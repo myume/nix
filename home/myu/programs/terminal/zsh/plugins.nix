@@ -26,7 +26,7 @@
     }
     {
       name = "dc";
-      src = inputs.dc.packages.${pkgs.system}.default;
+      src = inputs.dc.packages.${pkgs.stdenv.hostPlatform.system}.default;
       file = "share/dc/dc.plugin.zsh";
     }
   ];
