@@ -1,4 +1,4 @@
-{
+{config, ...}: {
   imports = [
     ./aliases.nix
     ./init.nix
@@ -8,6 +8,7 @@
 
   programs.zsh = {
     enable = true;
+    dotDir = config.home.homeDirectory;
 
     # zprof.enable = true;
     enableCompletion = true;
