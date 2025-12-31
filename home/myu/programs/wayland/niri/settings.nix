@@ -138,8 +138,8 @@
             "Mod+Shift+P".action.screenshot-screen = [];
             "Mod+Ctrl+P".action.screenshot-window = [];
 
-            "XF86AudioRaiseVolume".action = spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
-            "XF86AudioLowerVolume".action = spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+            "XF86AudioRaiseVolume".action = spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1";
+            "XF86AudioLowerVolume".action = spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- -l 1";
             "XF86AudioMute".action = spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
             "XF86AudioPlay".action = spawn-sh "playerctl play-pause";
             "XF86AudioPrev".action = spawn-sh "playerctl previous";
