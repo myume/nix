@@ -26,8 +26,7 @@ in {
   programs.nvf = {
     enable = true;
     defaultEditor = true;
-
-    enableManpages = true;
+    enableManpages = false;
 
     settings = {
       vim = {
@@ -38,7 +37,8 @@ in {
         options = {
           cursorline = true;
           cursorlineopt = "number";
-          fillchars = "eob: "; # remove ~ characters on empty lines in the line numbers
+          fillchars = "fold: ,foldopen:,foldclose:,foldsep: ,diff:╱,eob: ";
+          diffopt = "internal,filler,closeoff,algorithm:histogram,indent-heuristic,linematch:60";
           showmode = false;
         };
       };

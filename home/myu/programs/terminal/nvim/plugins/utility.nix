@@ -2,7 +2,14 @@
   programs.nvf.settings.vim = {
     utility = {
       # yazi-nvim.enable = true;
-      diffview-nvim.enable = true;
+      diffview-nvim = {
+        enable = true;
+        setupOpts = {
+          enhanced_diff_hl = true;
+          use_icons = true;
+          show_help_hints = false;
+        };
+      };
       surround = {
         enable = true;
         useVendoredKeybindings = false;

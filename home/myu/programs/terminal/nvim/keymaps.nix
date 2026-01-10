@@ -189,5 +189,23 @@
       action = "gj";
       desc = "Navigate down a display line";
     }
+    {
+      key = "<leader>gd";
+      mode = "n";
+      silent = true;
+      lua = true;
+      desc = "Toggle Diffview";
+      action = ''
+        function()
+          local lib = require("diffview.lib")
+          local view = lib.get_current_view()
+          if view then
+            vim.cmd("DiffviewClose")
+          else
+            vim.cmd("DiffviewOpen")
+          end
+        end
+      '';
+    }
   ];
 }
