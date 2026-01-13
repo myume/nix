@@ -9,7 +9,6 @@
     qbittorrent
     dbeaver-bin
     protonvpn-gui
-    ghidra
     readest
   ];
 }
