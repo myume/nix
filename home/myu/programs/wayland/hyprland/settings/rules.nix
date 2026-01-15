@@ -1,23 +1,23 @@
 {
   wayland.windowManager.hyprland.settings = {
     layerrule = [
-      "blur ,top-bar"
-      "ignorealpha .3, top-bar"
+      "match:namespace top-bar, blur on"
+      "match:namespace top-bar, ignore_alpha .3"
 
-      "blur ,floating-notifications"
-      "ignorealpha .3, floating-notifications"
+      "match:namespace floating-notifications, blur on"
+      "match:namespace floating-notifications, ignore_alpha .3"
 
-      "blur ,launcher"
-      "ignorealpha .3, launcher"
+      "match:namespace launcher, blur on"
+      "match:namespace launcher, ignore_alpha .3"
 
-      "blur ,center-menu"
-      "ignorealpha .3, center-menu"
+      "match:namespace center-menu, blur on"
+      "match:namespace center-menu, ignore_alpha .3"
 
-      "blur ,control-panel"
-      "ignorealpha .3, control-panel"
+      "match:namespace control-panel, blur on"
+      "match:namespace control-panel, ignore_alpha .3"
 
-      "blur ,OSD"
-      "ignorealpha .3, OSD"
+      "match:namespace OSD, blur on"
+      "match:namespace OSD, ignore_alpha .3"
     ];
 
     workspace = [
