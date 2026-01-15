@@ -37,6 +37,9 @@
         {proportion = 3.0 / 4.0;}
         {proportion = 5.0 / 6.0;}
       ];
+      default-column-width = {
+        proportion = 1.0 / 2.0;
+      };
     };
 
     overview = {
