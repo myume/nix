@@ -105,7 +105,7 @@ in {
     };
 
     sessionVariables = {
-      GSK_RENDERER = "ngl";
+      GSK_RENDERER = "gl";
     };
   };
 
