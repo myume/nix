@@ -91,6 +91,17 @@ in {
       download-buffer-size = 524288000; # 500 MB
     };
   };
+
+  networking.hosts = {
+    "0.0.0.0" = [
+      "www.chess.com"
+      "www.reddit.com"
+      "www.twitter.com"
+      "www.x.com"
+      "x.com"
+    ];
+  };
+
   environment = {
     systemPackages = with pkgs; [
       git
