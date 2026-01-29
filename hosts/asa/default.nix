@@ -1,0 +1,64 @@
+{pkgs, ...}: {
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/networking
+    ../../modules/locale
+  ];
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+
+  users.users.yum = {
+    isNormalUser = true;
+    description = "yum";
+    extraGroups = ["networkmanager" "wheel"];
+    packages = with pkgs; [];
+  };
+
+  nixpkgs.config.allowUnfree = true;
+
+  nix.settings.experimental-features = ["nix-command" "flakes"];
+  environment.systemPackages = with pkgs; [
+    vim
+    git
+  ];
+
+  services = {
+    openssh.enable = true;
+    getty = {
+      autologinUser = "yum";
+    };
+    logind = {
+      settings.Login = {
+        HandleLidSwitch = "ignore";
+        HandleLidSwitchDocked = "ignore";
+        HandleLidSwitchExternalPower = "ignore";
+        IdleAction = "ignore";
+        HandlePowerKey = "ignore";
+        HandleSuspendKey = "ignore";
+      };
+    };
+    cloudflared = {
+      enable = true;
+      tunnels = {
+        "9bab2b63-839a-4cfe-bae3-c82e31b8d4d9" = {
+          credentialsFile = "/home/yum/.cloudflared/9bab2b63-839a-4cfe-bae3-c82e31b8d4d9.json";
+          default = "http_status:404";
+        };
+      };
+    };
+  };
+
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "25.11"; # Did you read the comment?
+}

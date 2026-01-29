@@ -31,5 +31,6 @@
     hyperfine # cli benchmarking
 
     gemini-cli
+    cloudflared
   ];
 }
