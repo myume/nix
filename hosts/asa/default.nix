@@ -43,6 +43,18 @@
         HandleSuspendKey = "ignore";
       };
     };
+    cloudflared = {
+      enable = true;
+      tunnels = {
+        "9bab2b63-839a-4cfe-bae3-c82e31b8d4d9" = {
+          credentialsFile = "/home/yum/.cloudflared/9bab2b63-839a-4cfe-bae3-c82e31b8d4d9.json";
+          default = "http_status:404";
+          ingress = {
+            "ssh.meyume.com" = "ssh://localhost:22";
+          };
+        };
+      };
+    };
   };
 
   # This value determines the NixOS release from which the default
