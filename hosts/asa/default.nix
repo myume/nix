@@ -5,7 +5,6 @@
     ../../modules/locale
   ];
 
-  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -33,6 +32,16 @@
     openssh.enable = true;
     getty = {
       autologinUser = "yum";
+    };
+    logind = {
+      settings.Login = {
+        HandleLidSwitch = "ignore";
+        HandleLidSwitchDocked = "ignore";
+        HandleLidSwitchExternalPower = "ignore";
+        IdleAction = "ignore";
+        HandlePowerKey = "ignore";
+        HandleSuspendKey = "ignore";
+      };
     };
   };
 
