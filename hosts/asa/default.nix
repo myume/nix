@@ -66,6 +66,14 @@ in {
       enable = true;
       database.type = "postgres";
       lfs.enable = true;
+      settings = {
+        server = {
+          DOMAIN = "git.meyume.com";
+          ROOT_URL = "https://git.meyume.com/";
+          HTTP_ADDR = "127.0.0.1";
+          HTTP_PORT = 3000;
+        };
+      };
     };
   };
 
