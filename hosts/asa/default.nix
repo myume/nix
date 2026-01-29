@@ -73,6 +73,11 @@ in {
           HTTP_ADDR = "127.0.0.1";
           HTTP_PORT = 3000;
         };
+        service.DISABLE_REGISTRATION = true;
+        actions = {
+          ENABLED = true;
+          DEFAULT_ACTIONS_URL = "github";
+        };
       };
     };
   };
