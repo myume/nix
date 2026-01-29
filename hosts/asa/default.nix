@@ -1,4 +1,10 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: let
+  tunnel_id = "9bab2b63-839a-4cfe-bae3-c82e31b8d4d9";
+in {
   imports = [
     ./hardware-configuration.nix
     ../../modules/networking
@@ -49,8 +55,8 @@
     cloudflared = {
       enable = true;
       tunnels = {
-        "9bab2b63-839a-4cfe-bae3-c82e31b8d4d9" = {
-          credentialsFile = "/home/yum/.cloudflared/9bab2b63-839a-4cfe-bae3-c82e31b8d4d9.json";
+        "${tunnel_id}" = {
+          credentialsFile = "/home/yum/.cloudflared/${tunnel_id}.json";
           default = "http_status:404";
         };
       };
@@ -61,6 +67,11 @@
       database.type = "postgres";
       lfs.enable = true;
     };
+  };
+
+  systemd.services."cloudflared-tunnel-${tunnel_id}".serviceConfig = {
+    Restart = lib.mkForce "always";
+    RestartSec = lib.mkForce "5s";
   };
 
   # This value determines the NixOS release from which the default
