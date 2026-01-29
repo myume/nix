@@ -31,4 +31,19 @@
         }
       ];
     };
+
+  # thinkpad
+  asa = let
+    hostname = "asa";
+  in
+    nixpkgs.lib.nixosSystem {
+      specialArgs = {
+        inherit hostname;
+        inherit inputs;
+      };
+
+      modules = [
+        (./. + "/${hostname}")
+      ];
+    };
 }
