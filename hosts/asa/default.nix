@@ -30,9 +30,11 @@
 
   services = {
     openssh.enable = true;
+
     getty = {
       autologinUser = "yum";
     };
+
     logind = {
       settings.Login = {
         HandleLidSwitch = "ignore";
@@ -43,6 +45,7 @@
         HandleSuspendKey = "ignore";
       };
     };
+
     cloudflared = {
       enable = true;
       tunnels = {
@@ -51,6 +54,12 @@
           default = "http_status:404";
         };
       };
+    };
+
+    forgejo = {
+      enable = true;
+      database.type = "postgres";
+      lfs.enable = true;
     };
   };
 
