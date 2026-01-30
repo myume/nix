@@ -32,5 +32,7 @@
 
     gemini-cli
     cloudflared
+
+    wl-clipboard
   ];
 }
