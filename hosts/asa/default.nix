@@ -19,11 +19,14 @@ in {
     variant = "";
   };
 
-  users.users.yum = {
-    isNormalUser = true;
-    description = "yum";
-    extraGroups = ["networkmanager" "wheel"];
-    packages = with pkgs; [];
+  users.users = {
+    yum = {
+      isNormalUser = true;
+      description = "yum";
+      extraGroups = ["networkmanager" "wheel"];
+      packages = with pkgs; [];
+    };
+    kavita.extraGroups = ["users"];
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -79,6 +82,11 @@ in {
           DEFAULT_ACTIONS_URL = "github";
         };
       };
+    };
+
+    kavita = {
+      enable = true;
+      tokenKeyFile = "/var/lib/kavita/token_key";
     };
   };
 
