@@ -25,7 +25,9 @@ in {
       description = "yum";
       extraGroups = ["networkmanager" "wheel"];
       packages = with pkgs; [];
+      homeMode = "710";
     };
+
     kavita.extraGroups = ["users"];
   };
 
