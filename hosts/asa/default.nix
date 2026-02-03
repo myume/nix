@@ -88,6 +88,13 @@ in {
       enable = true;
       tokenKeyFile = "/var/lib/kavita/token_key";
     };
+
+    filebrowser = {
+      enable = true;
+      settings = {
+        port = 3001;
+      };
+    };
   };
 
   systemd.services."cloudflared-tunnel-${tunnel_id}".serviceConfig = {
