@@ -10,5 +10,6 @@
     dbeaver-bin
     protonvpn-gui
     readest
+    godot
   ];
 }
