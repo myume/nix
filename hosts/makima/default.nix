@@ -95,10 +95,6 @@ in {
   networking.hosts = {
     "0.0.0.0" = [
       "www.chess.com"
-      "www.reddit.com"
-      "www.twitter.com"
-      "www.x.com"
-      "x.com"
     ];
   };
 
