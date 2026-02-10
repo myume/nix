@@ -29,7 +29,7 @@
       gleam.enable = true;
       json.enable = true;
 
-      # astro.enable = true;
+      astro.enable = true;
       # lua.enable = true;
       # zig.enable = true;
       # haskell.enable = true;
