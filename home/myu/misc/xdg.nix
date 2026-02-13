@@ -47,7 +47,7 @@ in {
       enable = true;
       createDirectories = true;
       extraConfig = {
-        XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/Screenshots";
+        SCREENSHOTS = "${config.xdg.userDirs.pictures}/Screenshots";
       };
     };
 
@@ -55,9 +55,14 @@ in {
       enable = true;
 
       extraPortals = [
+        pkgs.xdg-desktop-portal-gtk
         pkgs.xdg-desktop-portal-gnome
       ];
-      config.common.default = "gnome";
+      config.common = {
+        default = "gtk";
+        "org.freedesktop.impl.portal.ScreenCast" = ["gnome"];
+        "org.freedesktop.impl.portal.Screenshot" = ["gnome"];
+      };
     };
 
     mimeApps = {
