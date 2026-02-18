@@ -28,6 +28,7 @@
     "image/gif" = browser;
     "image/jpeg" = browser;
     "image/png" = browser;
+    "image/svg" = browser;
     "image/webp" = browser;
     "application/json" = browser;
     "application/pdf" = browser;
