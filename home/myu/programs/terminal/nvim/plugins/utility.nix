@@ -1,6 +1,8 @@
 {
   programs.nvf.settings.vim = {
     utility = {
+      grug-far-nvim.enable = true;
+
       # yazi-nvim.enable = true;
       diffview-nvim = {
         enable = true;

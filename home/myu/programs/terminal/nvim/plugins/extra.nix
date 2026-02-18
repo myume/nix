@@ -9,13 +9,6 @@
       '';
     };
 
-    grug-far = {
-      package = pkgs.vimPlugins.grug-far-nvim;
-      setup = ''
-        require("grug-far").setup()
-      '';
-    };
-
     dropbar = {
       package = pkgs.vimPlugins.dropbar-nvim;
       setup = ''
