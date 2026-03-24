@@ -11,6 +11,9 @@
       };
       init.defaultBranch = "main";
     };
+    ignores = [
+      ".cache/"
+    ];
   };
 
   programs.difftastic.enable = true;
