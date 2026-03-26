@@ -2,6 +2,17 @@
   imports = [inputs.wally.homeManagerModules.default];
   services.wally = {
     enable = true;
-    config = "/home/myu/infinite/projects/wally/wally.kdl";
+    frequency = "hourly";
+    defaultSource = "konachan";
+    settings = {
+      wallhaven = {
+        categories = {
+          general = false;
+          people = false;
+          anime = true;
+        };
+      };
+      setCommand = "swww img {{path}}";
+    };
   };
 }
