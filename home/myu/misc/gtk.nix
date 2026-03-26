@@ -16,6 +16,8 @@
       };
     };
 
+    gtk4.theme = null;
+
     iconTheme = {
       name = "WhiteSur-dark";
       package = pkgs.whitesur-icon-theme;

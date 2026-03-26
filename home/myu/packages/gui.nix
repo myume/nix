@@ -8,7 +8,7 @@
     tor-browser
     qbittorrent
     dbeaver-bin
-    protonvpn-gui
+    proton-vpn
     readest
     godot
   ];

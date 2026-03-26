@@ -11,6 +11,7 @@
       };
       init.defaultBranch = "main";
     };
+    signing.format = null;
     ignores = [
       ".cache/"
     ];
