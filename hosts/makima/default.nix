@@ -27,7 +27,6 @@ in {
 
       inputs.niri.nixosModules.niri
       inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
-      inputs.lucifer.nixosModules.lucifer
 
       ./hardware-configuration.nix
       {nixpkgs.hostPlatform = "x86_64-linux";}
@@ -61,17 +60,6 @@ in {
     getty = {
       autologinUser = "myu";
       autologinOnce = true;
-    };
-
-    lucifer = {
-      enable = true;
-      nameservers = ["1.1.1.1" "1.0.0.1"];
-      blocklist = [
-        "chess.com"
-        "reddit.com"
-        "twitter.com"
-        "x.com"
-      ];
     };
   };
 

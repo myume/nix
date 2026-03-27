@@ -28,7 +28,6 @@
 
     dc.url = "github:myume/dc";
     waysted.url = "github:myume/waysted";
-    lucifer.url = "github:myume/lucifer";
     wally.url = "github:myume/wally";
 
     niri.url = "github:sodiboo/niri-flake";
