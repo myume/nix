@@ -11,5 +11,6 @@
     proton-vpn
     readest
     godot
+    krita
   ];
 }
