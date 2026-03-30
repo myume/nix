@@ -47,9 +47,6 @@ in {
   };
 
   services = {
-    # Enable firmware updates
-    fwupd.enable = true;
-
     # Configure keymap in X11
     xserver.xkb = {
       layout = "us";
