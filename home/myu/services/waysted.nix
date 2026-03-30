@@ -3,5 +3,6 @@
 
   services.waysted = {
     enable = true;
+    compositor = "niri";
   };
 }
