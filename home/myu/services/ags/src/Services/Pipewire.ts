@@ -118,7 +118,7 @@ export default class PipeWire extends GObject.Object {
       )
       .map((o: any) => ({
         id: o.id,
-        name: o.info.props["node.description"],
+        name: o.info.props["node.nick"] ?? o.info.props["node.description"],
       }));
     this.notify("sinks");
   }
@@ -147,7 +147,7 @@ export default class PipeWire extends GObject.Object {
       if (sink) {
         this.default_sink = {
           id: sink.id,
-          name: sink.info.props["node.description"],
+        name: sink.info.props["node.nick"] ?? sink.info.props["node.description"],
         };
         this.notify("default_sink");
         return;

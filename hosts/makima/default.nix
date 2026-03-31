@@ -108,7 +108,10 @@ in {
   };
 
   hardware = {
-    framework.laptop13.audioEnhancement.enable = true;
+    framework.laptop13.audioEnhancement = {
+      enable = true;
+      rawDeviceName = "alsa_output.pci-0000_c1_00.6.analog-stereo";
+    };
 
     graphics = {
       enable = true;
