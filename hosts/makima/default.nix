@@ -128,6 +128,7 @@ in {
   zsh.enable = true;
   thunar.enable = true;
   nix-ld.enable = true;
+  steam.enable = true;
 
   system.stateVersion = "24.11";
 }

@@ -5,5 +5,6 @@
     ./zsh.nix
     ./nix-ld.nix
     ./thunar.nix
+    ./steam.nix
   ];
 }
