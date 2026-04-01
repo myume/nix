@@ -8,9 +8,9 @@ import Status from "./Status"
 import { SharedState } from "../../app"
 import { onCleanup } from "ags"
 
-const Start = ({ outputName }: { outputName: string }) => (
+const Start = ({ monitor }: { monitor: Gdk.Monitor }) => (
   <box cssClasses={["start", "section"]}>
-    <Workspaces outputName={outputName} />
+    <Workspaces monitor={monitor} />
   </box>
 )
 
@@ -53,7 +53,7 @@ export const Bar = (state: SharedState) => (gdkmonitor: Gdk.Monitor) => {
       $={(self) => onCleanup(() => self.destroy())}
     >
       <centerbox>
-        <Start $type="start" outputName={gdkmonitor.connector} />
+        <Start $type="start" monitor={gdkmonitor} />
         <Center $type="center" state={state} />
         <End $type="end" state={state} />
       </centerbox>

@@ -3,6 +3,7 @@ import Hyprland from "gi://AstalHyprland"
 import { isHyprland } from "../../../utils/util"
 import Niri from "../../../Services/Niri"
 import { exec } from "ags/process"
+import { Gdk } from "ags/gtk4"
 
 function HyprWorkspaces() {
   const hypr = Hyprland.get_default()
@@ -36,22 +37,25 @@ function HyprWorkspaces() {
   )
 }
 
-function NiriWorkspaces({ outputName }: { outputName: string }) {
+function NiriWorkspaces({ monitor }: { monitor: Gdk.Monitor }) {
   const niri = Niri.get_default()
-  const workspaces = createBinding(niri, "workspaces").as((workspaces) =>
-    workspaces
-      .filter(({ output }) => output === outputName)
+  const monitorName = createBinding(monitor, "connector")
+  const workspaces = createBinding(niri, "workspaces")
+  const monitorWorkspaces = createComputed(() =>
+    workspaces()
+      .filter(({ output }) => output === monitorName())
       .toSorted((a, b) => a.idx - b.idx),
   )
+
   return (
     <box cssClasses={["workspaces"]}>
-      <For each={workspaces}>
-        {(workspace) => (
+      <For each={monitorWorkspaces}>
+        {(ws) => (
           <button
             cssClasses={[
-              workspace.is_focused
+              ws.is_focused
                 ? "focused"
-                : workspace.is_active
+                : ws.active_window_id !== null
                   ? "populated"
                   : "empty",
             ]}
@@ -61,7 +65,7 @@ function NiriWorkspaces({ outputName }: { outputName: string }) {
                 "msg",
                 "action",
                 "focus-workspace",
-                workspace.idx.toString(),
+                ws.idx.toString(),
               ])
             }
           />
@@ -71,10 +75,10 @@ function NiriWorkspaces({ outputName }: { outputName: string }) {
   )
 }
 
-export default function Workspaces({ outputName }: { outputName: string }) {
-  return isHyprland() ? (
-    <HyprWorkspaces />
-  ) : (
-    <NiriWorkspaces outputName={outputName} />
-  )
+export default function Workspaces({ monitor }: { monitor: Gdk.Monitor }) {
+  // return isHyprland() ? (
+  //   <HyprWorkspaces />
+  // ) : (
+  return <NiriWorkspaces monitor={monitor} />
+  // )
 }

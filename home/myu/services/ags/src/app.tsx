@@ -18,7 +18,7 @@ import {
   OSDState,
   windowName as OSDWindowName,
 } from "./widget/OSD"
-import { createBinding, createState, State, For } from "ags"
+import { createBinding, createState, State, For, This } from "ags"
 import AstalIO from "gi://AstalIO?version=0.1"
 import { execAsync } from "ags/process"
 import { secondsToTimeStamp } from "./utils/util"
@@ -68,7 +68,7 @@ function main() {
     const osd = App.get_window(OSDWindowName)
     osd?.show()
 
-    if (!timer.get()) setTimer(timeout(3000, () => osd?.hide()))
+    if (!timer.peek()) setTimer(timeout(3000, () => osd?.hide()))
   }
 
   const { defaultSpeaker: speaker } = AstalWp.get_default()!
@@ -123,8 +123,8 @@ function main() {
 
   const allMonitorWindows = [Bar(sharedState), Notifications]
   return allMonitorWindows.map((window) => (
-    <For each={monitors} cleanup={(win) => (win as Gtk.Window).destroy()}>
-      {(monitor) => window(monitor)}
+    <For each={monitors}>
+      {(monitor) => <This this={App}>{window(monitor)}</This>}
     </For>
   ))
 }

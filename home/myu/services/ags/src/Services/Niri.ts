@@ -23,7 +23,6 @@ export default class Niri extends GObject.Object {
   }
 
   #workspaces: Workspace[] = []
-  // #windows = []
 
   @getter(Object as any)
   get workspaces() {
@@ -48,17 +47,15 @@ export default class Niri extends GObject.Object {
     )
 
     eventStream.subscribe(() => {
-      const recentEvent = JSON.parse(eventStream.get())
-      if (recentEvent["WorkspacesChanged"]) {
-        this.#workspaces = recentEvent["WorkspacesChanged"]["workspaces"]
-        this.notify("workspaces")
-      } else if (
+      const recentEvent = JSON.parse(eventStream.peek())
+      if (
+        recentEvent["WorkspacesChanged"] ||
         recentEvent["WorkspaceActivated"] ||
         recentEvent["WorkspaceActiveWindowChanged"] ||
-        recentEvent["WorkspaceUrgencyChanged"]
+        recentEvent["WorkspaceUrgencyChanged"] ||
+        recentEvent["WindowLayoutsChanged"]
       ) {
-        this.#workspaces = JSON.parse(exec(["niri", "msg", "-j", "workspaces"]))
-        this.notify("workspaces")
+        this.workspaces = JSON.parse(exec(["niri", "msg", "-j", "workspaces"]))
       }
     })
   }
