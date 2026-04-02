@@ -62,11 +62,10 @@ in {
       ];
 
       config.common = {
-        default = "gnome;gtk";
-        "org.freedesktop.impl.portal.FileChooser" = "gtk";
-        "org.freedesktop.impl.portal.Access" = "gtk";
-        "org.freedesktop.impl.portal.Inhibit" = "gtk";
-        "org.freedesktop.impl.portal.Secret" = "gnome-keyring";
+        default = ["gnome" "gtk"];
+        "org.freedesktop.impl.portal.FileChooser" = ["gtk"];
+        "org.freedesktop.impl.portal.Access" = ["gtk"];
+        "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
       };
     };
 
