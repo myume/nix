@@ -12,5 +12,6 @@
     readest
     godot
     krita
+    rnote
   ];
 }
