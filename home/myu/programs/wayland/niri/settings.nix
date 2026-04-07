@@ -54,6 +54,10 @@
         dwt = true;
       };
 
+      tablet = {
+        map-to-output = "DP-2";
+      };
+
       keyboard = {
         xkb = {
           options = "caps:ctrl_modifier";
