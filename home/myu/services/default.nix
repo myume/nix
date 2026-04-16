@@ -4,7 +4,8 @@
     ./hyprpaper
     ./ags
     ./waysted.nix
-    ./swww.nix
     ./wally.nix
   ];
+
+  services.awww.enable = true;
 }

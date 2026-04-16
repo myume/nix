@@ -12,7 +12,7 @@
           anime = true;
         };
       };
-      setCommand = "swww img {{path}}";
+      setCommand = "awww img {{path}}";
     };
   };
 }

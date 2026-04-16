@@ -24,7 +24,6 @@
         };
       };
       ts.enable = true;
-      tailwind.enable = true;
       # sql.enable = true;
       gleam.enable = true;
       json.enable = true;

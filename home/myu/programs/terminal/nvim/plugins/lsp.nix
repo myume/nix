@@ -16,6 +16,10 @@
         };
       };
 
+      presets = {
+        tailwindcss-language-server.enable = true;
+      };
+
       mappings = {
         goToDefinition = "gd";
         goToType = "gt";
