@@ -1,4 +1,6 @@
-{
+{lib, ...}: let
+  inherit (lib.generators) mkLuaInline;
+in {
   programs.nvf.settings.vim = {
     diagnostics = {
       enable = true;
@@ -8,15 +10,16 @@
         virtual_text = true;
         severity_sort = true;
 
-        # this is not working
-        # signs = {
-        #   text = {
-        #     "vim.diagnostic.severity.ERROR" = "󰅚 ";
-        #     "vim.diagnostic.severity.WARN" = "󰀪 ";
-        #     "vim.diagnostic.severity.HINT" = " ";
-        #     "vim.diagnostic.severity.INFO" = " ";
-        #   };
-        # };
+        signs = {
+          text = mkLuaInline ''
+            {
+              [vim.diagnostic.severity.ERROR] = " ",
+              [vim.diagnostic.severity.WARN] = " ",
+              [vim.diagnostic.severity.HINT] = " ",
+              [vim.diagnostic.severity.INFO] = " ",
+            }
+          '';
+        };
 
         float = {
           focusable = false;
