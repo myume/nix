@@ -1,5 +1,5 @@
 {
-  background_opacity = "0.95";
+  background_opacity = "0.85";
   font_family = "FiraCode Nerd Font";
   font_size = 12;
 

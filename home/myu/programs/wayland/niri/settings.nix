@@ -157,7 +157,48 @@
           }
         ];
 
+    # this is broken for my bar because there is no `ignore_alpha` option like in hyprland.
+    # layer-rules = [
+    #   {
+    #     matches = [
+    #       {
+    #         namespace = "^top-bar$";
+    #       }
+    #       {
+    #         namespace = "^floating-notifications$";
+    #       }
+    #       {
+    #         namespace = "^launcher$";
+    #       }
+    #       {
+    #         namespace = "^center-menu$";
+    #       }
+    #       {
+    #         namespace = "^control-panel$";
+    #       }
+    #       {
+    #         namespace = "^OSD$";
+    #       }
+    #     ];
+    #
+    #     background-effect = {
+    #       blur = true;
+    #       xray = false;
+    #     };
+    #   }
+    # ];
+
     window-rules = [
+      {
+        matches = [
+          {
+            app-id = "^kitty$";
+          }
+        ];
+        background-effect = {
+          blur = true;
+        };
+      }
       {
         draw-border-with-background = false;
         clip-to-geometry = true;

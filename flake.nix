@@ -30,7 +30,7 @@
     waysted.url = "github:myume/waysted";
     wally.url = "github:myume/wally";
 
-    niri.url = "github:sodiboo/niri-flake";
+    niri.url = "github:myume/niri-flake/blur";
   };
 
   outputs = inputs: {
