@@ -16,7 +16,7 @@
       interactiveShellInit = let
         startup =
           if config.hyprland.enable
-          then "dbus-run-session Hyprland"
+          then "start-hyprland"
           else "niri-session";
       in ''
         if [ -z "''${WAYLAND_DISPLAY}" ] && [ "''${XDG_VTNR}" -eq 1 ]; then

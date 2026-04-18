@@ -3,7 +3,7 @@ let
 in {
   wayland.windowManager.hyprland.settings = {
     exec-once = [
-      "hyprlock --immediate-render --no-fade-in"
+      # "hyprlock --immediate-render --no-fade-in"
       "hyprctl setcursor ${cursorName} ${toString 16}"
     ];
   };
