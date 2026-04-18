@@ -23,17 +23,17 @@
     workspace = [
     ];
 
-    windowrulev2 = [
+    windowrule = [
       # why is it impossible for anyone to get idle inhibit right
-      "idleinhibit focus, class:^(mpv)$"
-      "idleinhibit fullscreen, class:^(zen|zen-twilight)$"
+      "idle_inhibit match:focus, match:class ^(mpv)$"
+      "idle_inhibit match:fullscreen, match:class ^(zen|zen-twilight)$"
 
       # apparently the order matters and this needs to be second
-      "idleinhibit focus, class:^(zen|zen-twilight)$, title:^(.*YouTube.*)$"
+      "idle_inhibit focus, match:class ^(zen|zen-twilight)$, match:title ^(.*YouTube.*)$"
 
-      "float, title:^(Media viewer)$"
+      "float on, match:title ^(Media viewer)$"
 
-      "float, title:^(Save File|Open.*|Choose.*|Select.*)$"
+      "float on, match:title ^(Save File|Open.*|Choose.*|Select.*)$"
     ];
   };
 }

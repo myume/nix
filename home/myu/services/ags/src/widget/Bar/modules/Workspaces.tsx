@@ -76,9 +76,9 @@ function NiriWorkspaces({ monitor }: { monitor: Gdk.Monitor }) {
 }
 
 export default function Workspaces({ monitor }: { monitor: Gdk.Monitor }) {
-  // return isHyprland() ? (
-  //   <HyprWorkspaces />
-  // ) : (
-  return <NiriWorkspaces monitor={monitor} />
-  // )
+  return isHyprland() ? (
+    <HyprWorkspaces />
+  ) : (
+    <NiriWorkspaces monitor={monitor} />
+  )
 }

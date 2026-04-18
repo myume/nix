@@ -35,20 +35,4 @@ in {
     ];
   };
 
-  wayland.windowManager.hyprland.settings = {
-    exec-once = [
-      "ags run --log-file /tmp/ags.log"
-    ];
-  };
-
-  programs.niri.settings.spawn-at-startup = [
-    {
-      argv = [
-        "ags"
-        "run"
-        "--log-file"
-        "/tmp/ags.log"
-      ];
-    }
-  ];
 }

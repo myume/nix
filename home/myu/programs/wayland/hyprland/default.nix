@@ -14,10 +14,15 @@
 
   hyprland.smartgaps.enable = false;
 
-  # wayland.windowManager.hyprland = {
-  #   enable = true;
-  #   systemd.enable = true;
-  #   xwayland.enable = true;
-  # };
+  wayland.windowManager.hyprland = {
+    enable = false;
+    systemd.enable = true;
+    xwayland.enable = true;
+    settings = {
+      exec-once = [
+        "ags run --log-file /tmp/ags.log"
+      ];
+    };
+  };
   home.sessionVariables.NIXOS_OZONE_WL = "1";
 }

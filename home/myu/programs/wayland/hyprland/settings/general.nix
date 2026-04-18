@@ -12,7 +12,7 @@
       "col.active_border" = "rgba(89b4faee)";
       "col.inactive_border" = "rgba(1e1e2eee)";
 
-      layout = "dwindle";
+      layout = "scrolling";
     };
 
     xwayland = {
