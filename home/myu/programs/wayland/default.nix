@@ -6,5 +6,5 @@
   ];
 
   compositor.niri.enable = true;
-  layer-shell.ags.enable = true;
+  layer-shell.quickshell.enable = true;
 }
