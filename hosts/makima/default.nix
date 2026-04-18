@@ -124,7 +124,7 @@ in {
     };
   };
 
-  niri.enable = true;
+  hyprland.enable = true;
   zsh.enable = true;
   thunar.enable = true;
   nix-ld.enable = true;

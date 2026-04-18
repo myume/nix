@@ -1,28 +1,32 @@
 {
   lib,
   pkgs,
+  config,
   ...
 }: {
   imports = lib.filesystem.listFilesRecursive ./settings;
 
-  home.packages = with pkgs; [
-    # hyprshot
+  options.compositor.hyprland = {
+    enable = lib.mkEnableOption "Hyprland";
+  };
 
-    wireplumber
-    playerctl
-  ];
+  config = lib.mkIf config.compositor.hyprland.enable {
+    home.packages = with pkgs; [
+      # hyprshot
 
-  hyprland.smartgaps.enable = false;
+      wireplumber
+      playerctl
+    ];
 
-  wayland.windowManager.hyprland = {
-    enable = false;
-    systemd.enable = true;
-    xwayland.enable = true;
-    settings = {
-      exec-once = [
-        "ags run --log-file /tmp/ags.log"
-      ];
+    wayland.windowManager.hyprland = {
+      enable = true;
+      systemd.enable = true;
+      xwayland.enable = true;
+      settings = {
+        exec-once = [
+          "ags run --log-file /tmp/ags.log"
+        ];
+      };
     };
   };
-  home.sessionVariables.NIXOS_OZONE_WL = "1";
 }
