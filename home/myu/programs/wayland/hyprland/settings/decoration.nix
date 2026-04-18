@@ -8,7 +8,6 @@
         size = 8;
         passes = 3;
         new_optimizations = true;
-        xray = true;
       };
     };
   };
