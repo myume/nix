@@ -4,5 +4,5 @@
     ./niri
   ];
 
-  compositor.hyprland.enable = true;
+  compositor.niri.enable = true;
 }
