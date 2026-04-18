@@ -3,7 +3,19 @@
   pkgs,
   config,
   ...
-}: {
+}: let
+  ags =
+    if config.layer-shell.ags.enable
+    then ["ags run --log-file /tmp/ags.log"]
+    else [];
+
+  quickshell =
+    if config.layer-shell.quickshell.enable
+    then ["quickshell"]
+    else [];
+
+  autostart = ags ++ quickshell;
+in {
   imports = lib.filesystem.listFilesRecursive ./settings;
 
   options.compositor.hyprland = {
@@ -23,9 +35,7 @@
       systemd.enable = true;
       xwayland.enable = true;
       settings = {
-        exec-once = [
-          "ags run --log-file /tmp/ags.log"
-        ];
+        exec-once = autostart;
       };
     };
   };
