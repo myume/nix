@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
+import qs.common
 
 PanelWindow {
     id: bar
@@ -14,7 +15,7 @@ PanelWindow {
     height: 28
 
     margins {
-        top: 8
+        top: 4
         left: 10
         right: 10
     }
@@ -27,8 +28,8 @@ PanelWindow {
 
     BackgroundEffect.blurRegion: Region {
         Region {
-            shape: RegionShape.Ellipse
-            item: leftbar
+            item: center
+            radius: Theme.cornerRadius
         }
     }
 
@@ -36,12 +37,14 @@ PanelWindow {
         anchors.fill: parent
 
         Left {
-            id: leftbar
+            id: left
         }
         Item {
             Layout.fillWidth: true
         }
-        Center {}
+        Center {
+            id: center
+        }
         Item {
             Layout.fillWidth: true
         }

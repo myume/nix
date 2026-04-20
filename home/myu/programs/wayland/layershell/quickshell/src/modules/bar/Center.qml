@@ -1,21 +1,15 @@
 import QtQuick
-import Quickshell
+import "components"
+import qs.common
 
 Rectangle {
-    implicitWidth: time.implicitWidth
+    implicitWidth: clock.implicitWidth + 20
     implicitHeight: parent.height
 
-    color: "#cc1a1a2e"
-    radius: 16
+    color: Theme.backgroundColor
+    radius: Theme.cornerRadius
 
-    SystemClock {
+    Clock {
         id: clock
-        precision: SystemClock.Seconds
-    }
-
-    Text {
-        id: time
-        text: Qt.formatDateTime(clock.date, "hh:mm:ss - yyyy-MM-dd")
-        color: "white"
     }
 }
