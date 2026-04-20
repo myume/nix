@@ -5,8 +5,5 @@ Text {
     anchors.centerIn: parent
     text: Time.time
     color: "white"
-    font {
-        family: Theme.fontFamily
-        weight: 600
-    }
+    font: Theme.font
 }

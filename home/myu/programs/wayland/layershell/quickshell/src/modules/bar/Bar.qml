@@ -12,7 +12,7 @@ PanelWindow {
     screen: modelData
 
     color: "transparent"
-    height: 28
+    implicitHeight: 28
 
     margins {
         top: 4
