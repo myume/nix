@@ -9,6 +9,14 @@ Singleton {
 
     property var workspaces: []
 
+    function focusWorkspace(i) {
+        niriDispatcher.exec(["niri", "msg", "action", "focus-workspace", i]);
+    }
+
+    Process {
+        id: niriDispatcher
+    }
+
     Process {
         command: ["niri", "msg", "-j", "event-stream"]
         running: true
@@ -18,14 +26,14 @@ Singleton {
                 const event = JSON.parse(data);
                 const eventType = Object.keys(event)[0];
                 if (eventType.startsWith("Workspace")) {
-                    workspaceProcess.running = true
+                    workspaceEvents.running = true;
                 }
             }
         }
     }
 
     Process {
-        id: workspaceProcess
+        id: workspaceEvents
         command: ["niri", "msg", "-j", "workspaces"]
         running: true
 

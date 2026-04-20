@@ -6,6 +6,7 @@ import qs.services
 import qs.common
 
 Rectangle {
+    id: root
     required property var screen
 
     anchors.centerIn: parent
@@ -15,7 +16,7 @@ Rectangle {
         anchors.centerIn: parent
         Repeater {
             model: ScriptModel {
-                values: [...Niri.workspaces].filter(ws => ws.output === screen.name).sort((a, b) => a.idx - b.idx)
+                values: [...Niri.workspaces].filter(ws => ws.output === root.screen.name).sort((a, b) => a.idx - b.idx)
             }
             RoundButton {
                 id: button
@@ -29,6 +30,10 @@ Rectangle {
                 implicitHeight: size
 
                 antialiasing: true
+
+                onClicked: {
+                    Niri.focusWorkspace(modelData.idx);
+                }
 
                 onHoveredChanged: {
                     if (button.hovered) {
