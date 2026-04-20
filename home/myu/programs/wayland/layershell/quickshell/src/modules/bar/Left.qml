@@ -1,12 +1,19 @@
 import QtQuick
 import "components"
+import qs.common
 
 Rectangle {
-    implicitWidth: 64
+    id: root
+    required property var screen
+
+    implicitWidth: workspaces.implicitWidth
     implicitHeight: parent.height
 
-    color: "#cc1a1a2e"
+    color: Colors.backgroundColor
     radius: 16
 
-    Workspaces {}
+    Workspaces {
+        id: workspaces
+        screen: root.screen
+    }
 }

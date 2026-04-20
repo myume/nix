@@ -31,6 +31,10 @@ PanelWindow {
             item: center
             radius: Theme.cornerRadius
         }
+        Region {
+            item: left
+            radius: Theme.cornerRadius
+        }
     }
 
     RowLayout {
@@ -38,6 +42,7 @@ PanelWindow {
 
         Left {
             id: left
+            screen: bar.screen
         }
         Item {
             Layout.fillWidth: true

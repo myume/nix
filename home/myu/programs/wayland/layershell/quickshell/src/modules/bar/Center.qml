@@ -3,10 +3,10 @@ import "components"
 import qs.common
 
 Rectangle {
-    implicitWidth: clock.implicitWidth + 20
+    implicitWidth: clock.implicitWidth + 24
     implicitHeight: parent.height
 
-    color: Theme.backgroundColor
+    color: Colors.backgroundColor
     radius: Theme.cornerRadius
 
     Clock {
