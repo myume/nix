@@ -7,9 +7,16 @@ import qs.common
 IconImage {
     id: root
 
-    readonly property PwNode sink: Pipewire.defaultAudioSink
+    readonly property PwNode sink: {
+        if (Pipewire.ready) {
+            return Pipewire.nodes.values.filter(node => {
+                return node.name == Pipewire.defaultAudioSink.name && node.properties["media.class"] === "Audio/Sink";
+            })[0];
+        }
+        return null;
+    }
     PwObjectTracker {
-        objects: [root.sink]
+        objects: Pipewire.nodes.values
     }
 
     readonly property string volumeLevel: {
