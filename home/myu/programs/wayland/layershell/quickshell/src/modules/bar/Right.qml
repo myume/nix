@@ -15,6 +15,7 @@ Rectangle {
         anchors.centerIn: parent
 
         Tray {}
+        Network {}
         Brightness {}
         Audio {}
         Battery {}
