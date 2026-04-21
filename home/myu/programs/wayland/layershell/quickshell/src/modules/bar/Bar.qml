@@ -47,18 +47,15 @@ PanelWindow {
         Left {
             id: left
             screen: bar.screen
-        }
-        Item {
-            Layout.fillWidth: true
+            anchors.left: parent.left
         }
         Center {
             id: center
-        }
-        Item {
-            Layout.fillWidth: true
+            anchors.centerIn: parent
         }
         Right {
             id: right
+            anchors.right: parent.right
         }
     }
 }
