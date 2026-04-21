@@ -14,5 +14,6 @@ Rectangle {
         id: content
         anchors.centerIn: parent
         Tray {}
+        Battery {}
     }
 }
