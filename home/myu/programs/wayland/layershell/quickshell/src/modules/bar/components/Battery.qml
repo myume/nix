@@ -29,6 +29,7 @@ RowLayout {
         source: {
             const charging = root.isCharging ? "charging-" : "";
             const percentage = root.battery.percentage < 1 ? `0${Math.floor(root.battery.percentage * 10) * 10}` : 'full';
+
             return Quickshell.iconPath(`battery-${percentage}-${charging}symbolic`);
         }
         width: Theme.iconSize
@@ -36,8 +37,12 @@ RowLayout {
         layer.enabled: true
         layer.effect: MultiEffect {
             colorization: 1.0
-            brightness: root.isCharging ? 0.5 : null
-            colorizationColor: root.isCharging ? Colors.green : Colors.text
+            brightness: 0.5
+            colorizationColor: {
+                if (root.isCharging)
+                    return Colors.green;
+                return root.percentage >= 40 ? Colors.text : root.percentage >= 20 ? Colors.peach : Colors.red;
+            }
         }
     }
 }
