@@ -1,10 +1,11 @@
 import QtQuick
-import "components"
+import Quickshell
 import qs.common
+import "components"
 
 Rectangle {
     id: root
-    required property var screen
+    required property ShellScreen screen
 
     implicitWidth: workspaces.implicitWidth
     implicitHeight: parent.height

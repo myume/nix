@@ -8,7 +8,7 @@ PanelWindow {
     id: bar
     WlrLayershell.namespace: "bar"
 
-    required property var modelData
+    required property ShellScreen modelData
     screen: modelData
 
     color: "transparent"

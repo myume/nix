@@ -7,7 +7,7 @@ import qs.common
 
 Rectangle {
     id: root
-    required property var screen
+    required property ShellScreen screen
 
     anchors.centerIn: parent
     implicitWidth: workspaces.implicitWidth + 24

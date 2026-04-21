@@ -7,7 +7,7 @@ import QtQuick
 Singleton {
     id: niri
 
-    property var workspaces: []
+    property list<var> workspaces: []
 
     function focusWorkspace(i) {
         niriDispatcher.exec(["niri", "msg", "action", "focus-workspace", i]);
