@@ -32,14 +32,16 @@ RowLayout {
             return Quickshell.iconPath(`battery-${percentage}-${charging}symbolic`);
         }
         implicitSize: Theme.iconSize
-        layer.enabled: true
-        layer.effect: MultiEffect {
-            colorization: 1.0
-            brightness: 0.5
-            colorizationColor: {
-                if (root.isCharging)
-                    return Colors.green;
-                return root.percentage >= 40 ? Colors.text : root.percentage >= 20 ? Colors.peach : Colors.red;
+        layer {
+            enabled: true
+            effect: MultiEffect {
+                colorization: 1.0
+                brightness: 0.5
+                colorizationColor: {
+                    if (root.isCharging)
+                        return Colors.green;
+                    return root.percentage >= 40 ? Colors.text : root.percentage >= 20 ? Colors.peach : Colors.red;
+                }
             }
         }
     }

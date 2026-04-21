@@ -1,3 +1,4 @@
+import QtQuick.Effects
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Services.Pipewire
@@ -23,4 +24,13 @@ IconImage {
 
     implicitSize: Theme.iconSize
     source: Quickshell.iconPath(`audio-volume-${volumeLevel}-symbolic`)
+
+    layer {
+        enabled: true
+        effect: MultiEffect {
+            colorization: 1.0
+            brightness: 0.2
+            colorizationColor: Colors.text
+        }
+    }
 }

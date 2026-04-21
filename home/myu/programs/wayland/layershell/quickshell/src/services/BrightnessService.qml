@@ -17,7 +17,7 @@ Singleton {
     }
 
     FileView {
-        path: Qt.resolvedUrl(`/sys/class/backlight/${root.device}/brightness`)
+        path: root.device !== "" ? Qt.resolvedUrl(`/sys/class/backlight/${root.device}/brightness`) : null
         watchChanges: true
         onFileChanged: {
             this.reload();
