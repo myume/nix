@@ -12,7 +12,10 @@ in {
   };
 
   config = lib.mkIf config.layer-shell.quickshell.enable {
-    home.packages = [quickshell];
+    home.packages = [
+      quickshell
+      pkgs.papirus-icon-theme
+    ];
 
     xdg.configFile."quickshell".source = ./src;
   };

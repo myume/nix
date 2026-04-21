@@ -5,7 +5,7 @@ import QtQuick
 
 Singleton {
     readonly property double cornerRadius: 16
-    readonly property int iconSize: 16
+    readonly property int iconSize: 14
 
     readonly property QtObject font: QtObject {
         readonly property string family: "Inter"

@@ -5,6 +5,7 @@ import Quickshell.Widgets
 import qs.common
 
 RowLayout {
+    visible: SystemTray.items.values.length > 0
     Repeater {
         model: SystemTray.items
         IconImage {
