@@ -24,7 +24,7 @@ Rectangle {
                 required property var modelData
                 readonly property int size: 8
                 readonly property string buttonColor: {
-                    modelData.is_focused ? Colors.blue : modelData.active_window_id ? Colors.lavender : Colors.overlay;
+                    modelData.is_focused ? Colors.blue : modelData.active_window_id ? Colors.lavender : Colors.text;
                 }
 
                 implicitWidth: modelData.is_focused ? size * 4 : size
@@ -47,6 +47,7 @@ Rectangle {
                 background: Rectangle {
                     id: dot
                     color: button.buttonColor
+                    opacity: button.modelData.is_focused || button.modelData.active_window_id ? 1.0 : 0.4
                     radius: button.size
                     antialiasing: true
                 }

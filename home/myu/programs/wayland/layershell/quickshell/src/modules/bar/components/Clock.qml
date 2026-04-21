@@ -4,6 +4,6 @@ import qs.common
 Text {
     anchors.centerIn: parent
     text: Time.time
-    color: "white"
+    color: Colors.text
     font: Theme.font
 }
