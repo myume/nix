@@ -11,6 +11,7 @@ Rectangle {
 
     anchors.centerIn: parent
     implicitWidth: workspaces.implicitWidth + 24
+
     RowLayout {
         id: workspaces
         anchors.centerIn: parent
