@@ -12,7 +12,7 @@ PanelWindow {
     screen: modelData
 
     color: "transparent"
-    implicitHeight: 28
+    implicitHeight: Theme.barHeight
 
     margins {
         top: 4

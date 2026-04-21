@@ -13,7 +13,9 @@ Rectangle {
     RowLayout {
         id: content
         anchors.centerIn: parent
+
         Tray {}
+        Volume {}
         Battery {}
     }
 }

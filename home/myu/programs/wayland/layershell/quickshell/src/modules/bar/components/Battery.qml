@@ -29,11 +29,9 @@ RowLayout {
         source: {
             const charging = root.isCharging ? "charging-" : "";
             const percentage = root.battery.percentage < 1 ? `0${Math.floor(root.battery.percentage * 10) * 10}` : 'full';
-
             return Quickshell.iconPath(`battery-${percentage}-${charging}symbolic`);
         }
-        width: Theme.iconSize
-        height: Theme.iconSize
+        implicitSize: Theme.iconSize
         layer.enabled: true
         layer.effect: MultiEffect {
             colorization: 1.0
