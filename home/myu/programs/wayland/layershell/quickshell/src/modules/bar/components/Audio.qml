@@ -10,7 +10,7 @@ IconImage {
     readonly property PwNode sink: {
         if (Pipewire.ready) {
             return Pipewire.nodes.values.filter(node => {
-                return node.name == Pipewire.defaultAudioSink.name && node.properties["media.class"] === "Audio/Sink";
+                return node.name === Pipewire.defaultAudioSink?.name && node.properties["media.class"] === "Audio/Sink";
             })[0];
         }
         return null;
