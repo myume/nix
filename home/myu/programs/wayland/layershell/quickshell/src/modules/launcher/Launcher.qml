@@ -27,6 +27,7 @@ PanelWindow {
 
     function hide() {
         launcher.visible = false;
+        app.currentIndex = 0;
         search.text = "";
     }
 
@@ -66,11 +67,14 @@ PanelWindow {
                 background: Rectangle {
                     radius: Theme.cornerRadius
                     color: Colors.lavender
-                    opacity: 0.1
+                    opacity: 0.2
                 }
 
                 Keys.onEscapePressed: {
                     launcher.hide();
+                }
+                Keys.onPressed: event => {
+                    app.onKeyPressed(event);
                 }
 
                 onActiveFocusChanged: {
@@ -85,6 +89,9 @@ PanelWindow {
                 inputText: search.text
                 Layout.fillWidth: true
                 Layout.fillHeight: true
+                onLaunchedApp: {
+                    launcher.hide();
+                }
             }
         }
     }
