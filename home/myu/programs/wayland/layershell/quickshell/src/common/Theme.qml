@@ -14,7 +14,5 @@ Singleton {
         readonly property double weight: 600
     }
 
-    readonly property QtObject launcher: QtObject {
-        readonly property real aspectRatio: 3/2
-    }
+    readonly property real launcherAspectRatio: 3 / 2
 }
