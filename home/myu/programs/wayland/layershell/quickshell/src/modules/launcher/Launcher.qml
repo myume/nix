@@ -45,20 +45,31 @@ PanelWindow {
 
         ColumnLayout {
             anchors.fill: parent
-            anchors.margins: 16
+            anchors.margins: 12
 
             TextField {
                 id: search
                 Layout.fillWidth: true
-                font: Theme.font
                 enabled: launcher.visible
-                focus: launcher.visible
+                focus: true
+
+                font.family: Theme.font.family
+                font.weight: 500
+                font.pixelSize: 16
+                color: Colors.text
+
+                padding: 12
+
                 background: Rectangle {
                     radius: Theme.cornerRadius
+                    color: Colors.lavender
+                    opacity: 0.1
                 }
+
                 Keys.onEscapePressed: {
                     launcher.hide();
                 }
+
                 onActiveFocusChanged: {
                     if (!activeFocus && launcher.visible) {
                         launcher.hide();
