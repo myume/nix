@@ -52,7 +52,7 @@ IconImage {
                         break;
                     case ConnectionState.Connected:
                         const net = defaultDevice.networks.values.filter(net => net.connected)[0];
-                        const signal = Math.round(net.signalStrength * 5) * 20;
+                        const signal = Math.round((net?.signalStrength ?? 0) * 5) * 20;
                         status = `connected-${signal}`;
                         break;
                     }
