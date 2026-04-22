@@ -11,6 +11,11 @@
         skip-at-startup = true;
       };
 
+      blur = {
+        # passes = 4;
+        offset = 8.0;
+      };
+
       layout = {
         gaps = 10;
         struts = {

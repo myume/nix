@@ -8,6 +8,7 @@ Rectangle {
 
     color: Colors.backgroundColor
     radius: Theme.cornerRadius
+    antialiasing: true
 
     Clock {
         id: clock

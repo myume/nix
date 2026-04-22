@@ -11,7 +11,8 @@ Rectangle {
     implicitHeight: parent.height
 
     color: Colors.backgroundColor
-    radius: 16
+    radius: Theme.cornerRadius
+    antialiasing: true
 
     Workspaces {
         id: workspaces
