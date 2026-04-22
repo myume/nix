@@ -163,7 +163,7 @@
         {
           matches = [
             {
-              namespace = "^bar$";
+              namespace = "^(bar|launcher)$";
             }
           ];
 

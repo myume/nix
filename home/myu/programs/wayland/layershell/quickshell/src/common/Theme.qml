@@ -13,4 +13,8 @@ Singleton {
         readonly property double pixelSize: 12
         readonly property double weight: 600
     }
+
+    readonly property QtObject launcher: QtObject {
+        readonly property real aspectRatio: 3/2
+    }
 }
