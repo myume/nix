@@ -92,6 +92,7 @@ PanelWindow {
                 onLaunchedApp: {
                     launcher.hide();
                 }
+                clip: true
             }
         }
     }
