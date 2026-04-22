@@ -45,7 +45,8 @@ PanelWindow {
 
         ColumnLayout {
             anchors.fill: parent
-            anchors.margins: 12
+            anchors.margins: 16
+            spacing: 16
 
             TextField {
                 id: search
@@ -53,10 +54,12 @@ PanelWindow {
                 enabled: launcher.visible
                 focus: true
 
-                font.family: Theme.font.family
+                font.family: Theme.fontFamily
                 font.weight: 500
                 font.pixelSize: 16
                 color: Colors.text
+                placeholderText: `${app.placeholderText}...`
+                placeholderTextColor: Colors.translucentText
 
                 padding: 12
 
@@ -78,6 +81,7 @@ PanelWindow {
             }
 
             App {
+                id: app
                 Layout.fillWidth: true
                 Layout.fillHeight: true
             }

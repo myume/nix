@@ -14,4 +14,5 @@ Singleton {
 
     readonly property string overlay: "#9399b2"
     readonly property string text: "#dee5fa"
+    readonly property string translucentText: "#a0dee5fa"
 }
