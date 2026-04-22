@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import qs.common
@@ -41,21 +40,17 @@ PanelWindow {
         }
     }
 
-    RowLayout {
-        anchors.fill: parent
-
-        Left {
-            id: left
-            screen: bar.screen
-            anchors.left: parent.left
-        }
-        Center {
-            id: center
-            anchors.centerIn: parent
-        }
-        Right {
-            id: right
-            anchors.right: parent.right
-        }
+    Left {
+        id: left
+        screen: bar.screen
+        anchors.left: parent.left
+    }
+    Center {
+        id: center
+        anchors.centerIn: parent
+    }
+    Right {
+        id: right
+        anchors.right: parent.right
     }
 }
