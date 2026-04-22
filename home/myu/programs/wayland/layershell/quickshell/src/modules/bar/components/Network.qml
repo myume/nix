@@ -37,32 +37,20 @@ IconImage {
 
         if (defaultDevice.type === DeviceType.Wifi) {
             let status = "disconnected";
-            switch (Networking.connectivity) {
-            case NetworkConnectivity.Full:
-                {
-                    switch (defaultDevice.state) {
-                    case ConnectionState.Unknown:
-                        status = "no-route";
-                        break;
-                    case ConnectionState.Disconnected:
-                        status = "disconnected";
-                        break;
-                    case ConnectionState.Connecting:
-                        status = "acquiring";
-                        break;
-                    case ConnectionState.Connected:
-                        const net = defaultDevice.networks.values.filter(net => net.connected)[0];
-                        const signal = Math.round((net?.signalStrength ?? 0) * 5) * 20;
-                        status = `connected-${signal}`;
-                        break;
-                    }
-                    break;
-                }
-            case NetworkConnectivity.Limited:
-                status = "error";
-                break;
-            case NetworkConnectivity.Unknown:
+            switch (defaultDevice.state) {
+            case ConnectionState.Unknown:
                 status = "no-route";
+                break;
+            case ConnectionState.Disconnected:
+                status = "disconnected";
+                break;
+            case ConnectionState.Connecting:
+                status = "acquiring";
+                break;
+            case ConnectionState.Connected:
+                const net = defaultDevice.networks.values.filter(net => net.connected)[0];
+                const signal = Math.round((net?.signalStrength ?? 0) * 5) * 20;
+                status = `connected-${signal}`;
                 break;
             }
             return `network-wireless-${status}-symbolic`;
