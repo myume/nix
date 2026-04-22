@@ -2,11 +2,16 @@
 
 import QtQuick
 import Quickshell
-import "modules/bar"
+import qs.modules.bar
+import qs.modules.launcher
 
 ShellRoot {
     Variants {
         model: Quickshell.screens
         Bar {}
+    }
+    Variants {
+        model: Quickshell.screens
+        Launcher {}
     }
 }
