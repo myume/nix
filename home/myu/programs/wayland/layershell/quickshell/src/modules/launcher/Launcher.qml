@@ -62,7 +62,7 @@ PanelWindow {
                 placeholderText: `${app.placeholderText}...`
                 placeholderTextColor: Colors.translucentText
 
-                padding: 12
+                padding: 14
 
                 background: Rectangle {
                     radius: Theme.cornerRadius

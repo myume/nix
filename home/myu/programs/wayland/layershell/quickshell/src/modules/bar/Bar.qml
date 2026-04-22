@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
@@ -29,11 +30,11 @@ Variants {
 
         BackgroundEffect.blurRegion: Region {
             Region {
-                item: center
+                item: left
                 radius: Theme.cornerRadius
             }
             Region {
-                item: left
+                item: center
                 radius: Theme.cornerRadius
             }
             Region {

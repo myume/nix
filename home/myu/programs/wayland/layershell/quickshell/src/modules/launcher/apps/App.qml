@@ -53,7 +53,7 @@ ListView {
 
         width: parent?.width ?? 0
 
-        highlighted: item.modelData.name === root.selectedEntry.name
+        highlighted: item.modelData && item.modelData.name === root.selectedEntry.name
 
         padding: 10
         background: Rectangle {
