@@ -52,7 +52,7 @@ PanelWindow {
                 id: search
                 Layout.fillWidth: true
                 enabled: launcher.visible
-                focus: true
+                focus: launcher.visible
 
                 font.family: Theme.fontFamily
                 font.weight: 500
@@ -74,7 +74,7 @@ PanelWindow {
                 }
 
                 onActiveFocusChanged: {
-                    if (!activeFocus && launcher.visible) {
+                    if (!activeFocus) {
                         launcher.hide();
                     }
                 }
@@ -82,6 +82,7 @@ PanelWindow {
 
             App {
                 id: app
+                inputText: search.text
                 Layout.fillWidth: true
                 Layout.fillHeight: true
             }

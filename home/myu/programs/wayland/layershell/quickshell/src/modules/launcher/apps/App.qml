@@ -5,33 +5,37 @@ import Quickshell.Widgets
 import qs.common
 
 ListView {
+    id: root
     property string placeholderText: "Search"
+    required property string inputText
 
     spacing: 16
     model: ScriptModel {
-        values: [...DesktopEntries.applications.values]
+        // TODO: order by similarity + frequency
+        values: [...DesktopEntries.applications.values].filter(app => app.name.toLowerCase().startsWith(root.inputText))
     }
     delegate: RowLayout {
-        id: root
+        id: item
         required property DesktopEntry modelData
 
         spacing: 12
 
         IconImage {
             implicitSize: 32
-            source: Quickshell.iconPath(root.modelData.icon)
+            source: Quickshell.iconPath(item.modelData.icon)
         }
         ColumnLayout {
             spacing: 2
             Text {
-                text: root.modelData.name
+                text: item.modelData.name
                 color: Colors.text
                 font.family: Theme.fontFamily
                 font.weight: 600
                 font.pixelSize: 16
             }
             Text {
-                text: root.modelData.comment
+                visible: item.modelData.comment !== ""
+                text: item.modelData.comment
                 color: Colors.translucentText
                 font.family: Theme.fontFamily
                 font.weight: 500
