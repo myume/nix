@@ -12,9 +12,6 @@ PanelWindow {
     WlrLayershell.namespace: "launcher"
     focusable: true
 
-    required property ShellScreen modelData
-    screen: modelData
-
     visible: false
     color: 'transparent'
 
