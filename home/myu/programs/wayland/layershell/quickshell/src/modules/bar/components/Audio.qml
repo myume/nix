@@ -15,6 +15,7 @@ IconImage {
         }
         return null;
     }
+
     PwObjectTracker {
         objects: Pipewire.nodes.values
     }

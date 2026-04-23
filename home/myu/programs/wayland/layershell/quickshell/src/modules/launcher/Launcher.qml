@@ -10,6 +10,9 @@ import "apps"
 PanelWindow {
     id: launcher
     WlrLayershell.namespace: "launcher"
+    WlrLayershell.layer: WlrLayer.Overlay
+    exclusionMode: ExclusionMode.Ignore
+
     focusable: true
 
     visible: false
