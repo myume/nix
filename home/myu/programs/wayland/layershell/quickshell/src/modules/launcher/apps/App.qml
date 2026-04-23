@@ -12,7 +12,7 @@ ListView {
 
     property string placeholderText: "Search"
     required property string inputText
-    property DesktopEntry selectedEntry: model.values.length > 0 ? model.values[currentIndex] : null
+    readonly property DesktopEntry selectedEntry: model.values.length > 0 ? model.values[currentIndex] ?? null : null
     signal launchedApp(bar: DesktopEntry)
 
     currentIndex: 0
@@ -43,13 +43,18 @@ ListView {
     model: ScriptModel {
         // TODO: order by similarity + frequency
         values: [...DesktopEntries.applications.values].filter(app => app.name.toLowerCase().startsWith(root.inputText))
+        objectProp: "id"
     }
     delegate: ItemDelegate {
         id: item
         required property DesktopEntry modelData
         enabled: true
         hoverEnabled: true
-        onHoveredChanged: highlighted = hovered
+        onHoveredChanged: {
+            if (hovered) {
+                root.currentIndex = root.model.values.findIndex(app => app.id === modelData.id);
+            }
+        }
 
         width: parent?.width ?? 0
 
