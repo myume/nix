@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import qs.common
+import qs.services
 
 Variants {
     model: Quickshell.screens
@@ -27,7 +28,7 @@ Variants {
         implicitWidth: content.implicitWidth
         implicitHeight: content.implicitHeight
 
-        visible: sliders.children.some(child => child.visible)
+        visible: sliders.children.some(child => child.isVisible)
 
         BackgroundEffect.blurRegion: Region {
             item: content
@@ -52,7 +53,14 @@ Variants {
                 anchors.fill: parent
                 spacing: 20
 
-                VolumeSlider {}
+                OsdSlider {
+                    percentage: BrightnessService.percentage
+                    iconName: BrightnessService.iconName
+                }
+                OsdSlider {
+                    percentage: AudioService.defaultAudioSink?.audio.volume ?? 0
+                    iconName: AudioService.iconName
+                }
             }
         }
     }
