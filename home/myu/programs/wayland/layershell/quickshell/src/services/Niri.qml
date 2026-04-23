@@ -39,7 +39,7 @@ Singleton {
 
         stdout: StdioCollector {
             onStreamFinished: {
-                niri.workspaces = JSON.parse(data);
+                niri.workspaces = JSON.parse(data).sort((a, b) => a.idx - b.idx);
             }
         }
     }

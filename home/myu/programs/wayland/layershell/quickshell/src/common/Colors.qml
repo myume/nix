@@ -8,7 +8,7 @@ Singleton {
 
     readonly property string blue: "#89b4fa"
     readonly property string lavender: "#b4befe"
-    readonly property string saphhire: "#74c7ec"
+    readonly property string sapphire: "#74c7ec"
     readonly property string green: "#a6e3a1"
     readonly property string peach: "#fab387"
     readonly property string red: "#f38ba8"
