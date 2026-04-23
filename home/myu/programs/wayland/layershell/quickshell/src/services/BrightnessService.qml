@@ -8,7 +8,7 @@ Singleton {
     id: root
     property string device: ""
     property string deviceType: ""
-    property int currentBrightness: 0
+    property int currentBrightness: device !== "" ? Number(brightness.text()) : 0
     property int maxBrightness: 0
     property real percentage: maxBrightness > 0 ? currentBrightness / maxBrightness : 0
     readonly property string iconName: {
@@ -17,12 +17,11 @@ Singleton {
     }
 
     FileView {
-        path: root.device !== "" ? Qt.resolvedUrl(`/sys/class/backlight/${root.device}/brightness`) : null
+        id: brightness
+        path: root.device !== "" ? Qt.resolvedUrl(`/sys/class/backlight/${root.device}/brightness`) : ""
+        blockLoading: true
         watchChanges: true
-        onFileChanged: {
-            this.reload();
-            root.currentBrightness = this.text();
-        }
+        onFileChanged: this.reload()
     }
 
     Process {
@@ -34,8 +33,7 @@ Singleton {
                 const [device, clss, curr, percentage, max] = data.toString().split(',');
                 root.device = device;
                 root.deviceType = clss;
-                root.currentBrightness = curr;
-                root.maxBrightness = max;
+                root.maxBrightness = Number(max);
             }
         }
     }
