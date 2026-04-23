@@ -1,6 +1,8 @@
 import QtQuick
-import Quickshell
+import qs.services
 
 OsdSlider {
-    percentage: 0.6
+    visible: true
+    percentage: AudioService.defaultAudioSink.audio.volume
+    iconName: AudioService.iconName
 }

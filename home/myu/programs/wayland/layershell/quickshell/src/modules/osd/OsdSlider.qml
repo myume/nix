@@ -7,15 +7,15 @@ import qs.common
 RowLayout {
     id: root
     required property real percentage
+    required property string iconName
 
     spacing: 8
     IconImage {
         implicitSize: Theme.iconSize + 4
-        source: Quickshell.iconPath('audio-volume-high-symbolic')
+        source: Quickshell.iconPath(root.iconName)
     }
     Rectangle {
         Layout.fillWidth: true
-        // Layout.fillHeight: true
 
         color: Colors.text
         radius: Theme.cornerRadius

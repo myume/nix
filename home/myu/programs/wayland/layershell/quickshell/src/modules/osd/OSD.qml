@@ -27,6 +27,8 @@ Variants {
         implicitWidth: content.implicitWidth
         implicitHeight: content.implicitHeight
 
+        visible: sliders.children.some(child => child.visible)
+
         BackgroundEffect.blurRegion: Region {
             item: content
             radius: content.radius
