@@ -15,6 +15,7 @@ PanelWindow {
 
     focusable: true
 
+    property bool active: false
     visible: false
     color: 'transparent'
 
@@ -22,11 +23,12 @@ PanelWindow {
     implicitHeight: content.implicitHeight
 
     function show() {
-        launcher.visible = true;
+        visible = true;
+        active = true;
     }
 
     function hide() {
-        launcher.visible = false;
+        active = false;
         app.currentIndex = 0;
         search.text = "";
     }
@@ -34,6 +36,7 @@ PanelWindow {
     BackgroundEffect.blurRegion: Region {
         item: content
         radius: Theme.cornerRadius
+        y: content.yOffset
     }
 
     Rectangle {
@@ -42,7 +45,6 @@ PanelWindow {
         radius: Theme.cornerRadius
         implicitWidth: launcher.screen.width / 2
         implicitHeight: implicitWidth / Theme.launcherAspectRatio
-        antialiasing: true
 
         ColumnLayout {
             anchors.fill: parent
@@ -93,6 +95,24 @@ PanelWindow {
                     launcher.hide();
                 }
                 clip: true
+            }
+        }
+
+        property real yOffset: launcher.active ? 0 : implicitHeight
+        transform: Translate {
+            y: content.yOffset
+        }
+
+        Behavior on yOffset {
+            SpringAnimation {
+                spring: 6
+                damping: 0.5
+                epsilon: 0.25
+                easing.type: Easing.OutQuint
+                onRunningChanged: {
+                    if (!running && !launcher.active)
+                        launcher.visible = false;
+                }
             }
         }
     }
