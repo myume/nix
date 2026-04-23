@@ -105,7 +105,7 @@ PanelWindow {
 
         Behavior on yOffset {
             SpringAnimation {
-                spring: 6
+                spring: 8
                 damping: 0.5
                 epsilon: 0.25
                 easing.type: Easing.OutQuint

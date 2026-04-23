@@ -66,7 +66,7 @@ RowLayout {
     // debounce the percentage changes on startup
     Timer {
         id: startupTimer
-        interval: 100
+        interval: 500
         onTriggered: {
             root.startup = false;
         }
