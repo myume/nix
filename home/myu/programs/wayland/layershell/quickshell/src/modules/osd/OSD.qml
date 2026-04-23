@@ -28,11 +28,17 @@ Variants {
         implicitWidth: content.implicitWidth
         implicitHeight: content.implicitHeight
 
-        visible: sliders.children.some(child => child.isVisible)
+        readonly property bool active: sliders.children.some(child => child.active)
+        onActiveChanged: {
+            if (active) {
+                visible = true;
+            }
+        }
 
         BackgroundEffect.blurRegion: Region {
             item: content
             radius: content.radius
+            y: content.yOffset
         }
 
         Rectangle {
@@ -60,6 +66,33 @@ Variants {
                 OsdSlider {
                     percentage: AudioService.defaultAudioSink?.audio.volume ?? 0
                     iconName: AudioService.iconName
+                }
+            }
+
+            // slide in animation
+            property real yOffset: osd.active ? 0 : 50
+
+            transform: Translate {
+                y: content.yOffset
+            }
+
+            Behavior on yOffset {
+                SpringAnimation {
+                    spring: 12
+                    damping: 0.5
+                    epsilon: 0.25
+                    easing.type: Easing.OutQuint
+                    onRunningChanged: {
+                        if (!running && !osd.active)
+                            osd.visible = false;
+                    }
+                }
+            }
+
+            // expand animation
+            Behavior on implicitHeight {
+                NumberAnimation {
+                    duration: 100
                 }
             }
         }

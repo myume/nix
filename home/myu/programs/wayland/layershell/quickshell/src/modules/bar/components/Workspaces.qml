@@ -47,7 +47,7 @@ Rectangle {
                 background: Rectangle {
                     id: dot
                     color: button.buttonColor
-                    opacity: button.modelData.is_focused || button.modelData.active_window_id ? 1.0 : 0.4
+                    opacity: button.hovered || button.modelData.is_focused || button.modelData.active_window_id ? 1.0 : 0.4
                     radius: button.size
                     antialiasing: true
                 }

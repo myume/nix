@@ -7,11 +7,11 @@ import qs.common
 
 RowLayout {
     id: root
-    visible: isVisible
+    opacity: active
 
     required property real percentage
     required property string iconName
-    property bool isVisible: false
+    property bool active: false
 
     spacing: 8
 
@@ -43,16 +43,41 @@ RowLayout {
         }
     }
 
-    onPercentageChanged: {
-        root.isVisible = true;
+    function activate() {
+        root.active = true;
+        root.visible = true;
         visibilityTimer.restart();
+    }
+
+    onIconNameChanged: {
+        activate();
+    }
+
+    onPercentageChanged: {
+        activate();
     }
 
     Timer {
         id: visibilityTimer
         interval: 3000
         onTriggered: {
-            root.isVisible = false;
+            root.active = false;
+        }
+    }
+
+    Behavior on opacity {
+        NumberAnimation {
+            duration: 100
+            onRunningChanged: {
+                if (!running && !root.active) {
+                    root.visible = false;
+                }
+            }
+        }
+    }
+    Behavior on percentage {
+        NumberAnimation {
+            duration: 100
         }
     }
 }
