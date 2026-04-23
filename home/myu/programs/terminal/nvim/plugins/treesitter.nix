@@ -4,7 +4,10 @@
       enable = true;
       fold = true;
       autotagHtml = true;
-      indent.enable = true;
+      indent = {
+        enable = true;
+        excludes = ["qml"];
+      };
     };
   };
 }

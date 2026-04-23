@@ -11,6 +11,11 @@
         skip-at-startup = true;
       };
 
+      blur = {
+        # passes = 4;
+        offset = 8.0;
+      };
+
       layout = {
         gaps = 10;
         struts = {
@@ -87,14 +92,17 @@
           }
         ]) (lib.lists.range 1 9)));
 
-        transition = "niri msg action do-screen-transition --delay-ms 0";
+        launcher =
+          if config.layer-shell.ags.enable
+          then "ags toggle launcher"
+          else "quickshell ipc call launcher toggle";
       in
         with config.lib.niri.actions;
           lib.attrsets.mergeAttrsList [
             workspaces
             {
               "Mod+Return".action.spawn-sh = "kitty -1";
-              "Mod+Space".action.spawn-sh = "${transition}; ags toggle launcher";
+              "Mod+Space".action.spawn-sh = launcher;
               "Mod+Shift+Slash".action = show-hotkey-overlay;
 
               "Mod+H".action = focus-column-or-monitor-left;
@@ -159,35 +167,20 @@
           ];
 
       # this is broken for my bar because there is no `ignore_alpha` option like in hyprland.
-      # layer-rules = [
-      #   {
-      #     matches = [
-      #       {
-      #         namespace = "^top-bar$";
-      #       }
-      #       {
-      #         namespace = "^floating-notifications$";
-      #       }
-      #       {
-      #         namespace = "^launcher$";
-      #       }
-      #       {
-      #         namespace = "^center-menu$";
-      #       }
-      #       {
-      #         namespace = "^control-panel$";
-      #       }
-      #       {
-      #         namespace = "^OSD$";
-      #       }
-      #     ];
-      #
-      #     background-effect = {
-      #       blur = true;
-      #       xray = false;
-      #     };
-      #   }
-      # ];
+      layer-rules = [
+        {
+          matches = [
+            {
+              namespace = "^(bar|launcher|osd)$";
+            }
+          ];
+
+          background-effect = {
+            blur = true;
+            xray = false;
+          };
+        }
+      ];
 
       window-rules = [
         {
