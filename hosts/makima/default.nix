@@ -34,16 +34,21 @@ in {
     ++ securityImports;
 
   boot = {
-    # Track the latest Linux kernel release for improved hardware support
     kernelPackages = pkgs.linuxPackages_latest;
     loader = {
-      # Bootloader.
       systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true; # Did you read the comment?
+      efi.canTouchEfiVariables = true;
 
-      # Limit the number of generations to keep
       systemd-boot.configurationLimit = 10;
     };
+
+    plymouth.enable = true;
+    # initrd.systemd.enable = true;
+    kernelParams = [
+      "quiet"
+      "udev.log_level=3"
+      "systemd.show_status=auto"
+    ];
   };
 
   services = {
