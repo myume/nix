@@ -8,10 +8,12 @@ import qs.common
 RowLayout {
     id: root
     opacity: active
+    visible: false
 
     required property real percentage
     required property string iconName
     property bool active: false
+    property bool startup: true
 
     spacing: 8
 
@@ -44,6 +46,10 @@ RowLayout {
     }
 
     function activate() {
+        if (startup) {
+            return startupTimer.restart();
+        }
+
         root.active = true;
         root.visible = true;
         visibilityTimer.restart();
@@ -55,6 +61,15 @@ RowLayout {
 
     onPercentageChanged: {
         activate();
+    }
+
+    // debounce the percentage changes on startup
+    Timer {
+        id: startupTimer
+        interval: 100
+        onTriggered: {
+            root.startup = false;
+        }
     }
 
     Timer {
