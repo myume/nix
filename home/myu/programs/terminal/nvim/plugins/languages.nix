@@ -23,7 +23,7 @@
           crates-nvim.enable = true;
         };
       };
-      ts.enable = true;
+      typescript.enable = true;
       gleam.enable = true;
       json.enable = true;
       astro.enable = true;
