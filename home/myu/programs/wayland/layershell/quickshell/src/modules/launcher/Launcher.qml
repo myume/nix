@@ -106,9 +106,8 @@ PanelWindow {
         Behavior on yOffset {
             SpringAnimation {
                 spring: 8
-                damping: 0.5
+                damping: 0.6
                 epsilon: 0.25
-                easing.type: Easing.OutQuint
                 onRunningChanged: {
                     if (!running && !launcher.active)
                         launcher.visible = false;
