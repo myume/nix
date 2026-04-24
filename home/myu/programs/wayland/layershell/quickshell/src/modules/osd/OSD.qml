@@ -79,9 +79,8 @@ Variants {
             Behavior on yOffset {
                 SpringAnimation {
                     spring: 12
-                    damping: 0.5
+                    damping: 0.6
                     epsilon: 0.25
-                    easing.type: Easing.OutQuint
                     onRunningChanged: {
                         if (!running && !osd.active)
                             osd.visible = false;
