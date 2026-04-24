@@ -16,7 +16,6 @@ ListView {
     signal launchedApp(bar: DesktopEntry)
 
     currentIndex: 0
-
     onCurrentIndexChanged: {
         root.positionViewAtIndex(root.currentIndex, ListView.Contain);
     }
@@ -44,6 +43,9 @@ ListView {
         // TODO: order by similarity + frequency
         values: [...DesktopEntries.applications.values].filter(app => app.name.toLowerCase().startsWith(root.inputText))
         objectProp: "id"
+        onValuesChanged: {
+            root.currentIndex = 0;
+        }
     }
     delegate: ItemDelegate {
         id: item
@@ -58,7 +60,7 @@ ListView {
 
         width: parent?.width ?? 0
 
-        highlighted: item.modelData && item.modelData.name === root.selectedEntry?.name
+        highlighted: ListView.isCurrentItem
 
         padding: 10
         background: Rectangle {
