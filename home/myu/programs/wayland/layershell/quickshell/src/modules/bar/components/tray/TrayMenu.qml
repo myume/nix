@@ -10,8 +10,9 @@ PanelWindow {
     color: "transparent"
     required property QsMenuHandle menu
     property int padding: 18
-
     property point pos
+    property bool menuOpen: false
+    property bool menuActive: false
 
     focusable: true
 
@@ -36,6 +37,7 @@ PanelWindow {
     BackgroundEffect.blurRegion: Region {
         item: menuList
         radius: Theme.cornerRadius
+        y: menuList.slideOffset
     }
 
     Rectangle {
@@ -45,6 +47,44 @@ PanelWindow {
         implicitHeight: menuContent.implicitHeight + root.padding
         radius: Theme.cornerRadius
         color: Colors.backgroundColor
+        opacity: !root.menuActive ? 0 : 1
+
+        property int slideOffset: root.menuActive ? 0 : -implicitHeight
+
+        transform: Translate {
+            y: menuList.slideOffset
+        }
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 200
+            }
+        }
+
+        Behavior on slideOffset {
+            SpringAnimation {
+                id: slidein
+                spring: 6
+                damping: 0.6
+                epsilon: 0.25
+                onRunningChanged: {
+                    if (!running && !root.menuActive) {
+                        root.menuOpen = false;
+                    }
+                }
+            }
+        }
+
+        Component.onCompleted: {
+            // trigger animation here
+            root.menuOpen = true;
+            root.menuActive = true;
+        }
+
+        onActiveFocusChanged: {
+            if (!activeFocus)
+                root.menuActive = false;
+        }
 
         QsMenuOpener {
             id: opener
