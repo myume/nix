@@ -28,7 +28,6 @@ MouseArea {
             menu: root.modelData.menu
             pos: root.mapToGlobal(0, 0)
             onMenuOpenChanged: {
-                console.log('open', menuOpen);
                 if (!menuOpen)
                     root.menuActive = false;
             }

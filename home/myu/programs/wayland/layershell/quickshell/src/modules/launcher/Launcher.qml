@@ -98,14 +98,21 @@ PanelWindow {
             }
         }
 
-        property real yOffset: launcher.active ? 0 : implicitHeight
+        property real yOffset: launcher.active ? 0 : implicitHeight + 1
+        opacity: launcher.active ? 1 : 0
         transform: Translate {
             y: content.yOffset
         }
 
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 300
+            }
+        }
+
         Behavior on yOffset {
             SpringAnimation {
-                spring: 8
+                spring: 10
                 damping: 0.6
                 epsilon: 0.25
                 onRunningChanged: {
