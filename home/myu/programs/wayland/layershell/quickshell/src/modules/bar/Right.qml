@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import qs.common
 import "components"
+import "components/tray"
 
 Rectangle {
     implicitWidth: content.implicitWidth + 24

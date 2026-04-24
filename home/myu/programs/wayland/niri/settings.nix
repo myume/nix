@@ -171,7 +171,7 @@
         {
           matches = [
             {
-              namespace = "^(bar|launcher|osd)$";
+              namespace = "^(bar|launcher|osd|popup)$";
             }
           ];
 
