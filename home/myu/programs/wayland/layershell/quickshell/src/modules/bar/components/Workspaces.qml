@@ -10,7 +10,7 @@ Rectangle {
     required property ShellScreen screen
 
     anchors.centerIn: parent
-    implicitWidth: workspaces.implicitWidth + 24
+    implicitWidth: workspaces.implicitWidth
 
     RowLayout {
         id: workspaces

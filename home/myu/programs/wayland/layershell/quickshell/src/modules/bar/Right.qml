@@ -1,25 +1,51 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import qs.common
 import "components"
 import "components/tray"
 
-Rectangle {
-    implicitWidth: content.implicitWidth + 24
-    implicitHeight: parent.height
+RowLayout {
+    id: root
+    implicitHeight: Theme.barHeight
 
-    color: Colors.backgroundColor
-    radius: Theme.cornerRadius
-    antialiasing: true
+    property alias playerRegion: playerContainer
+    property alias contentRegion: content
 
-    RowLayout {
+    Rectangle {
+        id: playerContainer
+        implicitWidth: player.implicitWidth + Theme.barHpadding
+        implicitHeight: parent.height
+
+        color: Colors.backgroundColor
+        radius: Theme.cornerRadius
+        antialiasing: true
+        visible: player.active
+
+        Player {
+            id: player
+            anchors.centerIn: parent
+        }
+    }
+
+    Rectangle {
         id: content
-        anchors.centerIn: parent
+        implicitWidth: coreItems.implicitWidth + Theme.barHpadding
+        implicitHeight: parent.height
 
-        Tray {}
-        Network {}
-        Brightness {}
-        Audio {}
-        Battery {}
+        color: Colors.backgroundColor
+        radius: Theme.cornerRadius
+        antialiasing: true
+
+        RowLayout {
+            id: coreItems
+            anchors.centerIn: parent
+
+            Tray {}
+            Network {}
+            Brightness {}
+            Audio {}
+            Battery {}
+        }
     }
 }

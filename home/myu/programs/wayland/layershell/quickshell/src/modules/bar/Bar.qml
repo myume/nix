@@ -38,7 +38,11 @@ Variants {
                 radius: Theme.cornerRadius
             }
             Region {
-                item: right
+                item: right.playerRegion
+                radius: Theme.cornerRadius
+            }
+            Region {
+                item: right.contentRegion
                 radius: Theme.cornerRadius
             }
         }

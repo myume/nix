@@ -7,7 +7,7 @@ Rectangle {
     id: root
     required property ShellScreen screen
 
-    implicitWidth: workspaces.implicitWidth
+    implicitWidth: workspaces.implicitWidth + Theme.barHpadding
     implicitHeight: parent.height
 
     color: Colors.backgroundColor
