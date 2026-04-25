@@ -37,7 +37,7 @@ Variants {
                 radius: Theme.cornerRadius
             }
             Region {
-                item: mpris
+                item: mprisSection.visible ? mprisSection : null
                 radius: Theme.cornerRadius
             }
             Region {
@@ -61,10 +61,15 @@ Variants {
                     screen: bar.screen
                 }
             }
-
             Section {
-                id: mpris
-                Mpris {}
+                id: mprisSection
+                Mpris {
+                    id: mpris
+                    onActiveChanged: {
+                        if (active)
+                            mprisSection.visible = active;
+                    }
+                }
             }
         }
 
@@ -75,7 +80,6 @@ Variants {
 
             Section {
                 id: clock
-
                 Clock {}
             }
         }
