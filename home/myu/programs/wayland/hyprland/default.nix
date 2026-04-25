@@ -11,7 +11,7 @@
 
   quickshell =
     if config.layer-shell.quickshell.enable
-    then ["quickshell"]
+    then ["quickshell -d"]
     else [];
 
   autostart = ags ++ quickshell;

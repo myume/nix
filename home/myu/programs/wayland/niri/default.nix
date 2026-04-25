@@ -24,6 +24,7 @@
       {
         argv = [
           "quickshell"
+          "-d"
         ];
       }
     ]
