@@ -19,6 +19,11 @@ Singleton {
         objects: Pipewire.nodes.values
     }
 
+    function updateVolume(volume: real) {
+        if (defaultAudioSink?.audio)
+            defaultAudioSink.audio.volume = volume;
+    }
+
     readonly property string iconName: {
         let volumeLevel = "low";
         if (!root.defaultAudioSink || root.defaultAudioSink.audio.muted)

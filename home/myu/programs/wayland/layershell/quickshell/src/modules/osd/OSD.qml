@@ -62,10 +62,16 @@ Variants {
                 OsdSlider {
                     percentage: BrightnessService.percentage
                     iconName: BrightnessService.iconName
+                    onUpdatePercentage: brightness => {
+                        BrightnessService.updateBrightness(brightness);
+                    }
                 }
                 OsdSlider {
                     percentage: AudioService.defaultAudioSink?.audio.volume ?? 0
                     iconName: AudioService.iconName
+                    onUpdatePercentage: volume => {
+                        AudioService.updateVolume(volume);
+                    }
                 }
             }
 

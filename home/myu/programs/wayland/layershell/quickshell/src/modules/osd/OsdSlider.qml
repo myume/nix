@@ -4,6 +4,7 @@ import QtQuick.Effects
 import Quickshell
 import Quickshell.Widgets
 import qs.common
+import qs.components
 
 RowLayout {
     id: root
@@ -14,6 +15,8 @@ RowLayout {
     required property string iconName
     property bool active: false
     property bool startup: true
+
+    signal updatePercentage(percentage: real)
 
     spacing: 8
 
@@ -30,18 +33,23 @@ RowLayout {
         }
     }
 
-    Rectangle {
+    MouseArea {
+        hoverEnabled: true
+        onEntered: visibilityTimer.stop()
+        onExited: visibilityTimer.restart()
+
         Layout.fillWidth: true
+        implicitHeight: slider.height
 
-        color: Colors.text
-        radius: Theme.cornerRadius
-        implicitHeight: 8
+        onClicked: mouse => {
+            root.updatePercentage(mouse.x / width);
+        }
 
-        Rectangle {
-            radius: parent.radius
-            color: Colors.blue
-            implicitHeight: parent.height
-            implicitWidth: parent.width * root.percentage
+        Slider {
+            id: slider
+            percentage: root.percentage
+            implicitHeight: 10
+            anchors.fill: parent
         }
     }
 

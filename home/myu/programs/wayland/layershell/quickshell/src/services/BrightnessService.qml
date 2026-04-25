@@ -16,6 +16,14 @@ Singleton {
         return `brightness-${icon}-symbolic`;
     }
 
+    function updateBrightness(brightness: real) {
+        updateBrightessProc.exec(["brightnessctl", "set", `${Math.round(brightness * 100)}%`]);
+    }
+
+    Process {
+        id: updateBrightessProc
+    }
+
     FileView {
         id: brightness
         path: root.device !== "" ? Qt.resolvedUrl(`/sys/class/backlight/${root.device}/brightness`) : ""
