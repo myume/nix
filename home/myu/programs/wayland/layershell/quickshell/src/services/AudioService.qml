@@ -10,7 +10,7 @@ Singleton {
         if (Pipewire.ready) {
             return Pipewire.nodes.values.filter(node => {
                 return node.name === Pipewire.defaultAudioSink?.name && node.properties["media.class"] === "Audio/Sink";
-            })[0];
+            })[0] ?? null;
         }
         return null;
     }
