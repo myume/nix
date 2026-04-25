@@ -13,6 +13,7 @@ RowLayout {
 
     required property real percentage
     required property string iconName
+    property bool showPercentage: false
     property bool active: false
     property bool startup: true
 
@@ -51,6 +52,13 @@ RowLayout {
             implicitHeight: 10
             anchors.fill: parent
         }
+    }
+
+    Text {
+        visible: root.showPercentage
+        text: Math.round(root.percentage * 100)
+        font: Theme.font
+        color: Colors.text
     }
 
     function activate() {
