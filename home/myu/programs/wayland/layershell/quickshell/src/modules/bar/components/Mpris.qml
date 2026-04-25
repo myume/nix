@@ -32,8 +32,7 @@ Item {
             spacing: 8
             Text {
                 text: root.elideToLength(root.activePlayer.trackTitle, root.maxTitleLength) || "Unknown Title"
-                font.family: Theme.fontFamily
-                font.pixelSize: Theme.font.pixelSize
+                font: Theme.font
                 color: Colors.text
             }
 
@@ -42,12 +41,12 @@ Item {
                 implicitHeight: 4
                 radius: Theme.cornerRadius
                 color: Colors.text
+                opacity: 0.5
             }
 
             Text {
                 text: root.elideToLength(root.activePlayer.trackArtist, root.maxArtistLength) || "Unknown Artist"
-                font.family: Theme.fontFamily
-                font.pixelSize: Theme.font.pixelSize
+                font: Theme.font
                 color: Colors.text
             }
         }
