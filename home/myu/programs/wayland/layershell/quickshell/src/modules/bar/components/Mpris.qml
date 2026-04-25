@@ -2,7 +2,10 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Effects
+import Quickshell
 import Quickshell.Services.Mpris
+import Quickshell.Widgets
 import qs.services
 import qs.common
 
@@ -12,17 +15,10 @@ Item {
 
     property bool active: !!activePlayer
     property MprisPlayer activePlayer: MprisService.activePlayer
-    property int maxTitleLength: 14
-    property int maxArtistLength: 14
+    property int maxTitleLength: 160
+    property int maxArtistLength: 120
 
     implicitWidth: content.implicitWidth
-
-    function elideToLength(s, length) {
-        if (s.length <= length) {
-            return s;
-        }
-        return s.slice(0, length) + "...";
-    }
 
     Loader {
         id: content
@@ -30,13 +26,30 @@ Item {
         anchors.centerIn: parent
         sourceComponent: RowLayout {
             spacing: 8
+            IconImage {
+                property string iconName: MprisService.playerEntry?.icon ?? "audio-x-generic-symbolic"
+                implicitSize: Theme.iconSize + 2
+                source: Quickshell.iconPath(iconName)
+
+                layer {
+                    enabled: iconName.endsWith("symbolic")
+                    effect: MultiEffect {
+                        colorization: 1.0
+                        brightness: 0.6
+                        colorizationColor: Colors.text
+                    }
+                }
+            }
             Text {
-                text: root.elideToLength(root.activePlayer.trackTitle, root.maxTitleLength) || "Unknown Title"
+                Layout.maximumWidth: root.maxTitleLength
+                text: root.activePlayer.trackTitle || "Unknown Title"
                 font: Theme.font
                 color: Colors.text
+                elide: Text.ElideRight
             }
 
             Rectangle {
+                id: sep
                 implicitWidth: 4
                 implicitHeight: 4
                 radius: Theme.cornerRadius
@@ -45,9 +58,11 @@ Item {
             }
 
             Text {
-                text: root.elideToLength(root.activePlayer.trackArtist, root.maxArtistLength) || "Unknown Artist"
+                Layout.maximumWidth: root.maxArtistLength
+                text: root.activePlayer.trackArtist || "Unknown Artist"
                 font: Theme.font
                 color: Colors.text
+                elide: Text.ElideRight
             }
         }
     }

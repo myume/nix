@@ -9,6 +9,20 @@ Singleton {
     id: root
 
     property MprisPlayer activePlayer: playerStack[playerStack.length - 1] ?? null
+    property DesktopEntry playerEntry: null
+
+    onActivePlayerChanged: {
+        if (!activePlayer) {
+            playerEntry = null;
+            return;
+        }
+
+        if (activePlayer.desktopEntry !== "") {
+            playerEntry = DesktopEntries.heuristicLookup(activePlayer.desktopEntry);
+        } else {
+            playerEntry = DesktopEntries.heuristicLookup(activePlayer.identity);
+        }
+    }
 
     // MRU cache for players
     // full MRU might be overkill here
