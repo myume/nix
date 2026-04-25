@@ -12,6 +12,8 @@ Item {
 
     property bool active: !!activePlayer
     property MprisPlayer activePlayer: MprisService.activePlayer
+    property int maxTitleLength: 14
+    property int maxArtistLength: 14
 
     implicitWidth: content.implicitWidth
 
@@ -24,17 +26,28 @@ Item {
 
     Loader {
         id: content
-        active: !!root.activePlayer
+        active: root.active
         anchors.centerIn: parent
         sourceComponent: RowLayout {
+            spacing: 8
             Text {
-                text: root.elideToLength(root.activePlayer.trackTitle, 16) || "Unknown Title"
-                font: Theme.font
+                text: root.elideToLength(root.activePlayer.trackTitle, root.maxTitleLength) || "Unknown Title"
+                font.family: Theme.fontFamily
+                font.pixelSize: Theme.font.pixelSize
                 color: Colors.text
             }
+
+            Rectangle {
+                implicitWidth: 4
+                implicitHeight: 4
+                radius: Theme.cornerRadius
+                color: Colors.text
+            }
+
             Text {
-                text: root.elideToLength(root.activePlayer.trackArtist, 12) || "Unknown Artist"
-                font: Theme.font
+                text: root.elideToLength(root.activePlayer.trackArtist, root.maxArtistLength) || "Unknown Artist"
+                font.family: Theme.fontFamily
+                font.pixelSize: Theme.font.pixelSize
                 color: Colors.text
             }
         }

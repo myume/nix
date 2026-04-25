@@ -1,8 +1,11 @@
 pragma ComponentBehavior: Bound
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import qs.common
+import "components"
+import "components/tray"
 
 Variants {
     model: Quickshell.screens
@@ -30,35 +33,66 @@ Variants {
 
         BackgroundEffect.blurRegion: Region {
             Region {
-                item: left
+                item: workspaces
                 radius: Theme.cornerRadius
             }
             Region {
-                item: center
+                item: mpris
                 radius: Theme.cornerRadius
             }
             Region {
-                item: right.playerRegion
+                item: clock
                 radius: Theme.cornerRadius
             }
             Region {
-                item: right.contentRegion
+                item: right
                 radius: Theme.cornerRadius
             }
         }
 
-        Left {
+        RowLayout {
             id: left
-            screen: bar.screen
+            implicitHeight: Theme.barHeight
             anchors.left: parent.left
+
+            Section {
+                id: workspaces
+                Workspaces {
+                    screen: bar.screen
+                }
+            }
+
+            Section {
+                id: mpris
+                Mpris {}
+            }
         }
-        Center {
+
+        RowLayout {
             id: center
+            implicitHeight: Theme.barHeight
             anchors.centerIn: parent
+
+            Section {
+                id: clock
+
+                Clock {}
+            }
         }
-        Right {
-            id: right
+
+        RowLayout {
+            implicitHeight: Theme.barHeight
             anchors.right: parent.right
+
+            Section {
+                id: right
+
+                Tray {}
+                Network {}
+                Brightness {}
+                Audio {}
+                Battery {}
+            }
         }
     }
 }

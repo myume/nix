@@ -5,11 +5,9 @@ import Quickshell
 import qs.services
 import qs.common
 
-Rectangle {
+Item {
     id: root
     required property ShellScreen screen
-
-    anchors.centerIn: parent
     implicitWidth: workspaces.implicitWidth
 
     RowLayout {
