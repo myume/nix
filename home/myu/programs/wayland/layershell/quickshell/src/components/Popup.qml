@@ -20,10 +20,10 @@ PopupWindow {
     anchor.edges: Edges.Bottom | Edges.Right
     anchor.rect.x: {
         const iconX = item.mapToItem(null, 0, 0).x;
-        const screenWidth = item.QsWindow.window.width;
+        const screenWidth = item.QsWindow.window?.width ?? 0;
         return Math.min(iconX, screenWidth - implicitWidth - marginSize);
     }
-    anchor.rect.y: item.QsWindow.window.height + marginSize
+    anchor.rect.y: item.QsWindow.window?.height ?? 0 + marginSize
 
     implicitWidth: contentContainer.implicitWidth
     implicitHeight: contentContainer.implicitHeight
