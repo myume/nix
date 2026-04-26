@@ -6,14 +6,16 @@ import Quickshell
 import Quickshell.Widgets
 import Quickshell.Services.Pipewire
 import qs.common
-import qs.services
 import qs.components
+import qs.services
 
 Loader {
     id: root
     required property PwNode node
+
     property string iconName: node ? AudioService.iconLookup(node) : ""
-    property string name: node?.description || node?.name || "Unknown"
+    property bool expandable: false
+    property bool expanded: false
 
     active: node && node.audio
 
@@ -22,25 +24,35 @@ Loader {
     }
 
     sourceComponent: ColumnLayout {
-        RowLayout {
-            IconImage {
-                implicitSize: Theme.iconSize
-                source: Quickshell.iconPath(root.iconName)
-                layer {
-                    enabled: root.iconName.endsWith("symbolic")
-                    effect: MultiEffect {
-                        colorization: 1.0
-                        brightness: 0.4
-                        colorizationColor: Colors.text
+        MouseArea {
+            Layout.preferredWidth: 280
+            implicitWidth: label.implicitWidth
+            implicitHeight: label.implicitHeight
+            onClicked: {
+                root.expanded = root.expandable && !root.expanded;
+            }
+            RowLayout {
+                id: label
+
+                AudioLabel {
+                    id: device
+                    node: root.node
+                    iconName: root.iconName
+                }
+
+                IconImage {
+                    visible: root.expandable
+                    implicitSize: Theme.iconSize
+                    source: Quickshell.iconPath("pan-end-symbolic")
+                    layer {
+                        enabled: true
+                        effect: MultiEffect {
+                            colorization: 1.0
+                            brightness: 0.4
+                            colorizationColor: Colors.text
+                        }
                     }
                 }
-            }
-            Text {
-                Layout.preferredWidth: 240
-                text: root.name
-                elide: Text.ElideRight
-                font: Theme.font
-                color: Colors.text
             }
         }
 

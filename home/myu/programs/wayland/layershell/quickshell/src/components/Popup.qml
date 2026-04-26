@@ -23,7 +23,7 @@ PopupWindow {
         const screenWidth = item.QsWindow.window?.width ?? 0;
         return Math.min(iconX, screenWidth - implicitWidth - marginSize);
     }
-    anchor.rect.y: item.QsWindow.window?.height ?? 0 + marginSize
+    anchor.rect.y: (item.QsWindow.window?.height ?? 0) + marginSize
 
     implicitWidth: contentContainer.implicitWidth
     implicitHeight: contentContainer.implicitHeight
