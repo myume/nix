@@ -10,7 +10,7 @@ PanelWindow {
     color: "transparent"
     required property QsMenuHandle menu
     property int padding: 18
-    property point pos
+    required property point pos
     property bool menuOpen: false
     property bool menuActive: false
 

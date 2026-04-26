@@ -106,9 +106,4 @@ RowLayout {
             }
         }
     }
-    Behavior on percentage {
-        NumberAnimation {
-            duration: 100
-        }
-    }
 }

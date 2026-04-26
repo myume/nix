@@ -9,14 +9,32 @@ Singleton {
     readonly property PwNode defaultAudioSink: {
         if (Pipewire.ready) {
             return Pipewire.nodes.values.filter(node => {
-                return node.name === Pipewire.defaultAudioSink?.name && node.properties["media.class"] === "Audio/Sink";
+                return node.name === Pipewire.defaultAudioSink?.name && node.type === PwNodeType.AudioSink;
             })[0] ?? null;
         }
         return null;
     }
 
+    readonly property PwNodeLinkTracker linkTracker: PwNodeLinkTracker {
+        node: root.defaultAudioSink
+    }
+
     PwObjectTracker {
         objects: Pipewire.nodes.values
+    }
+
+    function iconLookup(node: PwNode): string {
+        for (const prop in node.properties) {
+            if (prop.match(/icon.?name/)) {
+                return node.properties[prop];
+            }
+        }
+
+        const entry = DesktopEntries.applications.values.filter(entry => {
+            return entry.id.includes(node.name.toLowerCase());
+        })[0];
+
+        return entry?.icon ?? "audio-volume-high-symbolic";
     }
 
     function updateVolume(volume: real) {
