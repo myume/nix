@@ -43,6 +43,7 @@ in {
   config = lib.mkIf config.compositor.niri.enable {
     home.packages = [
       pkgs.xwayland-satellite
+      pkgs.playerctl
     ];
 
     programs.niri.settings.spawn-at-startup = autostart;
