@@ -35,13 +35,30 @@ MouseArea {
     property bool showSinkSelector: false
 
     readonly property Component selector: ColumnLayout {
+        id: selector
+        property bool active: false
+        Component.onCompleted: {
+            active = true;
+        }
+        opacity: active ? 1 : 0
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 200
+                onRunningChanged: {
+                    if (!running && !selector.active) {
+                        root.showSinkSelector = false;
+                    }
+                }
+            }
+        }
+
         spacing: 8
 
         RowLayout {
             MouseArea {
                 hoverEnabled: true
                 onClicked: {
-                    root.showSinkSelector = false;
+                    selector.active = false;
                 }
                 implicitWidth: backIcon.implicitWidth
                 implicitHeight: backIcon.implicitHeight
@@ -98,7 +115,15 @@ MouseArea {
                 background: Rectangle {
                     radius: Theme.cornerRadius / 2
                     color: item.highlighted ? Colors.blue : "transparent"
-                    opacity: 0.2
+                    opacity: 0.3
+                    border.color: Colors.blue
+                    border.width: 2
+
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 200
+                        }
+                    }
                 }
 
                 onClicked: {
@@ -116,7 +141,23 @@ MouseArea {
     }
 
     readonly property Component mixer: ColumnLayout {
+        id: mixer
         spacing: 16
+        property bool active: false
+        Component.onCompleted: {
+            active = true;
+        }
+        opacity: active ? 1 : 0
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 200
+                onRunningChanged: {
+                    if (!running && !mixer.active) {
+                        root.showSinkSelector = true;
+                    }
+                }
+            }
+        }
 
         AudioSlider {
             id: sinkSlider
@@ -125,7 +166,9 @@ MouseArea {
             expandable: true
             expanded: root.showSinkSelector
             onExpandedChanged: {
-                root.showSinkSelector = expanded;
+                if (expanded) {
+                    mixer.active = false;
+                }
             }
         }
 
