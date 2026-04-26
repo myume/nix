@@ -70,7 +70,7 @@ Loader {
                 id: slider
                 anchors.fill: parent
                 implicitHeight: 8
-                percentage: root.node.audio.volume
+                percentage: root.node?.audio.volume || 0
             }
         }
     }

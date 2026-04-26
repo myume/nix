@@ -16,6 +16,9 @@ PopupWindow {
     property int padding: Theme.barHpadding
     default property alias children: content.data
 
+    property bool isReady: false
+    Component.onCompleted: isReady = true
+
     anchor.window: item.QsWindow.window
     anchor.edges: Edges.Bottom | Edges.Right
     anchor.rect.x: {
@@ -39,6 +42,14 @@ PopupWindow {
         implicitHeight: content.implicitHeight + popup.padding
         radius: Theme.cornerRadius
         color: Colors.backgroundColor
+
+        opacity: (popup.visible && popup.isReady) ? 1.0 : 0.0
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 350
+            }
+        }
+
         ColumnLayout {
             id: content
             anchors.centerIn: parent

@@ -5,11 +5,11 @@ import qs.common
 Rectangle {
     id: root
 
-    default property alias children: content.data
+    default property alias components: content.data
     property bool enableAnimations: true
 
     implicitWidth: content.implicitWidth + (content.implicitWidth > 0) * Theme.barHpadding
-    implicitHeight: parent.implicitHeight
+    implicitHeight: parent.height
     opacity: implicitWidth === 0 ? 0 : 1
 
     color: Colors.backgroundColor
