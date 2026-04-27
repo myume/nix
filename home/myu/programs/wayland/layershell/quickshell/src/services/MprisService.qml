@@ -8,7 +8,7 @@ import Quickshell.Services.Mpris
 Singleton {
     id: root
 
-    property MprisPlayer activePlayer: playerStack[playerStack.length - 1] ?? null
+    property MprisPlayer activePlayer: playingStack[playingStack.length - 1] ?? pausedStack[pausedStack.length - 1] ?? null
     property DesktopEntry playerEntry: null
 
     onActivePlayerChanged: {
@@ -27,7 +27,8 @@ Singleton {
     // MRU cache for players
     // full MRU might be overkill here
     // approximate if this becomes a performance issue (i doubt it)
-    property var playerStack: []
+    property var playingStack: []
+    property var pausedStack: Mpris.players.values.filter(player => !player.isPlaying)
 
     Instantiator {
         model: Mpris.players
@@ -35,14 +36,16 @@ Singleton {
         onObjectAdded: index => {
             const addedPlayer = Mpris.players.values[index];
             if (addedPlayer.isPlaying) {
-                root.playerStack.push(addedPlayer);
-                root.playerStackChanged();
+                root.playingStack = [...root.playingStack, addedPlayer];
+            } else {
+                root.pausedStack = [...root.pausedStack, addedPlayer];
             }
         }
 
         onObjectRemoved: index => {
             const removedPlayer = Mpris.players.values[index];
-            root.playerStack = root.playerStack.filter(player => player.identity !== removedPlayer.identity);
+            root.playingStack = root.playingStack.filter(player => player.identity !== removedPlayer.identity);
+            root.pausedStack = root.pausedStack.filter(player => player.identity !== removedPlayer.identity);
         }
 
         Connections {
@@ -51,11 +54,13 @@ Singleton {
             target: modelData
 
             function onIsPlayingChanged() {
-                const updatedState = root.playerStack.filter(player => player.identity !== modelData.identity);
                 if (modelData.isPlaying) {
-                    updatedState.push(modelData);
+                    root.pausedStack = root.pausedStack.filter(player => player.identity !== modelData.identity);
+                    root.playingStack = [...root.playingStack, modelData];
+                } else {
+                    root.playingStack = root.playingStack.filter(player => player.identity !== modelData.identity);
+                    root.pausedStack = [...root.pausedStack, modelData];
                 }
-                root.playerStack = updatedState;
             }
         }
     }
