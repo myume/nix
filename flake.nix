@@ -36,6 +36,8 @@
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    fsel.url = "github:Mjoyufull/fsel/dev";
   };
 
   outputs = inputs: {

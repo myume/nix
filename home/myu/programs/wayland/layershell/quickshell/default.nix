@@ -15,6 +15,7 @@ in {
     home.packages = [
       quickshell
       pkgs.papirus-icon-theme
+      inputs.fsel.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
 
     xdg.configFile."quickshell".source = ./src;
