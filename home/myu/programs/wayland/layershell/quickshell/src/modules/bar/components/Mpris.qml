@@ -69,14 +69,18 @@ MouseArea {
     }
 
     onClicked: {
-        popupLoader.item.visible = !popupLoader.item.visible;
+        popupLoader.active = !popupLoader.active;
     }
 
-    LazyLoader {
+    Loader {
         id: popupLoader
-        loading: true
-        component: MprisPopup {
+        active: false
+        sourceComponent: MprisPopup {
             item: playerStatus
+            onIsOpenChanged: {
+                if (!isOpen)
+                    popupLoader.active = false;
+            }
         }
     }
 }

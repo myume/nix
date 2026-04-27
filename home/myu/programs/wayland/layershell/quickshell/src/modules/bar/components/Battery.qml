@@ -2,12 +2,8 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Effects
 import Quickshell.Services.UPower
-import Quickshell
-import Quickshell.Widgets
 import qs.common
-import qs.components
 
 MouseArea {
     id: root
@@ -32,13 +28,19 @@ MouseArea {
         }
     }
 
-    onClicked: popupLoader.item.visible = !popupLoader.item.visible
+    onClicked: {
+        popupLoader.active = !popupLoader.active;
+    }
 
-    LazyLoader {
+    Loader {
         id: popupLoader
-        loading: true
-        component: BatteryPopup {
+        active: false
+        sourceComponent: BatteryPopup {
             item: icon
+            onIsOpenChanged: {
+                if (!isOpen)
+                    popupLoader.active = false;
+            }
         }
     }
 }

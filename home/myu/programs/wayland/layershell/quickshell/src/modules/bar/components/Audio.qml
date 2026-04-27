@@ -31,7 +31,6 @@ MouseArea {
         }
     }
 
-    onClicked: popupLoader.item.visible = !popupLoader.item.visible
     property bool showSinkSelector: false
 
     readonly property Component selector: ColumnLayout {
@@ -43,7 +42,7 @@ MouseArea {
         opacity: active ? 1 : 0
         Behavior on opacity {
             NumberAnimation {
-                duration: 200
+                duration: 150
                 onRunningChanged: {
                     if (!running && !selector.active) {
                         root.showSinkSelector = false;
@@ -150,7 +149,7 @@ MouseArea {
         opacity: active ? 1 : 0
         Behavior on opacity {
             NumberAnimation {
-                duration: 200
+                duration: 150
                 onRunningChanged: {
                     if (!running && !mixer.active) {
                         root.showSinkSelector = true;
@@ -197,14 +196,19 @@ MouseArea {
         }
     }
 
-    LazyLoader {
+    onClicked: {
+        popupLoader.active = !popupLoader.active;
+    }
+
+    Loader {
         id: popupLoader
-        loading: true
-        component: Popup {
+        active: false
+        sourceComponent: Popup {
             item: icon
             padding: Theme.barHpadding + 16
-            onVisibleChanged: {
-                if (!visible) {
+            onIsOpenChanged: {
+                if (!isOpen) {
+                    popupLoader.active = false;
                     root.showSinkSelector = false;
                 }
             }

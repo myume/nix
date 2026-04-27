@@ -40,7 +40,7 @@ Popup {
                         font.pixelSize: Theme.font.pixelSize * 2
                         font.weight: 600
                         color: Colors.text
-                        Layout.maximumWidth: 320
+                        Layout.maximumWidth: 200
                         maximumLineCount: 2
                         elide: Text.ElideRight
                     }
@@ -49,7 +49,7 @@ Popup {
                         font.pixelSize: Theme.font.pixelSize * 1.2
                         font.weight: 500
                         color: Colors.text
-                        Layout.maximumWidth: 320
+                        Layout.maximumWidth: 200
                         maximumLineCount: 1
                         elide: Text.ElideRight
                     }
@@ -93,7 +93,6 @@ Popup {
 
             Slider {
                 visible: root.activePlayer.positionSupported && root.activePlayer.lengthSupported
-                Layout.minimumWidth: 250
                 Layout.fillWidth: true
                 implicitHeight: 4
                 percentage: Math.min(root.activePlayer.position / root.activePlayer.length, 1)

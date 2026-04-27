@@ -25,10 +25,10 @@ MouseArea {
         active: root.modelData.hasMenu && root.modelData.menu && root.menuActive
         sourceComponent: TrayMenu {
             id: menu
+            item: icon
             menu: root.modelData.menu
-            pos: root.mapToGlobal(0, 0)
-            onMenuOpenChanged: {
-                if (!menuOpen)
+            onIsOpenChanged: {
+                if (!isOpen)
                     root.menuActive = false;
             }
         }
