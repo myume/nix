@@ -4,10 +4,13 @@ import qs.common
 Rectangle {
     id: root
     required property real percentage
+    property bool enableAnimations: true
     property bool horizontal: true
 
     color: Colors.text
     radius: Theme.cornerRadius
+
+    clip: true
 
     Rectangle {
         anchors.bottom: parent.bottom
@@ -19,6 +22,7 @@ Rectangle {
     }
 
     Behavior on percentage {
+        enabled: root.enableAnimations
         NumberAnimation {
             duration: 100
         }

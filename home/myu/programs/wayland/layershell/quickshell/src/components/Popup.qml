@@ -22,9 +22,9 @@ PopupWindow {
     anchor.window: item.QsWindow.window
     anchor.edges: Edges.Bottom | Edges.Right
     anchor.rect.x: {
-        const iconX = item.mapToItem(null, 0, 0).x;
+        const iconX = item.mapToGlobal(0, 0).x - implicitWidth / 2;
         const screenWidth = item.QsWindow.window?.width ?? 0;
-        return Math.min(iconX, screenWidth - implicitWidth - marginSize);
+        return Math.max(Math.min(iconX, screenWidth - implicitWidth - marginSize), marginSize);
     }
     anchor.rect.y: (item.QsWindow.window?.height ?? 0) + marginSize
 

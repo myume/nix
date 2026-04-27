@@ -25,7 +25,7 @@ PanelWindow {
     implicitHeight: menuList.implicitHeight
 
     margins {
-        top: Theme.barHeight + 8
+        top: pos.y + Theme.barHeight * 2 + 8
         right: Math.max(screen.width - pos.x - implicitWidth, 8)
     }
 

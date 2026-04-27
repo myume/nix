@@ -43,9 +43,11 @@ Singleton {
         }
 
         onObjectRemoved: index => {
-            const removedPlayer = Mpris.players.values[index];
-            root.playingStack = root.playingStack.filter(player => player.identity !== removedPlayer.identity);
-            root.pausedStack = root.pausedStack.filter(player => player.identity !== removedPlayer.identity);
+            if (index < Mpris.players.values.length) {
+                const removedPlayer = Mpris.players.values[index];
+                root.playingStack = root.playingStack.filter(player => player?.identity !== removedPlayer.identity);
+                root.pausedStack = root.pausedStack.filter(player => player?.identity !== removedPlayer.identity);
+            }
         }
 
         Connections {

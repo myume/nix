@@ -9,7 +9,7 @@ import Quickshell.Widgets
 import qs.services
 import qs.common
 
-Item {
+MouseArea {
     id: root
     visible: active
 
@@ -18,10 +18,11 @@ Item {
     property int maxTitleLength: 160
     property int maxArtistLength: 120
 
-    implicitWidth: content.implicitWidth
+    implicitWidth: playerStatus.implicitWidth
+    implicitHeight: playerStatus.implicitHeight
 
     Loader {
-        id: content
+        id: playerStatus
         active: root.active
         anchors.centerIn: parent
         sourceComponent: RowLayout {
@@ -64,6 +65,18 @@ Item {
                 color: Colors.text
                 elide: Text.ElideRight
             }
+        }
+    }
+
+    onClicked: {
+        popupLoader.item.visible = !popupLoader.item.visible;
+    }
+
+    LazyLoader {
+        id: popupLoader
+        loading: true
+        component: MprisPopup {
+            item: playerStatus
         }
     }
 }
