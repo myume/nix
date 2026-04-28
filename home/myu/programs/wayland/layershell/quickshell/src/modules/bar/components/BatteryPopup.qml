@@ -91,8 +91,9 @@ Popup {
                         return profile;
                     }
 
-                    onClicked: {
-                        PowerProfiles.profile = modelData;
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: PowerProfiles.profile = powerProfileItem.modelData
                     }
 
                     hoverEnabled: true
