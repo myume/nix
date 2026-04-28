@@ -18,6 +18,10 @@ in {
       inputs.fsel.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
 
+    xdg.configFile."fsel/config.toml".text = ''
+      terminal_launcher = "kitty -e"
+    '';
+
     xdg.configFile."quickshell".source = ./src;
   };
 }
