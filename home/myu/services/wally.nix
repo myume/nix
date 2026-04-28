@@ -12,7 +12,10 @@
           anime = true;
         };
       };
-      setCommand = "awww img {{path}}";
+      setCommand = [
+        "awww img {{path}}"
+        "awww img -n overview {{path}}"
+      ];
     };
   };
 }

@@ -30,7 +30,18 @@
     ]
     else [];
 
-  autostart = ags ++ quickshell;
+  autostart =
+    ags
+    ++ quickshell
+    ++ [
+      {
+        argv = [
+          "awww-daemon"
+          "-n"
+          "overview"
+        ];
+      }
+    ];
 in {
   imports = [
     ./settings.nix

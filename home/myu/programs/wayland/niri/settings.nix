@@ -48,10 +48,6 @@
         };
       };
 
-      overview = {
-        backdrop-color = "#313244";
-      };
-
       screenshot-path = "~/Pictures/Screenshots/%Y-%m-%dT%H:%M:%S.png";
 
       input = {
@@ -178,6 +174,17 @@
           background-effect = {
             blur = true;
             xray = false;
+          };
+        }
+        {
+          matches = [
+            {
+              namespace = "^awww-daemonoverview$";
+            }
+          ];
+          place-within-backdrop = true;
+          background-effect = {
+            blur = true;
           };
         }
       ];

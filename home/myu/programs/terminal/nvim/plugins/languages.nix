@@ -24,11 +24,11 @@
         };
       };
       typescript.enable = true;
-      gleam.enable = true;
       json.enable = true;
       astro.enable = true;
       qml.enable = true;
 
+      # gleam.enable = true;
       # sql.enable = true;
       # lua.enable = true;
       # zig.enable = true;
