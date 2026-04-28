@@ -6,18 +6,32 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Widgets
 import qs.common
+import qs.services
 
 ListView {
     id: root
 
+    FselService {
+        id: fsel
+    }
+
     property string placeholderText: "Search"
     required property string inputText
-    readonly property DesktopEntry selectedEntry: model.values.length > 0 ? model.values[currentIndex] ?? null : null
-    signal launchedApp(bar: DesktopEntry)
+    readonly property var selectedEntry: model.values.length > 0 ? model.values[currentIndex] ?? null : null
+    signal launchedApp(app: var)
 
     currentIndex: 0
     onCurrentIndexChanged: {
         root.positionViewAtIndex(root.currentIndex, ListView.Contain);
+    }
+
+    onInputTextChanged: {
+        fsel.query(root.inputText);
+    }
+
+    function fselLaunch(app) {
+        fsel.launch(app);
+        root.launchedApp(app);
     }
 
     function onKeyPressed(event: KeyEvent) {
@@ -29,10 +43,9 @@ ListView {
             currentIndex = Math.min(root.count - 1, currentIndex + 1);
             event.accepted = true;
         }
-        if (event.key === Qt.Key_Return) {
-            selectedEntry?.execute();
+        if (event.key === Qt.Key_Return && selectedEntry) {
+            fselLaunch(selectedEntry);
             event.accepted = true;
-            launchedApp(selectedEntry);
         }
     }
 
@@ -40,21 +53,20 @@ ListView {
 
     spacing: 4
     model: ScriptModel {
-        // TODO: order by similarity + frequency
-        values: [...DesktopEntries.applications.values].filter(app => app.name.toLowerCase().startsWith(root.inputText))
-        objectProp: "id"
+        values: fsel.desktopEntries
+        objectProp: "desktop_id"
         onValuesChanged: {
             root.currentIndex = 0;
         }
     }
     delegate: ItemDelegate {
         id: item
-        required property DesktopEntry modelData
+        required property var modelData
         enabled: true
         hoverEnabled: true
         onHoveredChanged: {
             if (hovered) {
-                root.currentIndex = root.model.values.findIndex(app => app.id === modelData.id);
+                root.currentIndex = root.model.values.findIndex(app => app.desktop_id === modelData.desktop_id);
             }
         }
 
@@ -69,10 +81,7 @@ ListView {
             opacity: 0.2
         }
 
-        onClicked: {
-            modelData.execute();
-            root.launchedApp(modelData);
-        }
+        onClicked: root.fselLaunch(modelData)
 
         contentItem: RowLayout {
             id: content
@@ -95,8 +104,8 @@ ListView {
                 }
                 Text {
                     Layout.fillWidth: true
-                    visible: item.modelData.comment !== ""
-                    text: item.modelData.comment
+                    visible: item.modelData.description !== ""
+                    text: item.modelData.description
                     color: Colors.translucentText
                     font.family: Theme.fontFamily
                     font.weight: 500
