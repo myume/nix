@@ -52,6 +52,8 @@ PanelWindow {
         radius: Theme.cornerRadius
         color: Colors.backgroundColor
         opacity: !root.isActive ? 0 : 1
+        border.color: Colors.surface0
+        border.width: 1.5
 
         property int slideOffset: root.isActive ? 0 : -implicitHeight
 
