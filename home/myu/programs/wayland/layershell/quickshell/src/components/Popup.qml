@@ -55,6 +55,10 @@ PanelWindow {
         border.color: Colors.surface0
         border.width: 1.5
 
+        Keys.onEscapePressed: {
+            root.isActive = false;
+        }
+
         property int slideOffset: root.isActive ? 0 : -implicitHeight
 
         transform: Translate {
