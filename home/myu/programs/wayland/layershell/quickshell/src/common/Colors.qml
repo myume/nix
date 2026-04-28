@@ -12,6 +12,7 @@ Singleton {
     readonly property string green: "#a6e3a1"
     readonly property string peach: "#fab387"
     readonly property string red: "#f38ba8"
+    readonly property string sky: "#89dceb"
 
     readonly property string overlay: "#9399b2"
     readonly property string text: "#dee5fa"

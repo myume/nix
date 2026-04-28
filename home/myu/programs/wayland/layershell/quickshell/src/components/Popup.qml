@@ -35,10 +35,9 @@ PanelWindow {
         }
     }
 
-    anchors {
-        top: true
-        left: true
-    }
+    anchors.top: item.bottom
+    anchors.left: item.left
+
     BackgroundEffect.blurRegion: Region {
         item: contentContainer
         radius: Theme.cornerRadius
