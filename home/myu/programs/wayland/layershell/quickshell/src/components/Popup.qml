@@ -26,7 +26,7 @@ PanelWindow {
 
     margins {
         top: {
-            return item.mapToGlobal(0, 0).y + item.implicitHeight + root.margin + 4;
+            return item.mapToGlobal(0, 0).y + item.implicitHeight + root.margin + 6;
         }
         left: {
             const maxOffset = screen.width - implicitWidth - root.margin;
