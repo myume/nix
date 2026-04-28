@@ -31,6 +31,7 @@ ListView {
 
     function fselLaunch(app) {
         fsel.launch(app);
+        fsel.resetEntries();
         root.launchedApp(app);
     }
 
