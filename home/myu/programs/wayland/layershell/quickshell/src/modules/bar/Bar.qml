@@ -45,6 +45,10 @@ Variants {
                 radius: Theme.cornerRadius
             }
             Region {
+                item: tray
+                radius: Theme.cornerRadius
+            }
+            Region {
                 item: right
                 radius: Theme.cornerRadius
             }
@@ -89,9 +93,14 @@ Variants {
             anchors.right: parent.right
 
             Section {
+                id: tray
+                Tray {}
+            }
+
+            Section {
                 id: right
 
-                Tray {}
+                // Tray {}
                 Network {}
                 Brightness {}
                 Audio {}
