@@ -1,5 +1,6 @@
 pragma ComponentBehavior: Bound
 import QtQuick
+import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
@@ -21,14 +22,27 @@ Popup {
             RowLayout {
                 spacing: 16
                 ClippingRectangle {
-                    visible: root.activePlayer.trackArtUrl !== ""
-                    radius: Theme.cornerRadius
+                    visible: art.source !== ""
+                    radius: Theme.cornerRadius / 2
                     implicitWidth: art.implicitWidth
                     implicitHeight: art.implicitHeight
+                    color: "transparent"
+
                     IconImage {
                         id: art
                         implicitSize: 72
-                        source: root.activePlayer.trackArtUrl
+                        source: {
+                            const fallback = Quickshell.iconPath(MprisService.playerEntry?.icon ?? "audio-x-generic-symbolic");
+                            return root.activePlayer.trackArtUrl || fallback;
+                        }
+                        layer {
+                            enabled: art.source.toString().endsWith("symbolic")
+                            effect: MultiEffect {
+                                colorization: 1.0
+                                brightness: 0.5
+                                colorizationColor: Colors.text
+                            }
+                        }
                     }
                 }
 
