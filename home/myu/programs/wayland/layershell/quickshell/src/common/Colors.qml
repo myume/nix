@@ -5,6 +5,8 @@ import Quickshell
 Singleton {
     readonly property string backgroundColor: "#a01e1e2e"
     readonly property string bgColor: "#1e1e2e"
+    readonly property string base: "#24273a"
+    readonly property string translucentBase: "#d024273a"
 
     readonly property string blue: "#89b4fa"
     readonly property string translucentBlue: "#a089b4fa"
