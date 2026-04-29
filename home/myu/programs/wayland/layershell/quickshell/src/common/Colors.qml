@@ -9,7 +9,7 @@ Singleton {
     readonly property string translucentBase: "#d024273a"
 
     readonly property string blue: "#89b4fa"
-    readonly property string translucentBlue: "#a089b4fa"
+    readonly property string translucentBlue: "#5089b4fa"
     readonly property string lavender: "#b4befe"
     readonly property string sapphire: "#74c7ec"
     readonly property string green: "#a6e3a1"

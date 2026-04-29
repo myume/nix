@@ -11,23 +11,30 @@ Singleton {
     property list<var> activeNotifications: []
     property list<var> notifications: []
     property var timestamps: ({})
+    property bool dnd: false
 
     function setInactive(id: int) {
         activeNotifications = activeNotifications.filter(notif => notif.id !== id);
+    }
+
+    function clear() {
+        activeNotifications = [];
+        notifications = [];
+        timestamps = {};
     }
 
     function onNewNotification(notif: Notification) {
         notifications = [...root.notifications, notif];
         timestamps[notif.id] = new Date();
 
-        if (!notif.lastGeneration)
+        if (!notif.lastGeneration && !dnd)
             activeNotifications = [...root.activeNotifications, notif];
     }
 
-    function onClosed(notif: Notification) {
-        root.notifications = root.notifications.filter(notif => notif.id !== notif.id);
-        root.activeNotifications = root.activeNotifications.filter(notif => notif.id !== notif.id);
-        delete root.timestamps[notif.id];
+    function onClosed(closed: Notification) {
+        root.notifications = root.notifications.filter(notif => notif.id !== closed.id);
+        root.activeNotifications = root.activeNotifications.filter(notif => notif.id !== closed.id);
+        delete root.timestamps[closed.id];
     }
 
     NotificationServer {

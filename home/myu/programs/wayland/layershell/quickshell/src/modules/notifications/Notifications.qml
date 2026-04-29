@@ -42,30 +42,13 @@ Variants {
 
             implicitWidth: screen.width / 4
 
-            ListView {
-                id: notifList
+            NotificationList {
                 anchors.fill: parent
-                visible: count > 0
-                spacing: 8
-                verticalLayoutDirection: ListView.BottomToTop
-
                 model: ScriptModel {
                     values: NotificationService.activeNotifications
                     objectProp: "id"
                 }
-
-                removeDisplaced: Transition {
-                    NumberAnimation {
-                        properties: "y"
-                        duration: 300
-                        easing.type: Easing.OutCubic
-                    }
-                }
-
-                delegate: NotificationItem {
-                    required property var modelData
-                    notification: modelData
-                }
+                verticalLayoutDirection: ListView.BottomToTop
             }
         }
     }

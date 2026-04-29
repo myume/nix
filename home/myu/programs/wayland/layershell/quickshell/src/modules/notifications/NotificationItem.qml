@@ -16,16 +16,25 @@ ItemDelegate {
     required property Notification notification
 
     property bool active: false
+    property bool hideOnTimeout: true
+    property bool enabledSlidein: true
 
     opacity: active ? 1 : 0
     x: active ? 0 : implicitWidth
 
     Behavior on x {
+        enabled: root.enabledSlidein
         SpringAnimation {
             id: slidein
             spring: 8
             damping: 0.6
             epsilon: 0.25
+            duration: 200
+        }
+    }
+
+    Behavior on opacity {
+        NumberAnimation {
             duration: 200
             onRunningChanged: {
                 if (!running && !root.active) {
@@ -36,12 +45,6 @@ ItemDelegate {
                     }
                 }
             }
-        }
-    }
-
-    Behavior on opacity {
-        NumberAnimation {
-            duration: 200
         }
     }
 
@@ -62,10 +65,11 @@ ItemDelegate {
 
     Timer {
         id: expireTimer
-        running: true
+        running: root.hideOnTimeout
         interval: Math.max(root.notification.expireTimeout, 3000)
         onTriggered: {
-            root.active = false;
+            if (root.hideOnTimeout)
+                root.active = false;
         }
     }
 

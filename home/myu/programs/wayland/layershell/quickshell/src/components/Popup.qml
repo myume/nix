@@ -52,7 +52,7 @@ PanelWindow {
         radius: Theme.cornerRadius
         color: Colors.backgroundColor
         opacity: !root.isActive ? 0 : 1
-        border.color: Colors.translucentBase
+        border.color: Colors.translucentBlue
         border.width: 2
 
         Keys.onEscapePressed: {

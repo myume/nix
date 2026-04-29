@@ -96,6 +96,7 @@ Variants {
                 Brightness {}
                 Audio {}
                 Battery {}
+                Notifications {}
             }
         }
     }
