@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
@@ -7,97 +9,105 @@ import qs.services
 
 Variants {
     model: Quickshell.screens
-    PanelWindow {
-        id: osd
-        WlrLayershell.namespace: "osd"
-        WlrLayershell.layer: WlrLayer.Overlay
-        exclusionMode: ExclusionMode.Ignore
-
-        anchors {
-            bottom: true
-        }
-
-        margins {
-            bottom: 4
-        }
-
+    LazyLoader {
+        id: root
         required property ShellScreen modelData
-        screen: modelData
 
-        color: "transparent"
-        implicitWidth: content.implicitWidth
-        implicitHeight: content.implicitHeight
+        loading: true
 
-        readonly property bool active: sliders.children.some(child => child.active)
-        onActiveChanged: {
-            if (active) {
-                visible = true;
+        PanelWindow {
+            id: osd
+            WlrLayershell.namespace: "osd"
+            WlrLayershell.layer: WlrLayer.Overlay
+            exclusionMode: ExclusionMode.Ignore
+
+            visible: false
+
+            anchors {
+                bottom: true
             }
-        }
 
-        BackgroundEffect.blurRegion: Region {
-            item: content
-            radius: content.radius
-            y: content.yOffset
-        }
+            margins {
+                bottom: 4
+            }
 
-        Rectangle {
-            id: content
-            radius: Theme.cornerRadius
-            color: Colors.backgroundColor
+            screen: root.modelData
+            color: "transparent"
+            implicitWidth: content.implicitWidth
+            implicitHeight: content.implicitHeight
 
-            implicitWidth: 260
-            implicitHeight: sliders.implicitHeight + sliders.anchors.margins * 2
-
-            ColumnLayout {
-                id: sliders
-                anchors.margins: 24
-                anchors {
-                    leftMargin: 24
-                    rightMargin: 24
-                }
-                anchors.fill: parent
-                spacing: 20
-
-                OsdSlider {
-                    percentage: BrightnessService.percentage
-                    iconName: BrightnessService.iconName
-                    onUpdatePercentage: brightness => {
-                        BrightnessService.updateBrightness(brightness);
-                    }
-                }
-                OsdSlider {
-                    percentage: AudioService.defaultAudioSink?.audio.volume ?? 0
-                    iconName: AudioService.iconName
-                    onUpdatePercentage: volume => {
-                        AudioService.updateVolume(volume);
-                    }
+            readonly property bool active: sliders.children.some(child => child.active)
+            onActiveChanged: {
+                if (active) {
+                    visible = true;
                 }
             }
 
-            // slide in animation
-            property real yOffset: osd.active ? 0 : 50
-
-            transform: Translate {
+            BackgroundEffect.blurRegion: Region {
+                item: content
+                radius: content.radius
                 y: content.yOffset
             }
 
-            Behavior on yOffset {
-                SpringAnimation {
-                    spring: 12
-                    damping: 0.6
-                    epsilon: 0.25
-                    onRunningChanged: {
-                        if (!running && !osd.active)
-                            osd.visible = false;
+            Rectangle {
+                id: content
+                radius: Theme.cornerRadius
+                color: Colors.backgroundColor
+
+                implicitWidth: 260
+                implicitHeight: sliders.implicitHeight + sliders.anchors.margins * 2
+
+                ColumnLayout {
+                    id: sliders
+                    anchors.margins: 24
+                    anchors {
+                        leftMargin: 24
+                        rightMargin: 24
+                    }
+                    anchors.fill: parent
+                    spacing: 20
+
+                    OsdSlider {
+                        percentage: BrightnessService.percentage
+                        iconName: BrightnessService.iconName
+                        onUpdatePercentage: brightness => {
+                            BrightnessService.updateBrightness(brightness);
+                        }
+                    }
+                    OsdSlider {
+                        percentage: AudioService.defaultAudioSink?.audio.volume ?? 0
+                        iconName: AudioService.iconName
+                        onUpdatePercentage: volume => {
+                            AudioService.updateVolume(volume);
+                        }
                     }
                 }
-            }
 
-            // expand animation
-            Behavior on implicitHeight {
-                NumberAnimation {
-                    duration: 100
+                // slide in animation
+                property real yOffset: osd.active ? 0 : 50
+
+                transform: Translate {
+                    y: content.yOffset
+                }
+
+                Behavior on yOffset {
+                    SpringAnimation {
+                        spring: 12
+                        damping: 0.6
+                        epsilon: 0.25
+                        onRunningChanged: {
+                            if (!running && !osd.active) {
+                                osd.visible = false;
+                            }
+                        }
+                    }
+                }
+
+                // expand animation
+                Behavior on implicitHeight {
+                    NumberAnimation {
+                        duration: 100
+                    }
                 }
             }
         }
