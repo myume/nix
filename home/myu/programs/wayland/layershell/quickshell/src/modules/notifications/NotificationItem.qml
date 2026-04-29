@@ -15,6 +15,40 @@ ItemDelegate {
 
     required property Notification notification
 
+    property bool active: false
+
+    opacity: active ? 1 : 0
+    x: active ? 0 : implicitWidth
+
+    Behavior on x {
+        SpringAnimation {
+            id: slidein
+            spring: 8
+            damping: 0.6
+            epsilon: 0.25
+            duration: 200
+            onRunningChanged: {
+                if (!running && !root.active) {
+                    if (root.notification.expireTimeout > 0) {
+                        root.notification.expire();
+                    } else {
+                        NotificationService.setInactive(root.notification.id);
+                    }
+                }
+            }
+        }
+    }
+
+    Behavior on opacity {
+        NumberAnimation {
+            duration: 200
+        }
+    }
+
+    Component.onCompleted: {
+        active = true;
+    }
+
     hoverEnabled: true
     onHoveredChanged: {
         if (hovered) {
@@ -31,11 +65,7 @@ ItemDelegate {
         running: true
         interval: Math.max(root.notification.expireTimeout, 3000)
         onTriggered: {
-            if (root.notification.expireTimeout > 0) {
-                root.notification.expire();
-            } else {
-                NotificationService.setInactive(root.notification.id);
-            }
+            root.active = false;
         }
     }
 
@@ -61,7 +91,7 @@ ItemDelegate {
 
                 RowLayout {
                     IconImage {
-                        visible: root.notification.appIcon !== ""
+                        visible: !!root.notification.appIcon
                         implicitSize: Theme.iconSize + 4
                         source: Quickshell.iconPath(root.notification.appIcon)
                     }

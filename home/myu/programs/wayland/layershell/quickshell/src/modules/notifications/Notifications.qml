@@ -54,11 +54,11 @@ Variants {
                     objectProp: "id"
                 }
 
-                transitions: Transition {
+                removeDisplaced: Transition {
                     NumberAnimation {
-                        properties: "x,y"
-                        from: 100
-                        duration: 1000
+                        properties: "y"
+                        duration: 300
+                        easing.type: Easing.OutCubic
                     }
                 }
 
