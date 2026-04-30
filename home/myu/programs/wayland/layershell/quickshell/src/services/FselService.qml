@@ -11,7 +11,7 @@ Item {
     }
 
     function launch(app: var) {
-        fselLaunch.exec(["fsel", "-r", "-d", "-p", app.name]);
+        fselLaunch.exec(["fsel", "-d", "-p", app.name]);
     }
 
     function resetEntries() {
