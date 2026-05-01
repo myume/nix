@@ -51,6 +51,7 @@ MouseArea {
 
             Rectangle {
                 id: sep
+                visible: artist.visible
                 implicitWidth: 4
                 implicitHeight: 4
                 radius: Theme.cornerRadius
@@ -59,7 +60,9 @@ MouseArea {
             }
 
             Text {
+                id: artist
                 Layout.maximumWidth: root.maxArtistLength
+                visible: root.activePlayer.trackArtist !== ""
                 text: root.activePlayer.trackArtist || "Unknown Artist"
                 font: Theme.font
                 color: Colors.text

@@ -59,7 +59,8 @@ Popup {
                         elide: Text.ElideRight
                     }
                     Text {
-                        text: root.activePlayer.trackArtist || "Unknown Artist"
+                        visible: root.activePlayer.trackArtist !== ""
+                        text: root.activePlayer.trackArtist
                         font.pixelSize: Theme.font.pixelSize * 1.2
                         font.weight: 500
                         color: Colors.text
