@@ -5,17 +5,13 @@ import QtQuick
 Item {
     id: root
     property list<var> desktopEntries: []
-    property string appName: ""
-    property int retries: 3
 
     function query(searchString: string): list<var> {
         fsel.exec(["fsel", "-r", "--stdout", "--filter-actions", "-ss", searchString]);
     }
 
     function launch(app: var) {
-        appName = app.name;
-        retries = 3;
-        fselLaunch.running = true;
+        fselLaunch.exec(["fsel", "-r", "-d", "-p", app.name]);
     }
 
     function resetEntries() {
@@ -24,22 +20,21 @@ Item {
 
     Process {
         id: fselLaunch
-        command: ["fsel", "-d", "-p", root.appName]
         workingDirectory: Quickshell.env("HOME")
-        onExited: (exitCode, exitStatus) => {
-            if (exitCode === 1 || exitStatus === 1) {
-                if (root.retries > 0) {
-                    root.retries -= 1;
-                    running = true;
-                } else {
-                    const entry = DesktopEntries.heuristicLookup(root.appName);
-                    if (entry) {
-                        entry.execute();
-                    } else {
-                        console.error(`Failed to launch application ${root.appName}: exited with code ${exitCode} and status ${exitStatus}`);
-                    }
-                }
+        stderr: StdioCollector {
+            onStreamFinished: {
+                if (text !== "")
+                    console.warn(text);
             }
+        }
+        stdout: StdioCollector {
+            onStreamFinished: {
+                if (text !== "")
+                    console.log(text);
+            }
+        }
+        onExited: (exitCode, exitStatus) => {
+            console.log(exitCode, exitStatus);
         }
     }
 

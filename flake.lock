@@ -164,16 +164,16 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1777263154,
-        "narHash": "sha256-tioSVOXFTAECwKXahwBhvmb6OKoFKnKSG7fNNdabIfQ=",
-        "owner": "Mjoyufull",
+        "lastModified": 1777655367,
+        "narHash": "sha256-EwNkdUFWizUPOla15byC+5/seArZy/w5ujHd7iJiFnk=",
+        "owner": "myume",
         "repo": "fsel",
-        "rev": "c127b7177589c7fbbafd6235824a7534f85b061b",
+        "rev": "dd84edd59d91ef077a70551f8af444b92f1fc1a4",
         "type": "github"
       },
       "original": {
-        "owner": "Mjoyufull",
-        "ref": "dev",
+        "owner": "myume",
+        "ref": "feat/direct-mode-replace",
         "repo": "fsel",
         "type": "github"
       }

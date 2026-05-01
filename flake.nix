@@ -37,7 +37,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    fsel.url = "github:Mjoyufull/fsel/dev";
+    fsel.url = "github:myume/fsel/feat/direct-mode-replace";
   };
 
   outputs = inputs: {
