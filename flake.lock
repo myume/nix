@@ -42,6 +42,26 @@
         "type": "github"
       }
     },
+    "ciri": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778129374,
+        "narHash": "sha256-Pr8FyztqJPSDAn+x8s2pTVdnY+dDPSQlrb8gKcr8OEo=",
+        "owner": "myume",
+        "repo": "ciri",
+        "rev": "d6b102de7ede0aa856ec3b7a45d356bea75e8bed",
+        "type": "github"
+      },
+      "original": {
+        "owner": "myume",
+        "repo": "ciri",
+        "type": "github"
+      }
+    },
     "dc": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -524,6 +544,7 @@
     "root": {
       "inputs": {
         "ags": "ags",
+        "ciri": "ciri",
         "dc": "dc",
         "fsel": "fsel",
         "home-manager": "home-manager",

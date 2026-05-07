@@ -1,0 +1,3 @@
+{
+  programs.ciri.settings = {};
+}

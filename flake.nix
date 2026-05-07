@@ -38,6 +38,11 @@
     };
 
     fsel.url = "github:Mjoyufull/fsel/dev";
+
+    ciri = {
+      url = "github:myume/ciri";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs: {

@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  inputs,
   ...
 }: let
   ags =
@@ -45,6 +46,8 @@
 in {
   imports = [
     ./settings.nix
+    ./ciri.nix
+    inputs.ciri.homeManagerModules.default
   ];
 
   options.compositor.niri = {
@@ -58,5 +61,7 @@ in {
     ];
 
     programs.niri.settings.spawn-at-startup = autostart;
+
+    programs.ciri.enable = true;
   };
 }
