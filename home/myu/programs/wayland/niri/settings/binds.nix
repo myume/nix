@@ -3,7 +3,7 @@
   config,
   ...
 }: {
-  programs.ciri.settings.binds = let
+  programs.niri.settings.binds = let
     workspaces = lib.flatten (map (n: [
       {
         key = "Mod+${toString n}";

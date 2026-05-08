@@ -1,5 +1,5 @@
 {
-  programs.ciri.settings.input = {
+  programs.niri.settings.input = {
     keyboard = {
       xkb = {
         options = "caps:ctrl_modifier";

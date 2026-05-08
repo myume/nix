@@ -1,5 +1,5 @@
 {
-  programs.ciri.settings.layout = {
+  programs.niri.settings.layout = {
     gaps = 10.0;
     struts = {
       top = -4;

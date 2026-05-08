@@ -1,5 +1,5 @@
 {
-  programs.ciri.settings = {
+  programs.niri.settings = {
     layer-rules = [
       {
         matches = [

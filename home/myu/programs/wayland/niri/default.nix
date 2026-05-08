@@ -59,7 +59,7 @@ in {
       pkgs.playerctl
     ];
 
-    programs.ciri = {
+    programs.niri = {
       settings.spawn-at-startup = autostart;
       enable = true;
     };

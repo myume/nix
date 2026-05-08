@@ -6,7 +6,7 @@
     ./rules.nix
   ];
 
-  programs.ciri.settings = {
+  programs.niri.settings = {
     blur = {
       # passes = 4;
       offset = 8.0;

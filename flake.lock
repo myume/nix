@@ -49,11 +49,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778200004,
-        "narHash": "sha256-nWq/noG6OL0jCUKTTiT7Jg0W7ZCFAOPNNyH5ywve3Jg=",
+        "lastModified": 1778200750,
+        "narHash": "sha256-1WUkdZ7JfgIGfJ3mbwSGpzjvQZqNFJd+C5fxI++HIlw=",
         "owner": "myume",
         "repo": "ciri",
-        "rev": "9e20c87c3e6ac02c03681fee45585041d84ac6bd",
+        "rev": "7e566a9a0af0102189ab865824d57e899e5a1f0e",
         "type": "github"
       },
       "original": {
