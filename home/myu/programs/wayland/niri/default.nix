@@ -2,13 +2,14 @@
   pkgs,
   lib,
   config,
+  inputs,
   ...
 }: let
   ags =
     if config.layer-shell.ags.enable
     then [
       {
-        argv = [
+        command = [
           "ags"
           "run"
           "--log-file"
@@ -22,7 +23,7 @@
     if config.layer-shell.quickshell.enable
     then [
       {
-        argv = [
+        command = [
           "quickshell"
           "-d"
         ];
@@ -35,7 +36,7 @@
     ++ quickshell
     ++ [
       {
-        argv = [
+        command = [
           "awww-daemon"
           "-n"
           "overview"
@@ -44,7 +45,8 @@
     ];
 in {
   imports = [
-    ./settings.nix
+    ./settings
+    inputs.ciri.homeManagerModules.default
   ];
 
   options.compositor.niri = {
@@ -57,6 +59,9 @@ in {
       pkgs.playerctl
     ];
 
-    programs.niri.settings.spawn-at-startup = autostart;
+    programs.niri = {
+      settings.spawn-at-startup = autostart;
+      enable = true;
+    };
   };
 }

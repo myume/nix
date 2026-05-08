@@ -25,7 +25,6 @@ in {
       "${modPath}/fonts"
       "${modPath}/virtualisation"
 
-      inputs.niri.nixosModules.niri
       inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
 
       ./hardware-configuration.nix

@@ -21,9 +21,7 @@
             useGlobalPkgs = true;
             useUserPackages = true;
 
-            extraSpecialArgs = {
-              inherit inputs;
-            };
+            extraSpecialArgs = {inherit inputs;};
             users = {
               myu = import ../home/myu/home.nix;
             };
