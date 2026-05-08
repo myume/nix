@@ -30,8 +30,6 @@
     waysted.url = "github:myume/waysted";
     wally.url = "github:myume/wally";
 
-    niri.url = "github:myume/niri-flake/blur";
-
     quickshell = {
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";

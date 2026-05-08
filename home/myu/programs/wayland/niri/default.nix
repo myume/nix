@@ -23,7 +23,7 @@
     if config.layer-shell.quickshell.enable
     then [
       {
-        argv = [
+        command = [
           "quickshell"
           "-d"
         ];
@@ -36,7 +36,7 @@
     ++ quickshell
     ++ [
       {
-        argv = [
+        command = [
           "awww-daemon"
           "-n"
           "overview"
@@ -46,7 +46,6 @@
 in {
   imports = [
     ./settings.nix
-    ./ciri.nix
     inputs.ciri.homeManagerModules.default
   ];
 
@@ -60,8 +59,9 @@ in {
       pkgs.playerctl
     ];
 
-    programs.niri.settings.spawn-at-startup = autostart;
-
-    programs.ciri.enable = true;
+    programs.ciri = {
+      settings.spawn-at-startup = autostart;
+      enable = true;
+    };
   };
 }
