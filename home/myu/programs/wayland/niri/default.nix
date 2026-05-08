@@ -45,7 +45,7 @@
     ];
 in {
   imports = [
-    ./settings.nix
+    ./settings
     inputs.ciri.homeManagerModules.default
   ];
 
