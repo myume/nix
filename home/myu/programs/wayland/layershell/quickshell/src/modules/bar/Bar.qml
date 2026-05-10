@@ -94,7 +94,12 @@ Variants {
 
             Section {
                 id: tray
-                Tray {}
+                Tray {
+                    onActiveChanged: {
+                        if (active)
+                            tray.visible = true;
+                    }
+                }
             }
 
             Section {
