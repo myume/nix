@@ -11,7 +11,7 @@ Item {
     }
 
     function launch(app: var) {
-        fselLaunch.exec(["fsel", "-r", "-d", "-p", app.name]);
+        fselLaunch.exec(["sh", "-c", `fsel -r -d -p "${app.name}"`]);
     }
 
     function resetEntries() {
@@ -27,14 +27,9 @@ Item {
                     console.warn(text);
             }
         }
-        stdout: StdioCollector {
-            onStreamFinished: {
-                if (text !== "")
-                    console.log(text);
-            }
-        }
-        onExited: (exitCode, exitStatus) => {
-            console.log(exitCode, exitStatus);
+        onRunningChanged: {
+            if (!running)
+                root.resetEntries();
         }
     }
 
