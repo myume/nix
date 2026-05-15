@@ -26,7 +26,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    dc.url = "github:myume/dc";
     waysted.url = "github:myume/waysted";
     wally.url = "github:myume/wally";
 
