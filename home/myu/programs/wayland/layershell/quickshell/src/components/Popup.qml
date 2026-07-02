@@ -26,12 +26,12 @@ PanelWindow {
 
     margins {
         top: {
-            return item.mapToGlobal(0, 0).y + item.implicitHeight + root.margin + 6;
+            return item.mapToGlobal(0, 0).y - screen.y + item.implicitHeight + root.margin + 6;
         }
         left: {
             const maxOffset = screen.width - implicitWidth - root.margin;
             const minOffset = root.margin;
-            return Math.min(Math.max(item.mapToGlobal(0, 0).x, minOffset), maxOffset);
+            return Math.min(Math.max(item.mapToGlobal(0, 0).x - screen.x, minOffset), maxOffset);
         }
     }
 
