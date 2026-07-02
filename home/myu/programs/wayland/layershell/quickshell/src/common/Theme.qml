@@ -7,7 +7,7 @@ Singleton {
     id: root
 
     readonly property double cornerRadius: 16
-    readonly property int iconSize: 14
+    readonly property int iconSize: 16
     readonly property int barHeight: 28
     readonly property int barHpadding: 24
 

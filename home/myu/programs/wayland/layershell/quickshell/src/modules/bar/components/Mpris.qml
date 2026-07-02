@@ -29,7 +29,7 @@ MouseArea {
             spacing: 8
             IconImage {
                 property string iconName: MprisService.playerEntry?.icon ?? "audio-x-generic-symbolic"
-                implicitSize: Theme.iconSize + 2
+                implicitSize: Theme.iconSize
                 source: Quickshell.iconPath(iconName)
 
                 layer {

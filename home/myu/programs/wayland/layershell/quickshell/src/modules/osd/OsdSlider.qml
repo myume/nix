@@ -22,7 +22,7 @@ RowLayout {
     spacing: 8
 
     IconImage {
-        implicitSize: Theme.iconSize + 4
+        implicitSize: Theme.iconSize
         source: Quickshell.iconPath(root.iconName)
         layer {
             enabled: true

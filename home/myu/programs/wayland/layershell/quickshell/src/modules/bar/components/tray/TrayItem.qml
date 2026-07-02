@@ -18,7 +18,7 @@ MouseArea {
     IconImage {
         id: icon
         source: root.modelData.icon
-        implicitSize: Theme.iconSize + 2
+        implicitSize: Theme.iconSize
     }
 
     Loader {
