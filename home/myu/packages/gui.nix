@@ -13,5 +13,6 @@
     godot
     krita
     rnote
+    chromium
   ];
 }

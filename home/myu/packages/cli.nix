@@ -30,7 +30,7 @@
     silicon # pretty screenshots of code
     hyperfine # cli benchmarking
 
-    gemini-cli
+    antigravity-cli
     cloudflared
 
     wl-clipboard
