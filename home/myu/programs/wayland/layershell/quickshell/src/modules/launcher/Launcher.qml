@@ -43,7 +43,7 @@ PanelWindow {
         id: content
         color: Colors.backgroundColor
         radius: Theme.cornerRadius
-        implicitWidth: launcher.screen.width / 2
+        implicitWidth: 800
         implicitHeight: implicitWidth / Theme.launcherAspectRatio
 
         ColumnLayout {
