@@ -78,6 +78,7 @@ Popup {
                     RoundButton {
                         visible: root.activePlayer.canGoPrevious
                         onClicked: root.activePlayer.previous()
+                        focusPolicy: Qt.NoFocus
 
                         implicitHeight: 32
                         icon.color: Colors.text
@@ -88,6 +89,7 @@ Popup {
                     RoundButton {
                         visible: root.activePlayer.canTogglePlaying
                         onClicked: root.activePlayer.togglePlaying()
+                        focusPolicy: Qt.NoFocus
 
                         implicitHeight: 32
                         icon.color: Colors.text
@@ -97,6 +99,7 @@ Popup {
                     RoundButton {
                         visible: root.activePlayer.canGoNext
                         onClicked: root.activePlayer.next()
+                        focusPolicy: Qt.NoFocus
 
                         implicitHeight: 32
                         icon.color: Colors.text
