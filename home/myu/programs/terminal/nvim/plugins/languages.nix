@@ -7,7 +7,10 @@
 
       bash.enable = true;
       css.enable = true;
-      clang.enable = true;
+      clang = {
+        enable = true;
+        extraDiagnostics.enable = false;
+      };
       go.enable = true;
       html.enable = true;
       markdown = {
