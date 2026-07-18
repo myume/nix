@@ -157,7 +157,7 @@
       }
       {
         key = "Mod+Ctrl+S";
-        action.spawn-sh = "systemctl suspend";
+        action.spawn-sh = "systemctl hibernate";
       }
 
       {
