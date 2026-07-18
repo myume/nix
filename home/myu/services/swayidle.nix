@@ -1,7 +1,7 @@
-{
+{pkgs, ...}: {
   services.swayidle = let
-    lock = "pidof hyprlock || hyprlock";
-    display = status: "niri msg action power-${status}-monitors";
+    lock = "${pkgs.hyprlock}/bin/hyprlock";
+    display = status: "${pkgs.niri}/bin/niri msg action power-${status}-monitors";
   in {
     enable = true;
     timeouts = [
@@ -12,17 +12,18 @@
       {
         timeout = 6 * 60;
         command = display "off";
+        resumeCommand = display "on";
       }
       {
-        timeout = 15 * 60;
-        command = "systemctl hibernate";
+        timeout = 10 * 60;
+        command = "${pkgs.systemd}/bin/systemctl suspend-then-hibernate";
       }
     ];
 
     events = {
-      before-sleep = (display "off") + "; " + lock;
+      before-sleep = lock;
       after-resume = display "on";
-      lock = (display "off") + "; " + lock;
+      inherit lock;
       unlock = display "on";
     };
   };

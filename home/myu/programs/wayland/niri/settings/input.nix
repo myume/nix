@@ -1,5 +1,6 @@
 {
   programs.niri.settings.input = {
+    disable-power-key-handling = true;
     keyboard = {
       xkb = {
         options = "caps:ctrl_modifier";

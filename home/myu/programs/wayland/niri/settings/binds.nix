@@ -153,11 +153,11 @@
 
       {
         key = "Mod+Shift+L";
-        action.spawn-sh = "hyprlock";
+        action.spawn-sh = "loginctl lock-session";
       }
       {
         key = "Mod+Ctrl+S";
-        action.spawn-sh = "systemctl hibernate";
+        action.spawn-sh = "systemctl suspend-then-hibernate";
       }
 
       {

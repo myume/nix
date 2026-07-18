@@ -24,6 +24,7 @@ in {
       "${modPath}/services"
       "${modPath}/fonts"
       "${modPath}/virtualisation"
+      ./hibernation.nix
 
       inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
 
