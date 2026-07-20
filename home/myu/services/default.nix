@@ -1,6 +1,6 @@
 {
   imports = [
-    ./swayidle.nix
+    ./idle
     ./hyprpaper
     ./waysted.nix
     ./wally.nix

@@ -3,7 +3,7 @@
     lock = "${pkgs.hyprlock}/bin/hyprlock";
     display = status: "${pkgs.niri}/bin/niri msg action power-${status}-monitors";
   in {
-    enable = true;
+    enable = false;
     timeouts = [
       {
         timeout = 5 * 60;
