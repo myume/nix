@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import QtQuick.Controls
 
 ListView {
     id: root
@@ -9,6 +10,9 @@ ListView {
 
     visible: count > 0
     spacing: 8
+    clip: true
+
+    ScrollIndicator.vertical: ScrollIndicator {}
 
     removeDisplaced: Transition {
         NumberAnimation {

@@ -122,7 +122,7 @@ ItemDelegate {
                         minute: 'numeric',
                         second: 'numeric',
                         hour12: false
-                    })
+                    }) ?? ""
                     color: Colors.text
                     font.family: Theme.fontFamily
                     font.weight: 600

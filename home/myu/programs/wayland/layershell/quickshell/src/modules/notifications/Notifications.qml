@@ -40,7 +40,7 @@ Variants {
                 bottom: true
             }
 
-            implicitWidth: screen.width / 4
+            implicitWidth: Math.max(screen.width / 6, 400)
 
             NotificationList {
                 anchors.fill: parent

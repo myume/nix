@@ -18,8 +18,8 @@ Popup {
 
     ColumnLayout {
         spacing: 16
-        Layout.preferredWidth: root.screen.width / 4
-        Layout.preferredHeight: root.screen.height / 2
+        Layout.preferredWidth: Math.min(root.screen.width / 4, 400)
+        Layout.preferredHeight: root.screen.height / 3
 
         RowLayout {
             Text {
