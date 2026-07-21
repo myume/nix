@@ -14,6 +14,7 @@
       pkgs.quickshell
       pkgs.papirus-icon-theme
       inputs.fsel.packages.${pkgs.stdenv.hostPlatform.system}.default
+      pkgs.rink
     ];
 
     xdg.configFile."fsel/config.toml".text = ''

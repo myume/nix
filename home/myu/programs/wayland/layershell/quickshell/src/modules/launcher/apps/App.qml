@@ -19,6 +19,7 @@ ListView {
     required property string inputText
     readonly property var selectedEntry: model.values.length > 0 ? model.values[currentIndex] ?? null : null
     signal launchedApp(app: var)
+    clip: true
 
     currentIndex: 0
     onCurrentIndexChanged: {

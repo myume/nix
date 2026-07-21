@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -29,8 +30,10 @@ PanelWindow {
 
     function hide() {
         active = false;
-        app.currentIndex = 0;
+        if (appSelector.item?.currentIndex)
+            appSelector.item.currentIndex = 0;
         search.text = "";
+        appSelector.appIndex = 0;
     }
 
     BackgroundEffect.blurRegion: Region {
@@ -44,9 +47,10 @@ PanelWindow {
         color: Colors.backgroundColor
         radius: Theme.cornerRadius
         implicitWidth: 800
-        implicitHeight: implicitWidth / Theme.launcherAspectRatio
+        implicitHeight: layout.implicitHeight
 
         ColumnLayout {
+            id: layout
             anchors.fill: parent
             anchors.margins: 16
             spacing: 16
@@ -61,7 +65,7 @@ PanelWindow {
                 font.weight: 500
                 font.pixelSize: 16
                 color: Colors.text
-                placeholderText: `${app.placeholderText}...`
+                placeholderText: `${appSelector.item?.placeholderText ?? "Start typing"}...`
                 placeholderTextColor: Colors.translucentText
 
                 padding: 14
@@ -75,8 +79,11 @@ PanelWindow {
                 Keys.onEscapePressed: {
                     launcher.hide();
                 }
+                Keys.onTabPressed: {
+                    appSelector.appIndex = (appSelector.appIndex + 1) % appSelector.apps.length;
+                }
                 Keys.onPressed: event => {
-                    app.onKeyPressed(event);
+                    appSelector.item?.onKeyPressed(event);
                 }
 
                 onActiveFocusChanged: {
@@ -86,15 +93,26 @@ PanelWindow {
                 }
             }
 
-            App {
-                id: app
-                inputText: search.text
+            Loader {
+                id: appSelector
                 Layout.fillWidth: true
-                Layout.fillHeight: true
-                onLaunchedApp: {
-                    launcher.hide();
+                active: true
+
+                property int appIndex: 0
+                readonly property list<Component> apps: [app, rink]
+                readonly property Component app: App {
+                    implicitHeight: content.implicitWidth / Theme.launcherAspectRatio - search.implicitHeight
+                    inputText: search.text
+                    onLaunchedApp: {
+                        launcher.hide();
+                    }
                 }
-                clip: true
+                readonly property Component rink: Rink {
+                    id: rink
+                    inputText: search.text
+                }
+
+                sourceComponent: apps[appIndex]
             }
         }
 
@@ -119,6 +137,14 @@ PanelWindow {
                     if (!running && !launcher.active)
                         launcher.visible = false;
                 }
+            }
+        }
+
+        Behavior on implicitHeight {
+            SpringAnimation {
+                spring: 20
+                damping: 0.7
+                epsilon: 0.25
             }
         }
     }
