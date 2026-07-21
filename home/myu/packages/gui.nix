@@ -4,6 +4,7 @@
     discord
     obs-studio
     obsidian
+    pear-desktop
     tor-browser
     qbittorrent
     dbeaver-bin
