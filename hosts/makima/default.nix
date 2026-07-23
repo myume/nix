@@ -49,6 +49,9 @@ in {
       "udev.log_level=3"
       "systemd.show_status=auto"
     ];
+    kernel.sysctl = {
+      "vm.swappiness" = 0;
+    };
   };
 
   services = {
